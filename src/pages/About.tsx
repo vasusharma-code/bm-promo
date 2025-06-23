@@ -1,263 +1,120 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Target, Eye, Award, Ship } from 'lucide-react';
 
-const About = () => {
-  const founders = [
-    {
-      name: 'Ojas Lalla',
-      title: 'Founder & CEO',
-      image: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=300',
-      bio: 'Former Chief Engineer with 15+ years of maritime experience. Sailed across 40+ countries and multiple vessel types. Passionate about nurturing the next generation of maritime professionals.',
-      achievements: ['Master Mariner License', 'Maritime Safety Expert', 'STCW Instructor']
-    },
-    {
-      name: 'Shahnawaz',
-      title: 'Co-Founder & Head of Operations',
-      image: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300',
-      bio: 'Navigation Officer turned educator with deep expertise in maritime regulations and training methodologies. Dedicated to making maritime education accessible and effective.',
-      achievements: ['Navigation Specialist', 'Training Development Expert', 'Maritime Consultant']
-    }
-  ];
+const founders = [
+	{
+		name: 'Ojas Lalla',
+		title: 'CEO & Founder',
+		image: '/assets/ojas.png',
+		bio: `Ojas Lalla is the visionary behind Budding Mariners. With a passion for maritime education and years of experience at sea, he has helped thousands of students achieve their dreams of joining the Merchant Navy. His leadership and dedication have set new standards in the industry.
 
-  return (
-    <div className="min-h-screen pt-20">
-      {/* Hero Section */}
-      <section className="bg-black text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                About <span className="text-primary-400">Us</span>
-              </h1>
-              <p className="text-xl text-white/90 mb-8 leading-relaxed">
-                Budding Mariners was born from a vision to bridge the gap between maritime education 
-                and industry requirements. We are committed to nurturing maritime professionals who 
-                are not just technically competent but also industry-ready.
-              </p>
-              <div className="grid grid-cols-2 gap-8">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary-400">5+</div>
-                  <div className="text-white/80">Years Experience</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary-400">3000+</div>
-                  <div className="text-white/80">Success Stories</div>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
-              <img 
-                src="https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg" 
-                alt="Maritime education"
-                className="rounded-2xl shadow-2xl"
-              />
-              <div className="absolute inset-0 bg-primary-400/20 rounded-2xl"></div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+Ojas believes in hands-on mentorship and has personally guided hundreds of cadets through the selection process. His mission is to make quality maritime training accessible to all aspiring mariners.`,
+	},
+	{
+		name: 'Shahnawaz',
+		title: 'COO & Co-Founder',
+		image: '/assets/shahnawaz.png',
+		bio: `Shahnawaz brings operational excellence to Budding Mariners. With a strong background in marine operations and training, he ensures every student receives the best possible support and guidance.
 
-      {/* Our Story */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Story</h2>
-            <div className="w-24 h-1 bg-primary-400 mx-auto"></div>
-          </motion.div>
+He is known for his approachable nature and commitment to student success. Shahnawaz oversees the day-to-day functioning of the academy and works closely with faculty and students to maintain high standards.`,
+	},
+];
 
-          <motion.div
-            className="max-w-4xl mx-auto text-lg text-gray-700 leading-relaxed space-y-6"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <p>
-              Founded in 2019, Budding Mariners emerged from the shared vision of maritime veterans 
-              who recognized the need for comprehensive, industry-aligned education in the merchant navy sector. 
-              Our founders, with their combined experience of over 25 years at sea, understood the challenges 
-              faced by aspiring maritime professionals.
-            </p>
-            <p>
-              What started as a small training center has now grown into India's premier maritime education 
-              platform, serving over 3,000 students across the country. We've successfully placed more than 
-              2,500 students in leading shipping companies worldwide, building a community of over 100,000 
-              maritime aspirants.
-            </p>
-            <p>
-              Our approach combines traditional maritime wisdom with modern training methodologies, ensuring 
-              our students are not just academically prepared but also practically equipped for the challenges 
-              of life at sea.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+const About = () => (
+	<div className="min-h-screen bg-black text-white">
+		{/* About Us Header */}
+		<section className="pt-28 pb-2 text-center">
+			<h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white">
+				About Us
+			</h1>
+			<p className="text-white/80 text-sm max-w-2xl mx-auto mb-2">
+				Discover the story behind Budding Mariners and our mission to transform
+				maritime education.
+			</p>
+		</section>
 
-      {/* Mission & Vision */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <motion.div
-              className="bg-primary-400 p-8 rounded-2xl text-black"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Target className="h-12 w-12 mb-6" />
-              <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
-              <p className="text-black/80 leading-relaxed">
-                To provide world-class maritime education and training that empowers individuals 
-                to build successful careers in the merchant navy while maintaining the highest 
-                standards of safety, professionalism, and environmental responsibility.
-              </p>
-            </motion.div>
+		{/* Our Story */}
+		<section className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10 pb-12 px-4">
+			<div className="flex-1">
+				<h2 className="text-2xl font-bold mb-4 text-white">Our Story</h2>
+				<p className="text-white/80 mb-4">
+					In 2019, Ojas and Shahnawaz founded Budding Mariners to help aspiring
+					seafarers achieve their dreams. What started as a small initiative has
+					now grown into a leading maritime academy, known for its commitment to
+					quality training and student success.
+				</p>
+				<p className="text-white/80">
+					Our mission is to bridge the gap between ambition and achievement by
+					providing world-class mentorship, practical training, and unwavering
+					support to every student.
+				</p>
+			</div>
+			<div className="flex-1 flex justify-center">
+				<img
+					src="/assets/about-story.jpg"
+					alt="Our Story"
+					className="rounded-xl w-full max-w-xs object-cover border-4 border-yellow-400"
+				/>
+			</div>
+		</section>
 
-            <motion.div
-              className="bg-black p-8 rounded-2xl text-white"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Eye className="h-12 w-12 mb-6 text-primary-400" />
-              <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
-              <p className="text-white/80 leading-relaxed">
-                To be the leading maritime education institution globally, recognized for excellence 
-                in training, innovation in teaching methodologies, and our contribution to developing 
-                skilled maritime professionals who shape the future of the shipping industry.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+		{/* Mission & Vision */}
+		<section className="max-w-5xl mx-auto flex flex-col md:flex-row gap-8 pb-16 px-4">
+			<div className="flex-1 bg-yellow-400 text-black rounded-xl p-8 shadow-lg">
+				<h3 className="text-2xl font-bold mb-2">Mission</h3>
+				<p>
+					To empower aspiring mariners with the knowledge, skills, and confidence
+					to excel in the Merchant Navy. We are dedicated to providing accessible,
+					high-quality training and personal mentorship for every student.
+				</p>
+			</div>
+			<div className="flex-1 bg-yellow-400 text-black rounded-xl p-8 shadow-lg">
+				<h3 className="text-2xl font-bold mb-2">Vision</h3>
+				<p>
+					To be India's most trusted maritime academy, recognized for our
+					results, integrity, and student-first approach. We envision a future
+					where every passionate seafarer has the opportunity to succeed.
+				</p>
+			</div>
+		</section>
 
-      {/* Founders Section */}
-      <section className="py-20 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              About the <span className="text-primary-400">Founders</span>
-            </h2>
-            <div className="w-24 h-1 bg-primary-400 mx-auto"></div>
-          </motion.div>
-
-          <div className="space-y-16">
-            {founders.map((founder, index) => (
-              <motion.div
-                key={founder.name}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
-                }`}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                  <div className="relative">
-                    <img 
-                      src={founder.image} 
-                      alt={founder.name}
-                      className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
-                    />
-                    <div className="absolute inset-0 bg-primary-400/10 rounded-2xl"></div>
-                  </div>
-                </div>
-                <div className={index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}>
-                  <h3 className="text-3xl font-bold mb-2">{founder.name}</h3>
-                  <p className="text-primary-400 text-xl mb-6">{founder.title}</p>
-                  <p className="text-white/90 mb-6 leading-relaxed">{founder.bio}</p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-primary-400 mb-3">Key Achievements:</h4>
-                    {founder.achievements.map((achievement, idx) => (
-                      <div key={idx} className="flex items-center space-x-2">
-                        <Award className="h-4 w-4 text-primary-400" />
-                        <span className="text-white/80">{achievement}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-20 bg-primary-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Our Values</h2>
-            <div className="w-24 h-1 bg-black mx-auto"></div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Ship,
-                title: 'Excellence',
-                description: 'We strive for excellence in everything we do, from curriculum design to student support.'
-              },
-              {
-                icon: Target,
-                title: 'Integrity',
-                description: 'We maintain the highest ethical standards and transparency in all our operations.'
-              },
-              {
-                icon: Award,
-                title: 'Innovation',
-                description: 'We continuously innovate our teaching methods to stay ahead of industry requirements.'
-              }
-            ].map((value, index) => (
-              <motion.div
-                key={value.title}
-                className="text-center"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <div className="bg-black p-4 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-                  <value.icon className="h-10 w-10 text-primary-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-black mb-4">{value.title}</h3>
-                <p className="text-black/80 leading-relaxed">{value.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
+		{/* About the Founders */}
+		<section className="max-w-5xl mx-auto pb-20 px-4">
+			<h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12 text-white">
+				About the Founders
+			</h2>
+			<div className="flex flex-col gap-16">
+				{founders.map((founder, idx) => (
+					<div
+						key={founder.name}
+						className={`flex flex-col md:flex-row items-center gap-10 ${
+							idx % 2 === 1 ? 'md:flex-row-reverse' : ''
+						}`}
+					>
+						<div className="flex-1">
+							<h3 className="text-2xl font-bold mb-2 text-white">
+								{founder.name}
+							</h3>
+							<div className="mb-4">
+								<span className="bg-yellow-400 text-black px-3 py-1 rounded-full font-semibold text-sm">
+									{founder.title}
+								</span>
+							</div>
+							<p className="text-white/80 whitespace-pre-line">
+								{founder.bio}
+							</p>
+						</div>
+						<div className="flex-1 flex justify-center">
+							<img
+								src={founder.image}
+								alt={founder.name}
+								className="rounded-xl w-full max-w-xs object-cover border-4 border-yellow-400"
+							/>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+	</div>
+);
 
 export default About;

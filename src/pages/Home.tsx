@@ -160,39 +160,34 @@ const Home = () => {
               Navigate your career with India's premier maritime education platform
             </motion.p>
           </div>
-
-          {/* Interactive Compass Wheel */}
-          <motion.div 
-            className="w-16 h-16 md:w-24 md:h-24 lg:w-28 lg:h-28 cursor-grab active:cursor-grabbing select-none"
-            style={{ rotate: compassRotation }}
-            drag
-            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-            onDrag={handleCompassDrag}
-            whileHover={{ scale: 1.1 }}
-            whileDrag={{ scale: 0.95 }}
-            dragElastic={0}
-          >
-            <div className="w-full h-full flex items-center justify-center relative">
-              {/* Compass PNG logo only, no background */}
-              <img
-                src={compass}
-                alt="Compass"
-                className="h-full w-full object-contain"
-                draggable={false}
-              />
-              {/* Optional: Compass markings, if you want to keep them */}
-              {/* 
-              <div className="absolute inset-2 border border-black/20 rounded-full"></div>
-              <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-1 h-2 md:h-3 bg-black/30"></div>
-              <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-2 md:h-3 bg-black/30"></div>
-              <div className="absolute left-1 top-1/2 transform -translate-y-1/2 w-2 md:w-3 h-1 bg-black/30"></div>
-              <div className="absolute right-1 top-1/2 transform -translate-y-1/2 w-2 md:w-3 h-1 bg-black/30"></div>
-              */}
-            </div>
-          </motion.div>
-          
-          <p className="text-white/70 text-xs md:text-sm mt-2">Drag the compass to explore</p>
+          {/* <p className="text-white/70 text-xs md:text-sm mt-2">Drag the compass to explore</p> */}
         </div>
+
+        {/* Overlapping Compass Wheel - Responsive and Centered */}
+        <motion.div
+          className="absolute left-1/2 z-20 flex justify-center items-center"
+          drag
+          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+          onDrag={handleCompassDrag}
+          whileHover={{ scale: 1.1 }}
+          whileDrag={{ scale: 0.95 }}
+          dragElastic={0}
+          style={{
+            rotate: compassRotation,
+            bottom: 'calc(-20vw / 2 + 2.5rem)', // Move up by increasing the value (was 2rem)
+            left: '43%',
+            transform: 'translateX(-50%)'
+          }}
+        >
+          <div className="w-[18vw] h-[18vw] min-w-[100px] min-h-[100px] max-w-[220px] max-h-[220px] flex items-center justify-center relative select-none">
+            <img
+              src={compass}
+              alt="Compass"
+              className="h-full w-full object-contain"
+              draggable={false}
+            />
+          </div>
+        </motion.div>
       </section>
 
       {/* Statistics Section - Fixed Position */}

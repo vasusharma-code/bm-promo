@@ -1,335 +1,255 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Download, FileText, Video, BookOpen, Filter, Mail } from 'lucide-react';
+import { Download, FileText, Video, BookOpen } from 'lucide-react';
+
+const stats = [
+	{ value: '500+', label: 'Study Materials' },
+	{ value: '100K+', label: 'Downloads' },
+	{ value: '50+', label: 'Topics Covered' },
+	{ value: '24/7', label: 'Access' },
+];
+
+const categories = [
+	{ id: 'all', label: 'All' },
+	{ id: 'entrance', label: 'Entrance Exam' },
+	{ id: 'navigation', label: 'Navigation' },
+	{ id: 'safety', label: 'Safety' },
+	{ id: 'regulation', label: 'Regulation' },
+	{ id: 'communication', label: 'Communication' },
+	{ id: 'interview', label: 'Interview' },
+];
+
+const materials = [
+	{
+		id: 1,
+		title: 'IMU-CET Previous Year Papers',
+		desc: 'All India IMU-CET solved papers with answer keys.',
+		type: 'pdf',
+		category: 'entrance',
+		downloads: '12,000+',
+		size: '8.2 MB',
+		featured: true,
+	},
+	{
+		id: 2,
+		title: 'Merchant Navy Career Guide 2024',
+		desc: 'Step-by-step guide for all streams and eligibility.',
+		type: 'pdf',
+		category: 'entrance',
+		downloads: '9,800+',
+		size: '5.1 MB',
+	},
+	{
+		id: 3,
+		title: 'STCW Basic Safety Training Manual',
+		desc: 'Official BST manual for all seafarers.',
+		type: 'pdf',
+		category: 'safety',
+		downloads: '7,200+',
+		size: '6.5 MB',
+	},
+	{
+		id: 4,
+		title: 'Ship Construction & Stability Notes',
+		desc: 'Detailed notes for deck and engine cadets.',
+		type: 'pdf',
+		category: 'navigation',
+		downloads: '6,500+',
+		size: '4.8 MB',
+	},
+	{
+		id: 5,
+		title: 'Navigation & Seamanship Handbook',
+		desc: 'Complete navigation and seamanship reference.',
+		type: 'pdf',
+		category: 'navigation',
+		downloads: '5,900+',
+		size: '7.3 MB',
+	},
+	{
+		id: 6,
+		title: 'Maritime Laws & Regulations',
+		desc: 'SOLAS, MARPOL, and Indian shipping rules.',
+		type: 'pdf',
+		category: 'regulation',
+		downloads: '4,800+',
+		size: '3.9 MB',
+	},
+	{
+		id: 7,
+		title: 'English Exam Preparation Video',
+		desc: 'Video guide for maritime English exams.',
+		type: 'video',
+		category: 'communication',
+		downloads: '3,200+',
+		size: '120 MB',
+	},
+	{
+		id: 8,
+		title: 'Maritime English Communication',
+		desc: 'PDF + Audio for spoken and written English.',
+		type: 'pdf',
+		category: 'communication',
+		downloads: '2,900+',
+		size: '2.5 MB',
+	},
+	{
+		id: 9,
+		title: 'Cargo Handling & Stowage Guide',
+		desc: 'Best practices for safe cargo operations.',
+		type: 'pdf',
+		category: 'navigation',
+		downloads: '2,100+',
+		size: '3.2 MB',
+	},
+];
+
+const getTypeIcon = (type: string) => {
+	if (type === 'pdf') return <FileText className="w-4 h-4 mr-1" />;
+	if (type === 'video') return <Video className="w-4 h-4 mr-1" />;
+	return <BookOpen className="w-4 h-4 mr-1" />;
+};
 
 const FreeMaterials = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [emailSubscription, setEmailSubscription] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
+	const [active, setActive] = useState('all');
+	const [email, setEmail] = useState('');
+	const [subscribed, setSubscribed] = useState(false);
 
-  const materialCategories = [
-    { id: 'all', label: 'All Materials' },
-    { id: 'entrance-exam', label: 'Entrance Exam' },
-    { id: 'navigation', label: 'Navigation' },
-    { id: 'marine-engineering', label: 'Marine Engineering' },
-    { id: 'safety', label: 'Safety & STCW' },
-    { id: 'regulations', label: 'Maritime Law' },
-    { id: 'preparation-tips', label: 'Preparation Tips' }
-  ];
+	const filtered =
+		active === 'all'
+			? materials
+			: materials.filter((m) => m.category === active);
 
-  const studyMaterials = [
-    {
-      id: 1,
-      title: 'DNS Entrance Exam - Complete Study Guide 2024',
-      description: 'Comprehensive study material covering all topics for DNS entrance examination',
-      type: 'pdf',
-      category: 'entrance-exam',
-      size: '15.2 MB',
-      downloads: '12,450',
-      image: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=300',
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'Navigation Basics - Chart Work Manual',
-      description: 'Essential chart work techniques and navigation fundamentals',
-      type: 'pdf',
-      category: 'navigation',
-      size: '8.7 MB',
-      downloads: '9,230',
-      image: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=300'
-    },
-    {
-      id: 3,
-      title: 'Marine Engine Room Operations Video Series',
-      description: 'Complete video tutorial on engine room operations and maintenance',
-      type: 'video',
-      category: 'marine-engineering',
-      size: '245 MB',
-      downloads: '5,670',
-      image: 'https://images.pexels.com/photos/688618/pexels-photo-688618.jpeg?w=300'
-    },
-    {
-      id: 4,
-      title: 'STCW Basic Safety Training Manual',
-      description: 'Official STCW BST training material with practical exercises',
-      type: 'pdf',
-      category: 'safety',
-      size: '12.3 MB',
-      downloads: '8,900',
-      image: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300'
-    },
-    {
-      id: 5,
-      title: 'Maritime Law and Regulations Handbook',
-      description: 'Complete guide to international maritime laws and SOLAS convention',
-      type: 'pdf',
-      category: 'regulations',
-      size: '11.8 MB',
-      downloads: '6,340',
-      image: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=300'
-    },
-    {
-      id: 6,
-      title: 'Merchant Navy Interview Preparation Kit',
-      description: 'Common interview questions and answers for merchant navy positions',
-      type: 'pdf',
-      category: 'preparation-tips',
-      size: '4.2 MB',
-      downloads: '15,230',
-      image: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=300'
-    },
-    {
-      id: 7,
-      title: 'Ship Stability and Trim Calculations',
-      description: 'Mathematical formulas and practical examples for ship stability',
-      type: 'pdf',
-      category: 'navigation',
-      size: '9.1 MB',
-      downloads: '4,560',
-      image: 'https://images.pexels.com/photos/688618/pexels-photo-688618.jpeg?w=300'
-    },
-    {
-      id: 8,
-      title: 'Marine Engineering Workshop Practices',
-      description: 'Hands-on workshop techniques and equipment operation guides',
-      type: 'video',
-      category: 'marine-engineering',
-      size: '189 MB',
-      downloads: '3,420',
-      image: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300'
-    },
-    {
-      id: 9,
-      title: 'Physical Fitness Guide for Seafarers',
-      description: 'Comprehensive fitness program designed for maritime professionals',
-      type: 'pdf',
-      category: 'preparation-tips',
-      size: '6.8 MB',
-      downloads: '7,890',
-      image: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=300'
-    }
-  ];
+	return (
+		<div className="min-h-screen bg-black text-white flex flex-col">
+			{/* Header */}
+			<section className="pt-28 pb-6 text-center">
+				<h1 className="text-3xl md:text-4xl font-extrabold mb-2">
+					Free Study Materials
+				</h1>
+				<p className="text-white/80 text-base max-w-2xl mx-auto">
+					Access our unique exhaustive collection of free study materials,
+					guides, and resources.
+				</p>
+			</section>
 
-  const filteredMaterials = activeFilter === 'all' 
-    ? studyMaterials 
-    : studyMaterials.filter(material => material.category === activeFilter);
+			{/* Stats */}
+			<section className="w-full bg-yellow-400 py-6 flex flex-wrap justify-center items-center gap-8 text-black font-bold text-center text-lg">
+				{stats.map((stat) => (
+					<div key={stat.label}>
+						<div className="text-2xl">{stat.value}</div>
+						<div className="text-xs font-semibold">{stat.label}</div>
+					</div>
+				))}
+			</section>
 
-  const getTypeIcon = (type: string) => {
-    switch(type) {
-      case 'pdf': return <FileText className="h-5 w-5" />;
-      case 'video': return <Video className="h-5 w-5" />;
-      default: return <BookOpen className="h-5 w-5" />;
-    }
-  };
+			{/* Filters */}
+			<section className="w-full bg-white flex flex-wrap justify-center gap-2 border-b border-gray-200 py-3">
+				{categories.map((cat) => (
+					<button
+						key={cat.id}
+						onClick={() => setActive(cat.id)}
+						className={`px-4 py-2 rounded-full font-semibold text-sm transition ${
+							active === cat.id
+								? 'bg-yellow-400 text-black'
+								: 'bg-gray-100 text-gray-700 hover:bg-yellow-400 hover:text-black'
+						}`}
+					>
+						{cat.label}
+					</button>
+				))}
+			</section>
 
-  const getTypeColor = (type: string) => {
-    switch(type) {
-      case 'pdf': return 'bg-red-100 text-red-600';
-      case 'video': return 'bg-blue-100 text-blue-600';
-      default: return 'bg-green-100 text-green-600';
-    }
-  };
+			{/* Materials Grid */}
+			<section className="max-w-6xl mx-auto w-full py-10 px-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{filtered.map((mat, idx) => (
+					<div
+						key={mat.id}
+						className={`bg-white rounded-xl shadow p-5 flex flex-col border border-gray-100 relative ${
+							mat.featured ? 'ring-2 ring-yellow-400' : ''
+						}`}
+					>
+						{mat.featured && (
+							<span className="absolute top-3 left-3 bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded-full z-10">
+								FEATURED
+							</span>
+						)}
+						<div className="flex items-center mb-2">
+							<span className="flex items-center bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-semibold mr-2">
+								{getTypeIcon(mat.type)}
+								{mat.type.toUpperCase()}
+							</span>
+							<span className="text-xs text-gray-400">{mat.size}</span>
+						</div>
+						<div className="font-bold text-base text-black mb-1">
+							{mat.title}
+						</div>
+						<div className="text-gray-700 text-xs mb-3">{mat.desc}</div>
+						<div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+							<span>{mat.downloads} downloads</span>
+						</div>
+						<button className="w-full bg-black text-yellow-400 py-2 rounded font-bold flex items-center justify-center gap-2 hover:bg-yellow-400 hover:text-black transition">
+							<Download className="w-4 h-4" />
+							Download Free
+						</button>
+					</div>
+				))}
+			</section>
 
-  const handleSubscription = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubscribed(true);
-  };
+			{/* Newsletter */}
+			<section className="w-full flex flex-col items-center justify-center py-10 bg-gradient-to-b from-[#18181b] to-black">
+				<div className="bg-[#18181b] rounded-xl shadow-lg p-8 w-full max-w-xl flex flex-col items-center">
+					<h2 className="text-xl font-bold mb-2 text-white">
+						Get Notified of New Materials
+					</h2>
+					<p className="text-white/70 mb-4 text-center text-sm">
+						Subscribe to receive updates when new study materials are added.
+					</p>
+					{subscribed ? (
+						<div className="bg-green-500/20 border border-green-500 rounded-lg p-4 text-green-300 w-full text-center">
+							Subscribed! You’ll get notified on new materials.
+						</div>
+					) : (
+						<form
+							className="flex w-full gap-2"
+							onSubmit={(e) => {
+								e.preventDefault();
+								setSubscribed(true);
+							}}
+						>
+							<input
+								type="email"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								placeholder="Enter your email"
+								className="flex-1 px-4 py-2 rounded bg-white/10 border border-white/20 text-white placeholder-white/60 focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+								required
+							/>
+							<button
+								type="submit"
+								className="bg-yellow-400 text-black px-6 py-2 rounded font-bold hover:bg-yellow-500 transition"
+							>
+								Subscribe
+							</button>
+						</form>
+					)}
+				</div>
+			</section>
 
-  return (
-    <div className="min-h-screen pt-20 bg-gray-50">
-      {/* Header */}
-      <section className="bg-black text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1 
-            className="text-4xl md:text-5xl font-bold mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            Free Study <span className="text-primary-400">Materials</span>
-          </motion.h1>
-          <motion.p 
-            className="text-xl text-white/80 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Access our comprehensive collection of free maritime education resources
-          </motion.p>
-        </div>
-      </section>
-
-      {/* Material Filters */}
-      <section className="py-8 bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900 flex items-center space-x-2">
-              <Filter className="h-5 w-5" />
-              <span>Filter by Category</span>
-            </h2>
-            <div className="text-sm text-gray-600">
-              {filteredMaterials.length} materials available
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2 md:gap-4">
-            {materialCategories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveFilter(category.id)}
-                className={`px-4 py-2 rounded-full font-medium transition-all duration-200 text-sm md:text-base ${
-                  activeFilter === category.id
-                    ? 'bg-primary-400 text-black shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Materials Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredMaterials.map((material, index) => (
-              <motion.div
-                key={material.id}
-                className={`bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 ${
-                  material.featured ? 'ring-2 ring-primary-400' : ''
-                }`}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                {material.featured && (
-                  <div className="bg-primary-400 text-black text-center py-2 text-sm font-medium">
-                    ⭐ Featured Material
-                  </div>
-                )}
-                
-                <div className="relative h-48">
-                  <img 
-                    src={material.image} 
-                    alt={material.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 ${getTypeColor(material.type)}`}>
-                      {getTypeIcon(material.type)}
-                      <span>{material.type.toUpperCase()}</span>
-                    </span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                </div>
-
-                <div className="p-6">
-                  <h3 className="font-bold text-xl mb-2 text-gray-900 line-clamp-2">
-                    {material.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 mb-4 line-clamp-2">
-                    {material.description}
-                  </p>
-                  
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <span>Size: {material.size}</span>
-                    <span>{material.downloads} downloads</span>
-                  </div>
-                  
-                  <button className="w-full bg-primary-400 text-black py-3 rounded-lg font-semibold hover:bg-primary-500 transition-colors flex items-center justify-center space-x-2">
-                    <Download className="h-5 w-5" />
-                    <span>Download Free</span>
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-16 bg-navy-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900"></div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Mail className="h-16 w-16 text-primary-400 mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Get Notified of New Materials
-            </h2>
-            <p className="text-xl text-white/80 mb-8">
-              Be the first to access our latest study materials and maritime resources
-            </p>
-            
-            {subscribed ? (
-              <div className="bg-green-500/20 border border-green-500 rounded-lg p-6">
-                <h3 className="text-xl font-bold text-green-400 mb-2">Successfully Subscribed!</h3>
-                <p className="text-green-300">You'll receive notifications about new materials via email.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscription} className="max-w-md mx-auto">
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <input
-                    type="email"
-                    value={emailSubscription}
-                    onChange={(e) => setEmailSubscription(e.target.value)}
-                    placeholder="Enter your email address"
-                    className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:ring-2 focus:ring-primary-400 focus:border-transparent"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="bg-primary-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-primary-500 transition-colors"
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              </form>
-            )}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-16 bg-primary-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">Why Our Materials?</h2>
-            <p className="text-xl text-black/80">Quality resources designed by maritime experts</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { number: '50+', label: 'Study Materials', icon: '📚' },
-              { number: '25+', label: 'Video Tutorials', icon: '🎥' },
-              { number: '100k+', label: 'Total Downloads', icon: '⬇️' },
-              { number: '98%', label: 'Success Rate', icon: '🎯' }
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                className="text-center"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <div className="text-4xl mb-4">{stat.icon}</div>
-                <div className="text-3xl font-bold text-black mb-2">{stat.number}</div>
-                <div className="text-black/80 font-medium">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
-  );
+			{/* Guidance CTA */}
+			<section className="w-full py-10 bg-white text-center">
+				<div className="text-black font-bold text-lg mb-2">
+					Need Personalized Guidance?
+				</div>
+				<div className="text-black/70 mb-4 text-sm">
+					Our experts can help you choose the right material and guide your
+					preparation.
+				</div>
+				<button className="bg-black text-yellow-400 px-6 py-3 rounded-full font-bold hover:bg-yellow-400 hover:text-black transition">
+					Get Free Consultation
+				</button>
+			</section>
+		</div>
+	);
 };
 
 export default FreeMaterials;

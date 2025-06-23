@@ -1,310 +1,182 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Calendar, User, Clock, Tag } from 'lucide-react';
 
+const blogTags = [
+	{ id: 'all', label: 'All' },
+	{ id: 'education', label: 'Education' },
+	{ id: 'admission', label: 'Admission' },
+	{ id: 'career', label: 'Career' },
+	{ id: 'sponsorship', label: 'Sponsorship' },
+	{ id: 'training', label: 'Training' },
+];
+
+const blogPosts = [
+	{
+		id: 1,
+		title: 'Complete Guide to Merchant Navy Entrance Exams 2024',
+		excerpt: 'Everything you need to know about the latest entrance exams, eligibility, and preparation tips.',
+		author: 'BM Editorial',
+		date: '2024-01-15',
+		readTime: '8 min read',
+		image: '', // Placeholder for featured
+		tags: ['admission', 'education'],
+		featured: true,
+	},
+	{
+		id: 2,
+		title: 'Top 10 Maritime Companies for Deck Cadets',
+		excerpt: 'A curated list of the best companies for aspiring deck cadets in India.',
+		author: 'BM Team',
+		date: '2024-01-10',
+		readTime: '5 min read',
+		image: '',
+		tags: ['career', 'sponsorship'],
+	},
+	{
+		id: 3,
+		title: 'Life Afloat: What to Expect in Your First Year',
+		excerpt: 'Insights and tips for freshers starting their journey at sea.',
+		author: 'BM Team',
+		date: '2024-01-08',
+		readTime: '6 min read',
+		image: '',
+		tags: ['career', 'training'],
+	},
+	{
+		id: 4,
+		title: 'STCW Certification: Everything You Need to Know',
+		excerpt: 'A breakdown of the STCW certification process and its importance.',
+		author: 'BM Editorial',
+		date: '2024-01-05',
+		readTime: '7 min read',
+		image: '',
+		tags: ['training', 'education'],
+	},
+	{
+		id: 5,
+		title: 'Safety Trends in Indian Shipping 2024',
+		excerpt: 'Latest safety protocols and trends in the Indian maritime sector.',
+		author: 'BM Team',
+		date: '2024-01-03',
+		readTime: '4 min read',
+		image: '',
+		tags: ['training'],
+	},
+	{
+		id: 6,
+		title: 'How to Choose the Right Marine Course',
+		excerpt: 'Factors to consider when selecting a marine course for your career.',
+		author: 'BM Editorial',
+		date: '2024-01-01',
+		readTime: '5 min read',
+		image: '',
+		tags: ['education', 'admission'],
+	},
+];
+
 const Blog = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
+	const [activeFilter, setActiveFilter] = useState('all');
 
-  const blogTags = [
-    { id: 'all', label: 'All Articles' },
-    { id: 'admission', label: 'Admission' },
-    { id: 'preparation', label: 'Preparation' },
-    { id: 'sponsorship', label: 'Sponsorship' },
-    { id: 'career', label: 'Career' },
-    { id: 'training', label: 'Training' },
-    { id: 'life-at-sea', label: 'Life at Sea' }
-  ];
+	const filteredPosts =
+		activeFilter === 'all'
+			? blogPosts
+			: blogPosts.filter((post) => post.tags.includes(activeFilter));
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'Complete Guide to Merchant Navy Admission 2024',
-      excerpt: 'Everything you need to know about merchant navy admission process, eligibility criteria, and important dates for 2024.',
-      author: 'Capt. Rajesh Kumar',
-      date: '2024-01-15',
-      readTime: '8 min read',
-      image: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=500',
-      tags: ['admission', 'preparation'],
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'How to Prepare for DNS Entrance Exam',
-      excerpt: 'Comprehensive preparation strategy for DNS entrance exam with study materials, mock tests, and expert tips.',
-      author: 'Chief Eng. Amit Sharma',
-      date: '2024-01-12',
-      readTime: '6 min read',
-      image: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=500',
-      tags: ['preparation', 'training']
-    },
-    {
-      id: 3,
-      title: 'Company Sponsorship vs Self-Sponsored: Which is Better?',
-      excerpt: 'Detailed comparison between company sponsorship and self-sponsored routes in merchant navy education.',
-      author: 'Capt. Priya Singh',
-      date: '2024-01-10',
-      readTime: '7 min read',
-      image: 'https://images.pexels.com/photos/688618/pexels-photo-688618.jpeg?w=500',
-      tags: ['sponsorship', 'career']
-    },
-    {
-      id: 4,
-      title: 'Life Aboard a Merchant Vessel: A Day in the Life',
-      excerpt: 'Real experiences from merchant navy officers sharing their daily routine and challenges at sea.',
-      author: '2nd Officer John D\'souza',
-      date: '2024-01-08',
-      readTime: '5 min read',
-      image: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=500',
-      tags: ['life-at-sea', 'career']
-    },
-    {
-      id: 5,
-      title: 'STCW Certification: Your Gateway to International Waters',
-      excerpt: 'Understanding STCW certification requirements, process, and its importance for merchant navy careers.',
-      author: 'Capt. Maritime Expert',
-      date: '2024-01-05',
-      readTime: '9 min read',
-      image: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=500',
-      tags: ['training', 'career']
-    },
-    {
-      id: 6,
-      title: 'Top 10 Shipping Companies Hiring in 2024',
-      excerpt: 'List of leading shipping companies actively recruiting merchant navy officers with application details.',
-      author: 'HR Specialist Marine Sector',
-      date: '2024-01-03',
-      readTime: '6 min read',
-      image: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=500',
-      tags: ['career', 'sponsorship']
-    }
-  ];
+	const featuredPost = blogPosts.find((post) => post.featured);
 
-  const filteredPosts = activeFilter === 'all' 
-    ? blogPosts 
-    : blogPosts.filter(post => post.tags.includes(activeFilter));
+	return (
+		<div className="min-h-screen bg-black text-white flex flex-col">
+			{/* Header */}
+			<section className="pt-28 pb-2 text-center">
+				<h1 className="text-3xl md:text-4xl font-extrabold mb-1">Maritime Insights</h1>
+				<p className="text-yellow-400 text-sm mb-2">
+					Stay updated with the latest maritime trends, guides, and insights from the maritime industry
+				</p>
+			</section>
 
-  const featuredPost = blogPosts.find(post => post.featured);
-  const regularPosts = filteredPosts.filter(post => !post.featured);
+			{/* Blog Filters */}
+			<section className="flex justify-center gap-2 mb-8">
+				{blogTags.map((tag) => (
+					<button
+						key={tag.id}
+						onClick={() => setActiveFilter(tag.id)}
+						className={`px-4 py-2 rounded-full font-semibold text-xs md:text-sm transition ${
+							activeFilter === tag.id
+								? 'bg-yellow-400 text-black'
+								: 'bg-white/10 text-white hover:bg-yellow-400 hover:text-black'
+						}`}
+					>
+						{tag.label}
+					</button>
+				))}
+			</section>
 
-  return (
-    <div className="min-h-screen pt-20 bg-gray-50">
-      {/* Header */}
-      <section className="bg-black text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1 
-            className="text-4xl md:text-5xl font-bold mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            Maritime <span className="text-primary-400">Insights</span>
-          </motion.h1>
-          <motion.p 
-            className="text-xl text-white/80 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Stay updated with the latest maritime industry news, career guidance, and expert insights
-          </motion.p>
-        </div>
-      </section>
+			{/* Featured Article */}
+			{featuredPost && (
+				<section className="max-w-3xl mx-auto w-full mb-12">
+					<div className="bg-white rounded-xl flex flex-col md:flex-row overflow-hidden shadow-lg">
+						<div className="flex-1 bg-gray-300 flex items-center justify-center min-h-[220px] md:min-h-[260px]">
+							<span className="text-gray-500 text-lg font-semibold">Featured Article</span>
+						</div>
+						<div className="flex-1 p-6 flex flex-col justify-center">
+							<div className="flex items-center gap-2 mb-2">
+								<span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold">Featured</span>
+								<span className="text-gray-400 text-xs">{new Date(featuredPost.date).toLocaleDateString()}</span>
+							</div>
+							<h2 className="text-lg md:text-xl font-bold text-black mb-2">{featuredPost.title}</h2>
+							<div className="text-gray-700 text-sm mb-3">{featuredPost.excerpt}</div>
+							<div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
+								<span className="flex items-center gap-1"><User className="w-3 h-3" />{featuredPost.author}</span>
+								<span className="flex items-center gap-1"><Clock className="w-3 h-3" />{featuredPost.readTime}</span>
+							</div>
+							<button className="bg-black text-yellow-400 px-4 py-2 rounded font-semibold text-xs w-max">Read More</button>
+						</div>
+					</div>
+				</section>
+			)}
 
-      {/* Blog Filters */}
-      <section className="py-8 bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-            {blogTags.map((tag) => (
-              <button
-                key={tag.id}
-                onClick={() => setActiveFilter(tag.id)}
-                className={`px-4 py-2 rounded-full font-medium transition-all duration-200 text-sm md:text-base ${
-                  activeFilter === tag.id
-                    ? 'bg-primary-400 text-black shadow-lg'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {tag.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+			{/* Blog Grid */}
+			<section className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-8 px-4 mb-16">
+				{filteredPosts
+					.filter((post) => !post.featured)
+					.map((post) => (
+						<div key={post.id} className="bg-white rounded-xl shadow flex flex-col overflow-hidden">
+							<div className="bg-gray-300 flex items-center justify-center min-h-[120px]">
+								<span className="text-gray-500 text-xs">Blog Image</span>
+							</div>
+							<div className="p-4 flex flex-col flex-1">
+								<div className="flex items-center gap-2 mb-2">
+									<span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold">
+										{post.tags[0]?.charAt(0).toUpperCase() + post.tags[0]?.slice(1)}
+									</span>
+									<span className="text-gray-400 text-xs">{new Date(post.date).toLocaleDateString()}</span>
+								</div>
+								<h3 className="text-base font-bold text-black mb-1">{post.title}</h3>
+								<div className="text-gray-700 text-xs mb-2 flex-1">{post.excerpt}</div>
+								<div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
+									<span className="flex items-center gap-1"><User className="w-3 h-3" />{post.author}</span>
+									<span className="flex items-center gap-1"><Clock className="w-3 h-3" />{post.readTime}</span>
+								</div>
+								<button className="bg-black text-yellow-400 px-3 py-1 rounded font-semibold text-xs w-max mt-auto">Read More</button>
+							</div>
+						</div>
+					))}
+			</section>
 
-      {/* Featured Article */}
-      {featuredPost && activeFilter === 'all' && (
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="bg-white rounded-2xl shadow-xl overflow-hidden"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div className="relative h-64 lg:h-full">
-                  <img 
-                    src={featuredPost.image} 
-                    alt={featuredPost.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-primary-400 text-black px-3 py-1 rounded-full text-sm font-medium">
-                      Featured
-                    </span>
-                  </div>
-                </div>
-                <div className="p-8 lg:p-12">
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {featuredPost.tags.map((tag) => (
-                      <span 
-                        key={tag}
-                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                    {featuredPost.title}
-                  </h2>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    {featuredPost.excerpt}
-                  </p>
-                  <div className="flex items-center text-sm text-gray-500 mb-6 space-x-4">
-                    <div className="flex items-center space-x-1">
-                      <User className="h-4 w-4" />
-                      <span>{featuredPost.author}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Calendar className="h-4 w-4" />
-                      <span>{new Date(featuredPost.date).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{featuredPost.readTime}</span>
-                    </div>
-                  </div>
-                  <button className="bg-black text-primary-400 px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
-                    Read Full Article
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* Blog Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {regularPosts.map((post, index) => (
-              <motion.article
-                key={post.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <div className="relative h-48">
-                  <img 
-                    src={post.image} 
-                    alt={post.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                </div>
-                
-                <div className="p-6">
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {post.tags.map((tag) => (
-                      <span 
-                        key={tag}
-                        className="bg-primary-50 text-primary-700 px-2 py-1 rounded-full text-xs"
-                      >
-                        <Tag className="inline h-3 w-3 mr-1" />
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <h3 className="font-bold text-xl mb-3 text-gray-900 line-clamp-2">
-                    {post.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center space-x-1">
-                      <User className="h-4 w-4" />
-                      <span className="truncate">{post.author}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="h-4 w-4" />
-                      <span>{post.readTime}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-1 text-sm text-gray-500">
-                      <Calendar className="h-4 w-4" />
-                      <span>{new Date(post.date).toLocaleDateString()}</span>
-                    </div>
-                    <button className="text-primary-600 hover:text-primary-700 font-medium">
-                      Read More →
-                    </button>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Signup */}
-      <section className="py-16 bg-primary-400">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <motion.h2 
-            className="text-3xl md:text-4xl font-bold text-black mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            Stay Updated with Maritime News
-          </motion.h2>
-          <motion.p 
-            className="text-xl text-black/80 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            Subscribe to our newsletter for the latest maritime industry insights and career tips
-          </motion.p>
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-black focus:border-transparent"
-            />
-            <button className="bg-black text-primary-400 px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
-              Subscribe
-            </button>
-          </motion.div>
-        </div>
-      </section>
-    </div>
-  );
+			{/* Newsletter Signup */}
+			<section className="w-full bg-yellow-400 py-8 mt-auto">
+				<div className="max-w-xl mx-auto flex flex-col md:flex-row items-center justify-center gap-4 px-4">
+					<span className="font-semibold text-black text-center md:text-left text-base">Stay Updated</span>
+					<input
+						type="email"
+						placeholder="Enter your email"
+						className="flex-1 px-4 py-2 rounded bg-white border-none text-black text-sm"
+					/>
+					<button className="bg-black text-yellow-400 px-6 py-2 rounded font-semibold text-sm">Subscribe</button>
+				</div>
+			</section>
+		</div>
+	);
 };
 
 export default Blog;

@@ -58,3 +58,14 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #f59e0b;
 }
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: inline-block;
+  min-width: 200%;
+  animation: marquee 18s linear infinite;
+}
