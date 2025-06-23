@@ -28,8 +28,8 @@ const Navbar = () => {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 bg-gradient-to-b from-[#18181b] to-black border-b border-yellow-400 shadow-none`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Bar */}
-        <div className="flex justify-between items-center h-10 border-b border-yellow-400">
+        {/* Top Bar - Desktop Only */}
+        <div className="hidden md:flex justify-between items-center h-10 border-b border-yellow-400">
           <div className="flex items-center gap-8 text-yellow-400 text-xs font-semibold h-full">
             <span className="hover:underline cursor-pointer">All Courses <span className="ml-1">&#9662;</span></span>
             <span className="hover:underline cursor-pointer">BM Offline Academy</span>
@@ -40,6 +40,18 @@ const Navbar = () => {
           <div className="flex items-center gap-4">
             <span className="text-yellow-400 text-xs font-semibold">Admissions Open For Online/Offline Batches</span>
             <button className="bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-300 text-xs">JOIN NOW</button>
+          </div>
+        </div>
+        {/* Top Bar - Mobile Only */}
+        <div className="flex md:hidden items-center border-b border-yellow-400 h-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
+          <div className="flex items-center gap-4 text-yellow-400 text-xs font-semibold px-1">
+            <span className="hover:underline cursor-pointer">All Courses <span className="ml-1">&#9662;</span></span>
+            <span className="hover:underline cursor-pointer">BM Offline Academy</span>
+            <span className="hover:underline cursor-pointer">Online Courses</span>
+            <span className="hover:underline cursor-pointer">Test Series</span>
+            <span className="hover:underline cursor-pointer">BM Store</span>
+            <span className="text-yellow-400 text-xs font-semibold">Admissions Open For Online/Offline Batches</span>
+            <button className="bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-300 text-xs ml-2">JOIN NOW</button>
           </div>
         </div>
         {/* Main Bar */}

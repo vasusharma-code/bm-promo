@@ -126,7 +126,7 @@ const Home = () => {
   }, [centerIndex]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-24">
       {/* Hero Section with Compass-Controlled Panoramic Banner - Half Page Height */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden bg-black pt-16">
         {/* Panoramic Background Image */}
@@ -195,7 +195,7 @@ const Home = () => {
         {/* Background overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-navy-900/80 to-navy-700/80"></div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-2 lg:px-4">
           <motion.div 
             className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12"
             initial={{ opacity: 0, y: 50 }}
