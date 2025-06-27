@@ -1,18 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
-import { Play, Users, Award, TrendingUp } from 'lucide-react';
 import compass from '../../assets/compass.png';
+import bg from '../../assets/BG Header.png';
+import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
+
 
 const Home = () => {
-  // Compass wheel rotation state
+  // Move image more to the left by adjusting transform range
   const compassRotation = useMotionValue(0);
-  const backgroundX = useTransform(compassRotation, [-180, 180], ['100%', '-100%']);
-  
-  // YouTube Shorts state
+  const backgroundX = useTransform(compassRotation, [-90, 90], ['-40%', '-10%']);
+
   const [centerIndex, setCenterIndex] = useState(2);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Animated Statistics Component
   const AnimatedStat = ({ value, label, suffix = '' }: { value: number; label: string; suffix?: string }) => {
     const [count, setCount] = useState(0);
     const [hasAnimated, setHasAnimated] = useState(false);
@@ -33,16 +33,12 @@ const Home = () => {
                 return prev + increment;
               });
             }, 40);
-            return () => clearInterval(timer);
           }
         },
         { threshold: 0.5 }
       );
 
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-
+      if (ref.current) observer.observe(ref.current);
       return () => observer.disconnect();
     }, [value, hasAnimated]);
 
@@ -56,62 +52,59 @@ const Home = () => {
     );
   };
 
-  // YouTube Shorts Data
   const youtubeShorts = [
-    { 
-      id: 1, 
-      title: 'Success Story - Abhijit', 
-      thumbnail: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=300&h=400&fit=crop', 
+    {
+      id: 1,
+      title: 'Success Story - Abhijit',
+      thumbnail: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=300&h=400&fit=crop',
       views: '2.1M',
       description: 'If He Can Clear A Sponsorship With Pre...'
     },
-    { 
-      id: 2, 
-      title: 'HIMAT Training', 
-      thumbnail: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=300&h=400&fit=crop', 
+    {
+      id: 2,
+      title: 'HIMAT Training',
+      thumbnail: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=300&h=400&fit=crop',
       views: '890K',
       description: 'How BM Changed His Life After He Failed In...'
     },
-    { 
-      id: 3, 
-      title: 'Officer Journey - Aayush', 
-      thumbnail: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300&h=400&fit=crop', 
+    {
+      id: 3,
+      title: 'Officer Journey - Aayush',
+      thumbnail: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300&h=400&fit=crop',
       views: '1.5M',
       description: 'He Didn\'t Even Know Merchant Navy Existed...'
     },
-    { 
-      id: 4, 
-      title: 'Field Knowledge Tips', 
-      thumbnail: 'https://images.pexels.com/photos/688618/pexels-photo-688618.jpeg?w=300&h=400&fit=crop', 
+    {
+      id: 4,
+      title: 'Field Knowledge Tips',
+      thumbnail: 'https://images.pexels.com/photos/688618/pexels-photo-688618.jpeg?w=300&h=400&fit=crop',
       views: '670K',
       description: 'From ZERO Field Knowledge To TOP 8...'
     },
-    { 
-      id: 5, 
-      title: 'FLEET Experience', 
-      thumbnail: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300&h=400&fit=crop', 
+    {
+      id: 5,
+      title: 'FLEET Experience',
+      thumbnail: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300&h=400&fit=crop',
       views: '1.2M',
       description: 'He Nearly Missed FLEET Sponsorship But...'
     },
   ];
 
-  // Handle compass wheel drag
   const handleCompassDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const deltaX = info.delta.x;
     const currentRotation = compassRotation.get();
-    const newRotation = currentRotation + (deltaX * 0.5);
-    compassRotation.set(Math.max(-180, Math.min(180, newRotation)));
+    const newRotation = currentRotation + deltaX * 0.1;
+    compassRotation.set(Math.max(-90, Math.min(90, newRotation)));
   };
 
-  // Handle YouTube Shorts scroll to determine center card
   const handleShortsScroll = () => {
     if (!scrollContainerRef.current) return;
-    
+
     const container = scrollContainerRef.current;
     const containerCenter = container.scrollLeft + container.clientWidth / 2;
-    const cardWidth = 280; // Width of each card including margin
+    const cardWidth = 280;
     const newCenterIndex = Math.round(containerCenter / cardWidth);
-    
+
     if (newCenterIndex !== centerIndex && newCenterIndex >= 0 && newCenterIndex < youtubeShorts.length) {
       setCenterIndex(newCenterIndex);
     }
@@ -127,22 +120,19 @@ const Home = () => {
 
   return (
     <div className="min-h-screen pt-24">
-      {/* Hero Section with Compass-Controlled Panoramic Banner - Half Page Height */}
+      {/* Hero Section */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden bg-black pt-16">
-        {/* Panoramic Background Image */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 w-[200%] h-full bg-cover bg-center"
-          style={{ 
-            backgroundImage: 'url(https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=2000)',
+          style={{
+            backgroundImage: `url(${bg})`,
             x: backgroundX
           }}
         />
         <div className="absolute inset-0 bg-black/50" />
-        
-        {/* Hero Content */}
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
           <div className="max-w-4xl mx-auto mb-4">
-            <motion.h1 
+            <motion.h1
               className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -151,7 +141,7 @@ const Home = () => {
               Your Gateway to the
               <span className="text-primary-400 block">Merchant Navy</span>
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-base md:text-lg lg:text-xl text-white/90 mb-4"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -160,10 +150,9 @@ const Home = () => {
               Navigate your career with India's premier maritime education platform
             </motion.p>
           </div>
-          {/* <p className="text-white/70 text-xs md:text-sm mt-2">Drag the compass to explore</p> */}
         </div>
 
-        {/* Overlapping Compass Wheel - Responsive and Centered */}
+        {/* Compass Wheel */}
         <motion.div
           className="absolute left-1/2 z-20 flex justify-center items-center"
           drag
@@ -174,7 +163,7 @@ const Home = () => {
           dragElastic={0}
           style={{
             rotate: compassRotation,
-            bottom: 'calc(-20vw / 2 + 2.5rem)', // Move up by increasing the value (was 2rem)
+            bottom: 'calc(-20vw / 2 + 2.5rem)',
             left: '43%',
             transform: 'translateX(-50%)'
           }}
@@ -190,13 +179,11 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Statistics Section - Fixed Position */}
+      {/* Statistics Section */}
       <section className="py-12 md:py-16 lg:py-20 bg-black relative overflow-hidden">
-        {/* Background overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-navy-900/80 to-navy-700/80"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-2 lg:px-4">
-          <motion.div 
+        <div className="relative z-10 max-w-7xl mx-auto px-4">
+          <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -211,107 +198,128 @@ const Home = () => {
         </div>
       </section>
 
-      {/* YouTube Shorts Section */}
-      <section className="py-12 md:py-16 lg:py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.h2 
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-3"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            Stories of Officers of{' '}
-            <span className="text-primary-400">Budding Mariners</span>
-          </motion.h2>
-          <p className="text-center text-white/70 mb-8 md:mb-12">Success stories from our maritime community</p>
+     {/* YouTube Shorts Section */}
+<section className="py-12 md:py-16 lg:py-20 bg-black relative">
+  <div className="max-w-7xl mx-auto px-4">
+    <motion.h2
+      className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-3"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+    >
+      Stories of Officers of <span className="text-primary-400">Budding Mariners</span>
+    </motion.h2>
+    <p className="text-center text-white/70 mb-8 md:mb-12">Success stories from our maritime community</p>
 
-          {/* Horizontal Scrollable YouTube Shorts */}
-          <div 
-            ref={scrollContainerRef}
-            className="flex overflow-x-auto space-x-4 md:space-x-6 pb-6 scrollbar-hide snap-x snap-mandatory"
-            style={{ scrollBehavior: 'smooth' }}
+    {/* Arrows */}
+    <div className="relative">
+      <button
+        onClick={() => {
+          const newIndex = Math.max(0, centerIndex - 1);
+          setCenterIndex(newIndex);
+          const cardWidth = window.innerWidth < 768 ? 240 : 280;
+          scrollContainerRef.current?.scrollTo({
+            left: newIndex * cardWidth - scrollContainerRef.current.clientWidth / 2 + cardWidth / 2,
+            behavior: 'smooth'
+          });
+        }}
+        className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black text-white p-2 rounded-full z-10"
+        disabled={centerIndex === 0}
+      >
+        <ChevronLeft size={24} />
+      </button>
+
+      <button
+        onClick={() => {
+          const newIndex = Math.min(youtubeShorts.length - 1, centerIndex + 1);
+          setCenterIndex(newIndex);
+          const cardWidth = window.innerWidth < 768 ? 240 : 280;
+          scrollContainerRef.current?.scrollTo({
+            left: newIndex * cardWidth - scrollContainerRef.current.clientWidth / 2 + cardWidth / 2,
+            behavior: 'smooth'
+          });
+        }}
+        className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-black text-white p-2 rounded-full z-10"
+        disabled={centerIndex === youtubeShorts.length - 1}
+      >
+        <ChevronRight size={24} />
+      </button>
+
+      {/* Scrollable Cards */}
+      <div
+        ref={scrollContainerRef}
+        className="flex overflow-x-auto space-x-4 md:space-x-6 pb-6 scrollbar-hide snap-x snap-mandatory scroll-smooth px-8"
+      >
+        {youtubeShorts.map((video, index) => (
+          <motion.div
+            key={video.id}
+            className={`flex-shrink-0 w-56 md:w-64 h-80 md:h-96 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 snap-center ${
+              index === centerIndex
+                ? 'shadow-2xl ring-4 ring-primary-400 scale-105'
+                : 'grayscale hover:grayscale-75 scale-95'
+            }`}
+            onClick={() => {
+              setCenterIndex(index);
+              const cardWidth = window.innerWidth < 768 ? 240 : 280;
+              scrollContainerRef.current?.scrollTo({
+                left: index * cardWidth - scrollContainerRef.current.clientWidth / 2 + cardWidth / 2,
+                behavior: 'smooth'
+              });
+            }}
           >
-            {youtubeShorts.map((video, index) => (
-              <motion.div
-                key={video.id}
-                className={`flex-shrink-0 w-56 md:w-64 h-80 md:h-96 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 snap-center ${
-                  index === centerIndex 
-                    ? 'shadow-2xl ring-4 ring-primary-400 scale-105' 
-                    : 'grayscale hover:grayscale-75 scale-95'
-                }`}
-                onClick={() => {
-                  setCenterIndex(index);
-                  // Scroll to center the clicked card
-                  if (scrollContainerRef.current) {
-                    const cardWidth = window.innerWidth < 768 ? 240 : 280;
-                    scrollContainerRef.current.scrollTo({
-                      left: index * cardWidth - scrollContainerRef.current.clientWidth / 2 + cardWidth / 2,
-                      behavior: 'smooth'
-                    });
-                  }
-                }}
-              >
-                <div className="relative h-full bg-gray-900">
-                  <img 
-                    src={video.thumbnail} 
-                    alt={video.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
-                  
-                  {/* Play button overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-primary-400/90 rounded-full p-3 md:p-4 hover:bg-primary-400 transition-colors">
-                      <Play className="h-6 w-6 md:h-8 md:w-8 text-black fill-current" />
-                    </div>
-                  </div>
-                  
-                  {/* Video info */}
-                  <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                    <h3 className="text-white font-bold text-base md:text-lg mb-1 line-clamp-1">{video.title}</h3>
-                    <p className="text-white/80 text-xs md:text-sm mb-2 line-clamp-2">{video.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-primary-400 text-xs md:text-sm font-medium">{video.views} views</span>
-                      <div className="flex items-center space-x-1">
-                        <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                        <span className="text-white/60 text-xs">SHORTS</span>
-                      </div>
-                    </div>
+            <div className="relative h-full bg-gray-900">
+              <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-primary-400/90 rounded-full p-3 md:p-4 hover:bg-primary-400 transition-colors">
+                  <Play className="h-6 w-6 md:h-8 md:w-8 text-black fill-current" />
+                </div>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                <h3 className="text-white font-bold text-base md:text-lg mb-1 line-clamp-1">{video.title}</h3>
+                <p className="text-white/80 text-xs md:text-sm mb-2 line-clamp-2">{video.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-primary-400 text-xs md:text-sm font-medium">{video.views} views</span>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                    <span className="text-white/60 text-xs">SHORTS</span>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
 
-          {/* Scroll indicators */}
-          <div className="flex justify-center mt-4 md:mt-6 space-x-2">
-            {youtubeShorts.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setCenterIndex(index);
-                  if (scrollContainerRef.current) {
-                    const cardWidth = window.innerWidth < 768 ? 240 : 280;
-                    scrollContainerRef.current.scrollTo({
-                      left: index * cardWidth - scrollContainerRef.current.clientWidth / 2 + cardWidth / 2,
-                      behavior: 'smooth'
-                    });
-                  }
-                }}
-                className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
-                  index === centerIndex ? 'bg-primary-400 scale-125' : 'bg-white/30 hover:bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+    {/* Dot Indicators */}
+    <div className="flex justify-center mt-4 md:mt-6 space-x-2">
+      {youtubeShorts.map((_, index) => (
+        <button
+          key={index}
+          onClick={() => {
+            setCenterIndex(index);
+            const cardWidth = window.innerWidth < 768 ? 240 : 280;
+            scrollContainerRef.current?.scrollTo({
+              left: index * cardWidth - scrollContainerRef.current.clientWidth / 2 + cardWidth / 2,
+              behavior: 'smooth'
+            });
+          }}
+          className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
+            index === centerIndex ? 'bg-primary-400 scale-125' : 'bg-white/30 hover:bg-white/50'
+          }`}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
 
       {/* CTA Section */}
       <section className="py-12 md:py-16 lg:py-20 bg-primary-400">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <motion.h2 
+          <motion.h2
             className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-4 md:mb-6"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -320,7 +328,7 @@ const Home = () => {
           >
             Ready to Start Your Maritime Journey?
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-lg md:text-xl text-black/80 mb-6 md:mb-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -329,7 +337,7 @@ const Home = () => {
           >
             Join thousands of successful maritime professionals who started their journey with us
           </motion.p>
-          <motion.div 
+          <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
