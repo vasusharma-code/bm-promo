@@ -1,0 +1,223 @@
+import React, { useEffect, useState } from 'react';
+import { FileText, LogOut, Download } from 'lucide-react';
+
+const ADMIN_ID = 'admin@bmpromo.com';
+const ADMIN_PASS = 'bmpromoadmin$';
+
+type Lead = {
+  _id: string;
+  name: string;
+  phone: string;
+  called: string;
+  interested: string;
+};
+
+const calledOptions = ['Not Yet', 'Called'];
+const interestedOptions = ['Not Yet', 'Interested', 'Not Interested'];
+
+const Admin: React.FC = () => {
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [auth, setAuth] = useState(false);
+  const [login, setLogin] = useState({ id: '', pass: '' });
+  const [loginError, setLoginError] = useState('');
+
+  // Fetch leads from backend
+  const fetchLeads = async () => {
+    setLoading(true);
+    try {
+      // Use the correct API endpoint and ensure proxy is set in client/package.json
+      // If using Vite, the proxy only works for /api/*, not for /api/store-user-info directly.
+      // Solution: Use /api/admin/leads (which already exists in your backend)
+      const res = await fetch('/api/admin/leads', {
+        headers: { Accept: 'application/json' }
+      });
+      if (!res.ok) throw new Error('Network response was not ok');
+      const data = await res.json();
+      setLeads((data.leads || []).map((u: any) => ({
+        _id: u._id || u.id || u.phone,
+        name: u.name,
+        phone: u.phone,
+        called: u.called || 'Not Yet',
+        interested: u.interested || 'Not Yet'
+      })));
+    } catch (err) {
+      setLeads([]);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (auth) fetchLeads();
+  }, [auth]);
+
+  // Update lead status
+  const updateLead = async (id: string, field: 'called' | 'interested', value: string) => {
+    await fetch(`/api/admin/leads/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ [field]: value }),
+    });
+    setLeads(leads =>
+      leads.map(lead => (lead._id === id ? { ...lead, [field]: value } : lead))
+    );
+  };
+
+  // Export to Excel
+  const exportToExcel = () => {
+    const header = ['Name', 'Phone', 'Called', 'Interested'];
+    const rows = leads.map(l => [l.name, l.phone, l.called, l.interested]);
+    const csvContent =
+      header.join(',') +
+      '\n' +
+      rows.map(row => row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'leads.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
+  // Login handler
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (
+      login.id.trim().toLowerCase() === ADMIN_ID.toLowerCase() &&
+      login.pass === ADMIN_PASS
+    ) {
+      setAuth(true);
+      setLoginError('');
+    } else {
+      setLoginError('Invalid credentials');
+    }
+  };
+
+  if (!auth) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center ">
+        <form
+          onSubmit={handleLogin}
+          className="bg-white rounded-xl shadow-lg p-8 w-full max-w-xs flex flex-col items-center"
+        >
+          <FileText className="w-8 h-8 text-yellow-400 mb-2" />
+          <h2 className="font-bold text-xl text-black mb-4">Admin Login</h2>
+          <input
+            type="text"
+            placeholder="Admin Email"
+            value={login.id}
+            onChange={e => setLogin(l => ({ ...l, id: e.target.value }))}
+            className="w-full mb-3 px-4 py-2 rounded-lg border border-gray-300 text-black"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={login.pass}
+            onChange={e => setLogin(l => ({ ...l, pass: e.target.value }))}
+            className="w-full mb-3 px-4 py-2 rounded-lg border border-gray-300 text-black"
+            required
+          />
+          {loginError && (
+            <div className="mb-3 w-full text-red-600 text-sm text-center">{loginError}</div>
+          )}
+          <button
+            type="submit"
+            className="w-full bg-yellow-400 text-black font-bold py-2 rounded-lg hover:bg-yellow-500 transition"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-black text-white flex flex-col">
+      <header className="flex flex-col md:flex-row md:items-center md:justify-between px-6 py-4 border-b border-yellow-400 gap-4 md:gap-0">
+        <h1 className="text-2xl font-bold text-yellow-400">Admin Panel - Leads</h1>
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={exportToExcel}
+            className="flex items-center gap-2 bg-yellow-400 text-black px-4 py-2 rounded font-semibold hover:bg-yellow-500 transition"
+            style={{ minWidth: 160 }}
+          >
+            <Download className="w-5 h-5" /> Export to Excel
+          </button>
+          <button
+            onClick={() => setAuth(false)}
+            className="flex items-center gap-2 bg-white/10 text-yellow-400 px-4 py-2 rounded font-semibold hover:bg-yellow-400 hover:text-black transition"
+          >
+            <LogOut className="w-5 h-5" /> Logout
+          </button>
+        </div>
+      </header>
+      <main className="flex-1 p-6">
+        {loading ? (
+          <div className="text-center text-yellow-400">Loading leads...</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-[#18181b] rounded-xl">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 text-left text-yellow-400">Name</th>
+                  <th className="px-4 py-2 text-left text-yellow-400">Phone</th>
+                  <th className="px-4 py-2 text-left text-yellow-400">Called</th>
+                  <th className="px-4 py-2 text-left text-yellow-400">Interested</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leads.map((lead) => (
+                  <tr key={lead._id} className="border-b border-white/10">
+                    <td className="px-4 py-2">{lead.name}</td>
+                    <td className="px-4 py-2">{lead.phone}</td>
+                    <td className="px-4 py-2">
+                      <select
+                        value={lead.called || 'Not Yet'}
+                        onChange={e => updateLead(lead._id, 'called', e.target.value)}
+                        className="px-2 py-1 rounded bg-black text-yellow-400 border border-yellow-400"
+                      >
+                        {calledOptions.map(opt => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className="px-4 py-2">
+                      <select
+                        value={lead.interested || 'Not Yet'}
+                        onChange={e => updateLead(lead._id, 'interested', e.target.value)}
+                        className="px-2 py-1 rounded bg-black text-yellow-400 border border-yellow-400"
+                      >
+                        {interestedOptions.map(opt => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {leads.length === 0 && (
+              <div className="text-center text-white/60 mt-8">No leads found.</div>
+            )}
+            {/* Export to Excel button at bottom */}
+            <div className="flex justify-end mt-6">
+              <button
+                onClick={exportToExcel}
+                className="flex items-center gap-2 bg-yellow-400 text-black px-4 py-2 rounded font-semibold hover:bg-yellow-500 transition"
+                style={{ minWidth: 160 }}
+              >
+                <Download className="w-5 h-5" /> Export to Excel
+              </button>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+};
+
+export default Admin;
