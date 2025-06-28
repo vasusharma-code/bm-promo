@@ -15,6 +15,8 @@ type Lead = {
 const calledOptions = ['Not Yet', 'Called'];
 const interestedOptions = ['Not Yet', 'Interested', 'Not Interested'];
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://bm-promo.onrender.com';
+
 const Admin: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,10 +28,7 @@ const Admin: React.FC = () => {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      // Use the correct API endpoint and ensure proxy is set in client/package.json
-      // If using Vite, the proxy only works for /api/*, not for /api/store-user-info directly.
-      // Solution: Use /api/admin/leads (which already exists in your backend)
-      const res = await fetch('/api/admin/leads', {
+      const res = await fetch(`${API_BASE}/api/admin/leads`, {
         headers: { Accept: 'application/json' }
       });
       if (!res.ok) throw new Error('Network response was not ok');
@@ -53,7 +52,7 @@ const Admin: React.FC = () => {
 
   // Update lead status
   const updateLead = async (id: string, field: 'called' | 'interested', value: string) => {
-    await fetch(`/api/admin/leads/${id}`, {
+    await fetch(`${API_BASE}/api/admin/leads/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ [field]: value }),
