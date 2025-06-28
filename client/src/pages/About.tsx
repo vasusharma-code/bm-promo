@@ -5,17 +5,17 @@ const founders = [
 		name: 'Ojas Lalla',
 		title: 'CEO & Founder',
 		image: '/assets/ojas.png',
-		bio: `Ojas Lalla is the visionary behind Budding Mariners. With a passion for maritime education and years of experience at sea, he has helped thousands of students achieve their dreams of joining the Merchant Navy. His leadership and dedication have set new standards in the industry.
+		bio: `Ojas Lalla, born in Jodhpur and shaped by his formative years in Jaipur, is a man of diverse passions and pursuits. His early love for cricket saw him competing at the under-14 nationals, but his true calling lay in the seas. Driven by an unwavering aspiration to join the merchant navy from class 11, Ojas excelled through numerous sponsorship exams and interviews with esteemed companies such as Anglo Eastern, Torm Tankers, and Fleet Management. Despite clearing the NDA written exams, his focus remained steadfast on maritime adventures. He honed his skills at Tolani Maritime Institute, eventually selecting Torm Tankers for his DNS
 
-Ojas believes in hands-on mentorship and has personally guided hundreds of cadets through the selection process. His mission is to make quality maritime training accessible to all aspiring mariners.`,
+Partnering with Shahnawaz, Ojas founded Budding Mariners, and over the past three years, he has successfully trained and sponsored over 1,500+ seafarers for various shipping companies, leaving an indelible mark on the maritime industry.`,
 	},
 	{
 		name: 'Shahnawaz',
 		title: 'COO & Co-Founder',
 		image: '/assets/shahnawaz.png',
-		bio: `Shahnawaz brings operational excellence to Budding Mariners. With a strong background in marine operations and training, he ensures every student receives the best possible support and guidance.
+		bio: `Shahnawaz, a determined young man from the small village of Selampur in Uttar Pradesh, grew up with his two brothers and sister in a modest home. Initially studying in a Hindi medium school, he harbored dreams of joining the NDA. After clearing the written exams but taking a one-year break, his aspirations shifted towards the merchant navy. Despite facing several setbacks, Shahnawaz's relentless hard work and perseverance paid off.
 
-He is known for his approachable nature and commitment to student success. Shahnawaz oversees the day-to-day functioning of the academy and works closely with faculty and students to maintain high standards.`,
+He successfully cleared the sponsorship with WSM and enrolled in Tolani Maritime Institute, India's premier college for maritime studies. His dedication and resilience led him to realize his dreams, and alongside his co-founder Ojas, he established Budding Mariners, a venture dedicated to shaping the futures of aspiring seafarers.`,
 	},
 ];
 
@@ -37,15 +37,10 @@ const About = () => (
 			<div className="flex-1">
 				<h2 className="text-2xl font-bold mb-4 text-white">Our Story</h2>
 				<p className="text-white/80 mb-4">
-					In 2019, Ojas and Shahnawaz founded Budding Mariners to help aspiring
-					seafarers achieve their dreams. What started as a small initiative has
-					now grown into a leading maritime academy, known for its commitment to
-					quality training and student success.
+					Founded in 2021 by Ojas Lalla and Shahnawaz, Budding Mariners has rapidly ascended to become India’s leading academy for aspiring merchant navy professionals. Our academy is recognized for its unwavering commitment to transparency, excellence, and the genuine guidance we provide to our students.
 				</p>
 				<p className="text-white/80">
-					Our mission is to bridge the gap between ambition and achievement by
-					providing world-class mentorship, practical training, and unwavering
-					support to every student.
+					With over 1,500+ successful selections into prestigious maritime universities across the country, Budding Mariners stands as a beacon of trust in an industry often plagued by misinformation and fraud. We believe in empowering the next generation of seafarers by equipping them with the knowledge and tools they need to navigate their careers with confidence.
 				</p>
 			</div>
 			<div className="flex-1 flex justify-center">
@@ -62,17 +57,13 @@ const About = () => (
 			<div className="flex-1 bg-yellow-400 text-black rounded-xl p-8 shadow-lg">
 				<h3 className="text-2xl font-bold mb-2">Mission</h3>
 				<p>
-					To empower aspiring mariners with the knowledge, skills, and confidence
-					to excel in the Merchant Navy. We are dedicated to providing accessible,
-					high-quality training and personal mentorship for every student.
+					Our mission at Budding Mariners is to cultivate a new generation of maritime professionals who are well-informed, well-prepared, and ready to excel in the global maritime industry. We are dedicated to providing our students with accurate, reliable, and actionable guidance that helps them make informed decisions about their careers, ensuring their success in a competitive and ever-evolving field.
 				</p>
 			</div>
 			<div className="flex-1 bg-yellow-400 text-black rounded-xl p-8 shadow-lg">
 				<h3 className="text-2xl font-bold mb-2">Vision</h3>
 				<p>
-					To be India's most trusted maritime academy, recognized for our
-					results, integrity, and student-first approach. We envision a future
-					where every passionate seafarer has the opportunity to succeed.
+					We envision a future where Budding Mariners is synonymous with excellence in maritime education and training. Our goal is to be the premier destination for aspiring merchant navy professionals, not just in India, but globally. We aim to set new standards in maritime education, fostering a community of seafarers who are not only skilled and knowledgeable but also ethical and committed to the values of transparency and integrity.
 				</p>
 			</div>
 		</section>
@@ -86,9 +77,8 @@ const About = () => (
 				{founders.map((founder, idx) => (
 					<div
 						key={founder.name}
-						className={`flex flex-col md:flex-row items-center gap-10 ${
-							idx % 2 === 1 ? 'md:flex-row-reverse' : ''
-						}`}
+						className={`flex flex-col md:flex-row items-center gap-10 ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''
+							}`}
 					>
 						<div className="flex-1">
 							<h3 className="text-2xl font-bold mb-2 text-white">

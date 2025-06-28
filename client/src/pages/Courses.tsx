@@ -3,6 +3,10 @@ import { motion } from 'framer-motion';
 import { Clock, Users, Star, BookOpen, CheckCircle, User, Video, Award } from 'lucide-react';
 import image1 from '../../assets/course1.png';
 import image2 from '../../assets/course2.png';
+import image3 from '../../assets/DNS.png';
+import image4 from '../../assets/sctw.png';
+import image5 from '../../assets/Marine engg.png';
+import image6 from '../../assets/roadmap.png';
 
 const Courses = () => {
   const [activeTab, setActiveTab] = useState('all');
@@ -51,7 +55,7 @@ const Courses = () => {
       duration: '2 months',
       students: '150+',
       rating: 4.7,
-      image: 'https://images.pexels.com/photos/688618/pexels-photo-688618.jpeg?w=400',
+      image: image6,
       features: ['Company Sponsorship', 'Mock Interviews', 'Documentation'],
       badge: 'yellow'
     },
@@ -64,7 +68,7 @@ const Courses = () => {
       duration: '2 months',
       students: '300+',
       rating: 4.9,
-      image: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=400',
+      image: image3,
       features: ['IMU-CET', 'Interview Prep', 'Medical Guidance'],
       badge: 'purple'
     },
@@ -77,7 +81,7 @@ const Courses = () => {
       duration: '3 months',
       students: '120+',
       rating: 4.6,
-      image: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=400',
+      image: image5,
       features: ['Workshop Training', 'Technical Drawing', 'Safety Protocols'],
       badge: 'blue'
     },
@@ -90,7 +94,7 @@ const Courses = () => {
       duration: '1 month',
       students: '100+',
       rating: 4.5,
-      image: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=400',
+      image: image4,
       features: ['Fire Fighting', 'First Aid', 'Personal Survival'],
       badge: 'red'
     }
@@ -168,7 +172,7 @@ const Courses = () => {
                     <img 
                       src={course.image} 
                       alt={course.title}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="absolute top-3 left-3">
