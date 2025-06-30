@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Calculator, DollarSign, CreditCard, BarChart2 } from 'lucide-react';
 
@@ -142,16 +142,35 @@ const Calculators = () => {
 	const [userPhone, setUserPhone] = useState('');
 	const [userError, setUserError] = useState('');
 
-	// Wrap calculator handlers to require user info first
+	const [usedCalculators, setUsedCalculators] = useState<{ [key: string]: boolean }>({});
+	const [scrollOnSelect, setScrollOnSelect] = useState(false);
+
+	// Scroll to calculator form only when user clicks "Use Calculator"
+	useEffect(() => {
+		if (scrollOnSelect && selected) {
+			const formSection = document.getElementById('calculator-form-section');
+			if (formSection) {
+				setTimeout(() => {
+					formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}, 100);
+			}
+			setScrollOnSelect(false);
+		}
+	// eslint-disable-next-line
+	}, [selected, scrollOnSelect]);
+
+	// Wrap calculator handlers to require user info first and limit use to once per calculator
 	const requireUserInfo = (calcId: string, handler: (e: React.FormEvent) => void) => {
 		return (e: React.FormEvent) => {
 			e.preventDefault();
+			if (usedCalculators[calcId]) return;
 			if (!userName || !userPhone) {
 				setPendingCalculator(calcId);
 				setShowUserModal(true);
 				return;
 			}
 			handler(e);
+			setUsedCalculators(prev => ({ ...prev, [calcId]: true }));
 		};
 	};
 
@@ -348,7 +367,10 @@ const Calculators = () => {
 							selected === calc.id ? 'ring-2 ring-yellow-400' : ''
 						}`}
 						style={{ cursor: 'pointer' }}
-						onClick={() => setSelected(calc.id)}
+						onClick={() => {
+							setSelected(calc.id);
+							setScrollOnSelect(true);
+						}}
 					>
 						<div className="mb-3">{calc.icon}</div>
 						<div className="font-bold text-lg mb-2 text-white">{calc.title}</div>
@@ -371,7 +393,7 @@ const Calculators = () => {
 			</section>
 
 			{/* Calculator Forms */}
-			<section className="flex justify-center mb-12 px-2">
+			<section id="calculator-form-section" className="flex justify-center mb-12 px-2">
 				{selected === 'imu-rank' && (
 					<div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-lg flex flex-col items-center">
 						<div className="flex items-center gap-2 mb-2">
@@ -417,8 +439,9 @@ const Calculators = () => {
 							<button
 								type="submit"
 								className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition"
+								disabled={usedCalculators['imu-rank']}
 							>
-								Calculate Rank
+								{usedCalculators['imu-rank'] ? 'Used' : 'Calculate Rank'}
 							</button>
 						</form>
 						{imuRankResult && (
@@ -479,8 +502,9 @@ const Calculators = () => {
 							<button
 								type="submit"
 								className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition"
+								disabled={usedCalculators['college-predictor']}
 							>
-								Predict Colleges
+								{usedCalculators['college-predictor'] ? 'Used' : 'Predict Colleges'}
 							</button>
 						</form>
 						{predictorResult.length > 0 && (
@@ -564,8 +588,12 @@ const Calculators = () => {
 									</div>
 								</>
 							)}
-							<button type="submit" className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition mt-2">
-								Check Eligibility
+							<button
+								type="submit"
+								className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition mt-2"
+								disabled={usedCalculators['course-eligibility']}
+							>
+								{usedCalculators['course-eligibility'] ? 'Used' : 'Check Eligibility'}
 							</button>
 						</form>
 						{courseEligibility && (
