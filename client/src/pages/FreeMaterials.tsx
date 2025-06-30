@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Download, FileText } from 'lucide-react';
 
 const materials = [
@@ -59,6 +60,17 @@ const FreeMaterials = () => {
 
 	return (
 		<div className="min-h-screen bg-black text-white flex flex-col">
+			<Helmet>
+				<title>Free Maritime Study Materials & PDFs | Budding Mariners</title>
+				<meta name="description" content="Download free study materials, PDFs, and resources for Merchant Navy and maritime education. Curated by Budding Mariners for aspiring seafarers." />
+				<meta name="keywords" content="Free Maritime Materials, Merchant Navy PDFs, Marine Study Material, Download Marine Resources, Budding Mariners Free" />
+				<meta property="og:title" content="Free Maritime Study Materials & PDFs | Budding Mariners" />
+				<meta property="og:description" content="Download free study materials and PDFs for Merchant Navy and marine education from Budding Mariners." />
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://buddingmariners.com/free-materials" />
+				<meta property="og:image" content="/assets/yellow on orange logomark.png" />
+			</Helmet>
+
 			{/* Header */}
 			<section className="pt-28 pb-6 text-center">
 				<h1 className="text-3xl md:text-4xl font-extrabold mb-2">

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { GraduationCap, FileText, CheckCircle } from 'lucide-react';
 
 const courseCards = [
@@ -95,6 +96,17 @@ const CollegeForms = () => {
 
 	return (
 		<div className="min-h-screen bg-black text-white flex flex-col">
+			<Helmet>
+				<title>Apply for Merchant Navy Courses & Sponsorships | Budding Mariners</title>
+				<meta name="description" content="Apply online for top Merchant Navy courses and company sponsorships. Fast, transparent, and expert-guided application process at Budding Mariners." />
+				<meta name="keywords" content="Merchant Navy Application, Marine Sponsorship, Apply Online, Maritime Courses, Budding Mariners Admission" />
+				<meta property="og:title" content="Apply for Merchant Navy Courses & Sponsorships | Budding Mariners" />
+				<meta property="og:description" content="Apply for maritime courses and company sponsorships with Budding Mariners. Fast, transparent, and expert-guided process." />
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://buddingmariners.com/college-forms" />
+				<meta property="og:image" content="/assets/yellow on orange logomark.png" />
+			</Helmet>
+
 			{/* Header */}
 			<section className="pt-28 pb-4 text-center">
 				<h1 className="text-3xl md:text-4xl font-extrabold mb-1">Admissions & Applications</h1>

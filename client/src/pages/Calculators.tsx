@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { Calculator, DollarSign, CreditCard, BarChart2 } from 'lucide-react';
 
 const calculators = [
@@ -274,6 +275,17 @@ const Calculators = () => {
 
 	return (
 		<div className="min-h-screen bg-black text-white flex flex-col">
+			<Helmet>
+				<title>Maritime Calculators | IMU CET Rank, College Predictor, Eligibility | Budding Mariners</title>
+				<meta name="description" content="Use our free maritime calculators: IMU CET rank estimator, college predictor, and eligibility checker. Plan your Merchant Navy career with Budding Mariners." />
+				<meta name="keywords" content="IMU CET Calculator, Maritime Calculators, College Predictor, Eligibility Checker, Merchant Navy Tools, Budding Mariners" />
+				<meta property="og:title" content="Maritime Calculators | IMU CET Rank, College Predictor, Eligibility | Budding Mariners" />
+				<meta property="og:description" content="Free tools for Merchant Navy aspirants: IMU CET rank calculator, college predictor, and eligibility checker by Budding Mariners." />
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://buddingmariners.com/calculators" />
+				<meta property="og:image" content="/assets/yellow on orange logomark.png" />
+			</Helmet>
+
 			{/* User Info Modal */}
 			{showUserModal && (
 				<div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">

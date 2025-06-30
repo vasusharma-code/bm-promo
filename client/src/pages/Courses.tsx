@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Clock, Users, Star, BookOpen, CheckCircle, User, Award } from 'lucide-react';
 import image1 from '../../assets/course1.png';
@@ -126,6 +127,16 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-black">
+      <Helmet>
+        <title>Merchant Navy Courses | Best Maritime Training in India | Budding Mariners</title>
+        <meta name="description" content="Explore the best Merchant Navy courses in India at Budding Mariners. Offline & online batches, expert faculty, 100% placement support, and industry-oriented training for your maritime career." />
+        <meta name="keywords" content="Merchant Navy Courses, Maritime Training, Marine Courses India, IMU CET, GP Rating, DNS, STCW, Marine Engineering, Best Marine Academy" />
+        <meta property="og:title" content="Merchant Navy Courses | Best Maritime Training in India | Budding Mariners" />
+        <meta property="og:description" content="Join Budding Mariners for top-rated Merchant Navy courses, mentorship, and placement support. India's best marine education platform." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://buddingmariners.com/courses" />
+        <meta property="og:image" content="/assets/yellow on orange logomark.png" />
+      </Helmet>
       {/* Header */}
       <section className="pt-28 pb-2 text-center">
         <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white">BM Offline Academy</h1>

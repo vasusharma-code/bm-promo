@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { Calendar, User, Clock, Tag } from 'lucide-react';
 import hero from '../../assets/Main.png';
 import top10 from '../../assets/top 10.png';
@@ -70,6 +71,17 @@ const Blog = () => {
 
 	return (
 		<div className="min-h-screen bg-black text-white flex flex-col">
+			<Helmet>
+				<title>Maritime Blog & Insights | Latest Merchant Navy News | Budding Mariners</title>
+				<meta name="description" content="Read the latest blog articles, guides, and news on maritime education, Merchant Navy careers, sponsorships, and industry trends. Stay updated with Budding Mariners." />
+				<meta name="keywords" content="Maritime Blog, Merchant Navy News, Marine Education, Shipping Industry, Marine Careers, Budding Mariners Blog" />
+				<meta property="og:title" content="Maritime Blog & Insights | Latest Merchant Navy News | Budding Mariners" />
+				<meta property="og:description" content="Stay updated with the latest maritime trends, guides, and insights from Budding Mariners." />
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://buddingmariners.com/blog" />
+				<meta property="og:image" content="/assets/yellow on orange logomark.png" />
+			</Helmet>
+
 			{/* Header */}
 			<section className="pt-28 pb-2 text-center">
 				<h1 className="text-3xl md:text-4xl font-extrabold mb-1">Maritime Insights</h1>

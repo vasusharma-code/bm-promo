@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import compass from '../../assets/compass.png';
 import bg from '../../assets/BG Header.png';
@@ -121,6 +122,16 @@ const Home = () => {
 
   return (
     <div className="min-h-screen pt-24">
+      <Helmet>
+        <title>Budding Mariners | India's Best Maritime Education Platform</title>
+        <meta name="description" content="Budding Mariners is India's leading maritime education platform. Get expert mentorship, top courses, and real success stories for your Merchant Navy career. Join the best marine academy for IMU CET, sponsorship, and placement support." />
+        <meta name="keywords" content="Merchant Navy, Maritime Education, IMU CET, Marine Courses, Sponsorship, Marine Academy, Maritime Training, Budding Mariners, Best Marine Institute India" />
+        <meta property="og:title" content="Budding Mariners | India's Best Maritime Education Platform" />
+        <meta property="og:description" content="Join Budding Mariners for the best Merchant Navy courses, mentorship, and placement support. India's most trusted marine education platform." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://buddingmariners.com/" />
+        <meta property="og:image" content="/assets/yellow on orange logomark.png" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden bg-black pt-16">
         <motion.div

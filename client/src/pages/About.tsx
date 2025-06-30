@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import ojas from '../../assets/ojas.png';
 import shahwanaz from '../../assets/shahnawaz.png';
 import ourstory from '../../assets/our story.jpg';
@@ -24,6 +25,17 @@ He successfully cleared the sponsorship with WSM and enrolled in Tolani Maritime
 
 const About = () => (
 	<div className="min-h-screen bg-black text-white">
+		<Helmet>
+			<title>About Budding Mariners | India's Trusted Maritime Academy</title>
+			<meta name="description" content="Learn about Budding Mariners, India's most trusted maritime education platform. Meet our founders, discover our mission, vision, and commitment to transparency and excellence in marine training." />
+			<meta name="keywords" content="About Budding Mariners, Maritime Academy, Marine Education, Merchant Navy, Marine Founders, Marine Training, Best Marine Institute India" />
+			<meta property="og:title" content="About Budding Mariners | India's Trusted Maritime Academy" />
+			<meta property="og:description" content="Discover the story, mission, and vision behind Budding Mariners, India's leading marine education platform." />
+			<meta property="og:type" content="website" />
+			<meta property="og:url" content="https://buddingmariners.com/about" />
+			<meta property="og:image" content="/assets/yellow on orange logomark.png" />
+		</Helmet>
+
 		{/* About Us Header */}
 		<section className="pt-28 pb-2 text-center">
 			<h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white">
