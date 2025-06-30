@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, User, Clock, Tag } from 'lucide-react';
 import hero from '../../assets/Main.png';
 import top10 from '../../assets/top 10.png';
-
-const blogTags = [
-	{ id: 'all', label: 'All' },
-	{ id: 'education', label: 'Education' },
-	{ id: 'admission', label: 'Admission' },
-	{ id: 'career', label: 'Career' },
-	{ id: 'sponsorship', label: 'Sponsorship' },
-	{ id: 'training', label: 'Training' },
-];
+import money from '../../assets/money.png';
+import confused from '../../assets/confused.png';
+import dept from '../../assets/BM Thumbnail (63).png';
 
 const blogPosts = [
 	{
@@ -21,7 +15,6 @@ const blogPosts = [
 		date: '2024-01-15',
 		readTime: '8 min read',
 		image: hero, // Placeholder for featured
-		tags: ['admission', 'education'],
 		featured: true,
 	},
 	{
@@ -31,8 +24,7 @@ const blogPosts = [
 		author: 'BM Team',
 		date: '2024-01-10',
 		readTime: '5 min read',
-		image: '',
-		tags: ['career', 'sponsorship'],
+		image: money,
 	},
 	{
 		id: 3,
@@ -41,8 +33,7 @@ const blogPosts = [
 		author: 'BM Team',
 		date: '2024-01-08',
 		readTime: '6 min read',
-		image: '',
-		tags: ['career', 'training'],
+		image: top10,
 	},
 	{
 		id: 4,
@@ -51,8 +42,7 @@ const blogPosts = [
 		author: 'BM Editorial',
 		date: '2024-01-05',
 		readTime: '7 min read',
-		image: top10,
-		tags: ['training', 'education'],
+		image: confused,
 	},
 	{
 		id: 5,
@@ -61,29 +51,21 @@ const blogPosts = [
 		author: 'BM Team',
 		date: '2024-01-03',
 		readTime: '4 min read',
-		image: '',
-		tags: ['training'],
-	},
-	{
-		id: 6,
-		title: ' 🌊 Life at Sea – The Real Experience! ',
-		excerpt: '⚓ Ever wondered what life is really like on a ship? From daily routines to breathtaking sunsets, food, work, and fun onboard – this vlog gives you a full glimpse into the real-life experience of seafarers 🌅🚢. Don’t miss the highs and challenges of life at sea!',
-		author: 'BM Editorial',
-		date: '2024-01-01',
-		readTime: '5 min read',
-		image: '',
-		tags: ['education', 'admission'],
-	},
+		image: dept,
+	}
+	// {
+	// 	id: 6,
+	// 	title: ' 🌊 Life at Sea – The Real Experience! ',
+	// 	excerpt: '⚓ Ever wondered what life is really like on a ship? From daily routines to breathtaking sunsets, food, work, and fun onboard – this vlog gives you a full glimpse into the real-life experience of seafarers 🌅🚢. Don’t miss the highs and challenges of life at sea!',
+	// 	author: 'BM Editorial',
+	// 	date: '2024-01-01',
+	// 	readTime: '5 min read',
+	// 	image: '',
+	// 	tags: ['education', 'admission'],
+	// },
 ];
 
 const Blog = () => {
-	const [activeFilter, setActiveFilter] = useState('all');
-
-	const filteredPosts =
-		activeFilter === 'all'
-			? blogPosts
-			: blogPosts.filter((post) => post.tags.includes(activeFilter));
-
 	const featuredPost = blogPosts.find((post) => post.featured);
 
 	return (
@@ -94,23 +76,6 @@ const Blog = () => {
 				<p className="text-yellow-400 text-sm mb-2">
 					Stay updated with the latest maritime trends, guides, and insights from the maritime industry
 				</p>
-			</section>
-
-			{/* Blog Filters */}
-			<section className="flex justify-center gap-2 mb-8">
-				{blogTags.map((tag) => (
-					<button
-						key={tag.id}
-						onClick={() => setActiveFilter(tag.id)}
-						className={`px-4 py-2 rounded-full font-semibold text-xs md:text-sm transition ${
-							activeFilter === tag.id
-								? 'bg-yellow-400 text-black'
-								: 'bg-white/10 text-white hover:bg-yellow-400 hover:text-black'
-						}`}
-					>
-						{tag.label}
-					</button>
-				))}
 			</section>
 
 			{/* Featured Article */}
@@ -148,7 +113,7 @@ const Blog = () => {
 
 			{/* Blog Grid */}
 			<section className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-8 px-4 mb-16">
-				{filteredPosts
+				{blogPosts
 					.filter((post) => !post.featured)
 					.map((post) => (
 						<div key={post.id} className="bg-white rounded-xl shadow flex flex-col overflow-hidden">
@@ -165,9 +130,6 @@ const Blog = () => {
 							</div>
 							<div className="p-4 flex flex-col flex-1">
 								<div className="flex items-center gap-2 mb-2">
-									<span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold">
-										{post.tags[0]?.charAt(0).toUpperCase() + post.tags[0]?.slice(1)}
-									</span>
 									<span className="text-gray-400 text-xs">{new Date(post.date).toLocaleDateString()}</span>
 								</div>
 								<h3 className="text-base font-bold text-black mb-1">{post.title}</h3>

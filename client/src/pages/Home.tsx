@@ -52,43 +52,44 @@ const Home = () => {
     );
   };
 
+  // Only provide the link for each short
   const youtubeShorts = [
-    {
-      id: 1,
-      title: 'Success Story - Abhijit',
-      thumbnail: 'https://images.pexels.com/photos/1434819/pexels-photo-1434819.jpeg?w=300&h=400&fit=crop',
-      views: '2.1M',
-      description: 'If He Can Clear A Sponsorship With Pre...'
-    },
-    {
-      id: 2,
-      title: 'HIMAT Training',
-      thumbnail: 'https://images.pexels.com/photos/163236/luxury-yacht-boat-speed-water-163236.jpeg?w=300&h=400&fit=crop',
-      views: '890K',
-      description: 'How BM Changed His Life After He Failed In...'
-    },
-    {
-      id: 3,
-      title: 'Officer Journey - Aayush',
-      thumbnail: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300&h=400&fit=crop',
-      views: '1.5M',
-      description: 'He Didn\'t Even Know Merchant Navy Existed...'
-    },
-    {
-      id: 4,
-      title: 'Field Knowledge Tips',
-      thumbnail: 'https://images.pexels.com/photos/688618/pexels-photo-688618.jpeg?w=300&h=400&fit=crop',
-      views: '670K',
-      description: 'From ZERO Field Knowledge To TOP 8...'
-    },
-    {
-      id: 5,
-      title: 'FLEET Experience',
-      thumbnail: 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?w=300&h=400&fit=crop',
-      views: '1.2M',
-      description: 'He Nearly Missed FLEET Sponsorship But...'
-    },
+    { id: 1, link: 'https://youtube.com/shorts/9IcZRS2AfK4?si=UnBLtcwnTwLYA6m3'},
+    { id: 2, link: 'https://youtube.com/shorts/5BebPB4MAmw?si=-AcctHKfFla_WgYx' },
+    { id: 3, link: 'https://youtube.com/shorts/_sVoBYAEkSg?si=NB16kTk-B6Pljcdd' },
+    { id: 4, link: 'https://youtube.com/shorts/372-IZDZWLc?si=28_VoLWrtBsSn7P_' },
+    { id: 5, link: 'https://youtube.com/shorts/rfF9kR2bGq0?si=76OwbiROcSpzZyFe' },
   ];
+
+  // Extract video ID from YouTube Shorts link
+  const getShortId = (url: string) => {
+    const match = url.match(/shorts\/([a-zA-Z0-9_-]{11})/);
+    return match ? match[1] : '';
+  };
+
+  // Get thumbnail from video ID
+  const getThumbnail = (url: string) => {
+    const id = getShortId(url);
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : '';
+  };
+
+  // Fetch video title using YouTube oEmbed API
+  const useYoutubeTitle = (url: string) => {
+    const [title, setTitle] = useState('Loading...');
+    useEffect(() => {
+      let cancelled = false;
+      fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`)
+        .then(res => res.ok ? res.json() : Promise.reject())
+        .then(data => {
+          if (!cancelled) setTitle(data.title || 'YouTube Short');
+        })
+        .catch(() => {
+          if (!cancelled) setTitle('YouTube Short');
+        });
+      return () => { cancelled = true; };
+    }, [url]);
+    return title;
+  };
 
   const handleCompassDrag = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const deltaX = info.delta.x;
@@ -251,45 +252,48 @@ const Home = () => {
         ref={scrollContainerRef}
         className="flex overflow-x-auto space-x-4 md:space-x-6 pb-6 scrollbar-hide snap-x snap-mandatory scroll-smooth px-8"
       >
-        {youtubeShorts.map((video, index) => (
-          <motion.div
-            key={video.id}
-            className={`flex-shrink-0 w-56 md:w-64 h-80 md:h-96 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 snap-center ${
-              index === centerIndex
-                ? 'shadow-2xl ring-4 ring-primary-400 scale-105'
-                : 'grayscale hover:grayscale-75 scale-95'
-            }`}
-            onClick={() => {
-              setCenterIndex(index);
-              const cardWidth = window.innerWidth < 768 ? 240 : 280;
-              scrollContainerRef.current?.scrollTo({
-                left: index * cardWidth - scrollContainerRef.current.clientWidth / 2 + cardWidth / 2,
-                behavior: 'smooth'
-              });
-            }}
-          >
-            <div className="relative h-full bg-gray-900">
-              <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-primary-400/90 rounded-full p-3 md:p-4 hover:bg-primary-400 transition-colors">
-                  <Play className="h-6 w-6 md:h-8 md:w-8 text-black fill-current" />
+        {youtubeShorts.map((video, index) => {
+          const title = useYoutubeTitle(video.link);
+          return (
+            <motion.div
+              key={video.id}
+              className={`flex-shrink-0 w-56 md:w-64 h-80 md:h-96 rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 snap-center ${
+                index === centerIndex
+                  ? 'shadow-2xl ring-4 ring-primary-400 scale-105'
+                  : 'grayscale hover:grayscale-75 scale-95'
+              }`}
+              onClick={() => {
+                window.open(video.link, '_blank', 'noopener');
+              }}
+            >
+              <div className="relative h-full bg-gray-900">
+                <img src={getThumbnail(video.link)} alt={title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <button
+                    className="bg-primary-400/90 rounded-full p-3 md:p-4 hover:bg-primary-400 transition-colors"
+                    onClick={e => {
+                      e.stopPropagation();
+                      window.open(video.link, '_blank', 'noopener');
+                    }}
+                  >
+                    <Play className="h-6 w-6 md:h-8 md:w-8 text-black fill-current" />
+                  </button>
                 </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                <h3 className="text-white font-bold text-base md:text-lg mb-1 line-clamp-1">{video.title}</h3>
-                <p className="text-white/80 text-xs md:text-sm mb-2 line-clamp-2">{video.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-primary-400 text-xs md:text-sm font-medium">{video.views} views</span>
-                  <div className="flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                    <span className="text-white/60 text-xs">SHORTS</span>
+                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                  <h3 className="text-white font-bold text-base md:text-lg mb-1 line-clamp-1">{title}</h3>
+                  {/* No description or views, only title */}
+                  <div className="flex items-center justify-end">
+                    <div className="flex items-center space-x-1">
+                      <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                      <span className="text-white/60 text-xs">SHORTS</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </div>
     </div>
 

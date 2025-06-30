@@ -32,8 +32,8 @@ const Navbar = () => {
         {/* Top Bar - Desktop Only */}
         <div className="hidden md:flex justify-between items-center h-10 border-b border-yellow-400">
           <div className="flex items-center gap-8 text-yellow-400 text-xs font-semibold h-full">
-            <span className="hover:underline cursor-pointer">All Courses <span className="ml-1">&#9662;</span></span>
-            <span className="hover:underline cursor-pointer">BM Offline Academy</span>
+            {/* <span className="hover:underline cursor-pointer">All Courses <span className="ml-1">&#9662;</span></span> */}
+            {/* <span className="hover:underline cursor-pointer">BM Offline Academy</span> */}
             {/* <span className="hover:underline cursor-pointer">Online Courses</span> */}
             {/* <span className="hover:underline cursor-pointer">Test Series</span> */}
             <a
@@ -59,8 +59,8 @@ const Navbar = () => {
         {/* Top Bar - Mobile Only */}
         <div className="flex md:hidden items-center border-b border-yellow-400 h-10 overflow-x-auto whitespace-nowrap scrollbar-hide">
           <div className="flex items-center gap-4 text-yellow-400 text-xs font-semibold px-1">
-            <span className="hover:underline cursor-pointer">All Courses <span className="ml-1">&#9662;</span></span>
-            <span className="hover:underline cursor-pointer">BM Offline Academy</span>
+            {/* <span className="hover:underline cursor-pointer">All Courses <span className="ml-1">&#9662;</span></span> */}
+            {/* <span className="hover:underline cursor-pointer">BM Offline Academy</span> */}
             {/* <span className="hover:underline cursor-pointer">Online Courses</span>
             <span className="hover:underline cursor-pointer">Test Series</span> */}
             <a
