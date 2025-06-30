@@ -89,9 +89,11 @@ const categoryOptions = [
 
 // Add a utility to POST user info to a backend API or save to a file (real storage, not simulated)
 // For demonstration, this will POST to /api/store-user-info (you must implement this API in your backend)
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://bm-promo.onrender.com';
+
 const storeUserInfo = async (name: string, phone: string) => {
 	try {
-		await fetch('/api/store-user-info', {
+		await fetch(`${API_BASE}/api/store-user-info`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ name, phone }),
