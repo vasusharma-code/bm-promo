@@ -164,8 +164,8 @@ const Home = () => {
           style={{
             rotate: compassRotation,
             bottom: 'calc(-20vw / 2 + 2.5rem)',
-            left: '43%',
-            transform: 'translateX(-50%)'
+            left: '38%',
+            transform: 'translateX(-40%)' // move slightly left on all screens
           }}
         >
           <div className="w-[18vw] h-[18vw] min-w-[100px] min-h-[100px] max-w-[220px] max-h-[220px] flex items-center justify-center relative select-none">
@@ -344,12 +344,20 @@ const Home = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <button className="bg-black text-primary-400 px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:bg-navy-800 transition-colors">
+            <a
+              href="/courses"
+              className="bg-black text-primary-400 px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:bg-navy-800 transition-colors flex items-center justify-center"
+            >
               Explore Courses
-            </button>
-            <button className="border-2 border-black text-black px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:bg-black hover:text-primary-400 transition-colors">
+            </a>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfplFAt9uFYYr9r5LDg4-0sP6IpfgZ0bjjOogXFtpODXRTVQw/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-2 border-black text-black px-6 md:px-8 py-3 md:py-4 rounded-full font-semibold hover:bg-black hover:text-primary-400 transition-colors flex items-center justify-center"
+            >
               Get Free Consultation
-            </button>
+            </a>
           </motion.div>
         </div>
       </section>

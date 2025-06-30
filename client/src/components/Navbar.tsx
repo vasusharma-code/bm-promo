@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Anchor } from 'lucide-react';
+import logo from '../../assets/yellow on orange logomark.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,11 +36,24 @@ const Navbar = () => {
             <span className="hover:underline cursor-pointer">BM Offline Academy</span>
             {/* <span className="hover:underline cursor-pointer">Online Courses</span> */}
             {/* <span className="hover:underline cursor-pointer">Test Series</span> */}
-            <span className="hover:underline cursor-pointer">BM Store</span>
+            <a
+              href="https://storebybm.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline cursor-pointer"
+            >
+              BM Store
+            </a>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-yellow-400 text-xs font-semibold">Admissions Open For Online/Offline Batches</span>
-            <button className="bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-300 text-xs">JOIN NOW</button>
+            <button
+              className="bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-300 text-xs"
+              onClick={() => window.open('https://forms.gle/eYhht7QngobRYATJ8', '_blank')}
+              type="button"
+            >
+              JOIN NOW
+            </button>
           </div>
         </div>
         {/* Top Bar - Mobile Only */}
@@ -49,17 +63,30 @@ const Navbar = () => {
             <span className="hover:underline cursor-pointer">BM Offline Academy</span>
             {/* <span className="hover:underline cursor-pointer">Online Courses</span>
             <span className="hover:underline cursor-pointer">Test Series</span> */}
-            <span className="hover:underline cursor-pointer">BM Store</span>
+            <a
+              href="https://storebybm.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline cursor-pointer"
+            >
+              BM Store
+            </a>
             <span className="text-yellow-400 text-xs font-semibold">Admissions Open For Online/Offline Batches</span>
-            <button className="bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-300 text-xs ml-2">JOIN NOW</button>
+            <button
+              className="bg-yellow-400 text-black font-bold px-3 py-1 rounded hover:bg-yellow-300 text-xs ml-2"
+              onClick={() => window.open('https://forms.gle/eYhht7QngobRYATJ8', '_blank')}
+              type="button"
+            >
+              JOIN NOW
+            </button>
           </div>
         </div>
         {/* Main Bar */}
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="bg-black border border-yellow-400 p-2 rounded-full">
-              <Anchor className="h-6 w-6 text-yellow-400" />
+            <div className="bg-black p-2 rounded-full flex items-center justify-center">
+              <img src={logo} alt="BM Logo" className="h-12 w-12 object" />
             </div>
             <span className="text-yellow-400 font-bold text-xl tracking-wide">BUDDING MARINERS</span>
           </Link>

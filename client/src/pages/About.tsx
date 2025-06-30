@@ -1,10 +1,13 @@
 import React from 'react';
+import ojas from '../../assets/ojas.png';
+import shahwanaz from '../../assets/shahnawaz.png';
+import ourstory from '../../assets/our story.jpg';
 
 const founders = [
 	{
 		name: 'Ojas Lalla',
 		title: 'CEO & Founder',
-		image: '/assets/ojas.png',
+		image: ojas,
 		bio: `Ojas Lalla, born in Jodhpur and shaped by his formative years in Jaipur, is a man of diverse passions and pursuits. His early love for cricket saw him competing at the under-14 nationals, but his true calling lay in the seas. Driven by an unwavering aspiration to join the merchant navy from class 11, Ojas excelled through numerous sponsorship exams and interviews with esteemed companies such as Anglo Eastern, Torm Tankers, and Fleet Management. Despite clearing the NDA written exams, his focus remained steadfast on maritime adventures. He honed his skills at Tolani Maritime Institute, eventually selecting Torm Tankers for his DNS
 
 Partnering with Shahnawaz, Ojas founded Budding Mariners, and over the past three years, he has successfully trained and sponsored over 1,500+ seafarers for various shipping companies, leaving an indelible mark on the maritime industry.`,
@@ -12,7 +15,7 @@ Partnering with Shahnawaz, Ojas founded Budding Mariners, and over the past thre
 	{
 		name: 'Shahnawaz',
 		title: 'COO & Co-Founder',
-		image: '/assets/shahnawaz.png',
+		image: shahwanaz,
 		bio: `Shahnawaz, a determined young man from the small village of Selampur in Uttar Pradesh, grew up with his two brothers and sister in a modest home. Initially studying in a Hindi medium school, he harbored dreams of joining the NDA. After clearing the written exams but taking a one-year break, his aspirations shifted towards the merchant navy. Despite facing several setbacks, Shahnawaz's relentless hard work and perseverance paid off.
 
 He successfully cleared the sponsorship with WSM and enrolled in Tolani Maritime Institute, India's premier college for maritime studies. His dedication and resilience led him to realize his dreams, and alongside his co-founder Ojas, he established Budding Mariners, a venture dedicated to shaping the futures of aspiring seafarers.`,
@@ -45,7 +48,7 @@ const About = () => (
 			</div>
 			<div className="flex-1 flex justify-center">
 				<img
-					src="/assets/about-story.jpg"
+					src= {ourstory}
 					alt="Our Story"
 					className="rounded-xl w-full max-w-xs object-cover border-4 border-yellow-400"
 				/>
@@ -77,27 +80,33 @@ const About = () => (
 				{founders.map((founder, idx) => (
 					<div
 						key={founder.name}
-						className={`flex flex-col md:flex-row items-center gap-10 ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''
-							}`}
+						className={`flex flex-col md:flex-row items-center gap-10 ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
 					>
-						<div className="flex-1">
-							<h3 className="text-2xl font-bold mb-2 text-white">
-								{founder.name}
-							</h3>
+						<div className="flex-1 flex flex-col w-full">
+							<h3 className="text-2xl font-bold mb-2 text-white">{founder.name}</h3>
 							<div className="mb-4">
 								<span className="bg-yellow-400 text-black px-3 py-1 rounded-full font-semibold text-sm">
 									{founder.title}
 								</span>
 							</div>
-							<p className="text-white/80 whitespace-pre-line">
-								{founder.bio}
-							</p>
+							{/* Mobile: Show image next, then bio */}
+							<div className="block md:hidden mb-4">
+								<img
+									src={founder.image}
+									alt={founder.name}
+									style={{ width: '100%', height: 'auto', maxWidth: 320, objectFit: 'cover' }}
+									className="rounded-xl border-4 border-yellow-400 mx-auto"
+								/>
+							</div>
+							<p className="text-white/80 whitespace-pre-line">{founder.bio}</p>
 						</div>
-						<div className="flex-1 flex justify-center">
+						{/* Desktop: Image on side, fit to bio height */}
+						<div className="flex-1 hidden md:flex justify-center items-stretch">
 							<img
 								src={founder.image}
 								alt={founder.name}
-								className="rounded-xl w-full max-w-xs object-cover border-4 border-yellow-400"
+								style={{ height: '100%', width: 'auto', maxWidth: 320, objectFit: 'cover' }}
+								className="rounded-xl border-4 border-yellow-400"
 							/>
 						</div>
 					</div>

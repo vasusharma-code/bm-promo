@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, User, Clock, Tag } from 'lucide-react';
+import hero from '../../assets/Main.png';
+import top10 from '../../assets/top 10.png';
 
 const blogTags = [
 	{ id: 'all', label: 'All' },
@@ -13,19 +15,19 @@ const blogTags = [
 const blogPosts = [
 	{
 		id: 1,
-		title: 'Complete Guide to Merchant Navy Entrance Exams 2024',
-		excerpt: 'Everything you need to know about the latest entrance exams, eligibility, and preparation tips.',
+		title: 'How to Join the Merchant Navy the RIGHT Way',
+		excerpt: 'Confused about how to join the Merchant Navy? This vlog explains the right process, answers common questions, and covers all essential details to start your career at sea. A must-read guide for every Merchant Navy aspirant!',
 		author: 'BM Editorial',
 		date: '2024-01-15',
 		readTime: '8 min read',
-		image: '', // Placeholder for featured
+		image: hero, // Placeholder for featured
 		tags: ['admission', 'education'],
 		featured: true,
 	},
 	{
 		id: 2,
-		title: 'Top 10 Maritime Companies for Deck Cadets',
-		excerpt: 'A curated list of the best companies for aspiring deck cadets in India.',
+		title: '🎖 Merchant Navy Salary 2025 💰 | Full Breakdown from Cadet to Captain!',
+		excerpt: 'Ever wondered how much you can actually earn in the Merchant Navy? 🚢 In this video, we break down the full salary structure – from starting as a cadet 👨‍🎓 to becoming a captain 👨‍✈. Whether youre just starting out or planning your future at sea, this vlog gives you the real numbers 💸 and expectations. Dont miss it! 📊⚓',
 		author: 'BM Team',
 		date: '2024-01-10',
 		readTime: '5 min read',
@@ -34,8 +36,8 @@ const blogPosts = [
 	},
 	{
 		id: 3,
-		title: 'Life Afloat: What to Expect in Your First Year',
-		excerpt: 'Insights and tips for freshers starting their journey at sea.',
+		title: '🎓 Best Merchant Navy Colleges in India (With Fees, Placement, Sponsorship) ',
+		excerpt: 'Looking to join the Merchant Navy but confused about colleges? 🧭 This vlog covers the top institutes in India 🏫 with complete details on fees, placements, and sponsorships ⚓—everything you need to choose the right college in 2025!',
 		author: 'BM Team',
 		date: '2024-01-08',
 		readTime: '6 min read',
@@ -44,18 +46,18 @@ const blogPosts = [
 	},
 	{
 		id: 4,
-		title: 'STCW Certification: Everything You Need to Know',
-		excerpt: 'A breakdown of the STCW certification process and its importance.',
+		title: '🚢 Top 10 Shipping Companies in Merchant Navy – Salary, Sponsorship & Perks! ',
+		excerpt: 'Confused about which shipping company is the best? 🌍 In this vlog, we break down the top 10 shipping giants with details on salary packages 💰, sponsorship options 🎓, perks 🧳, and more! A must-read for every future seafarer in 2025! ⚓',
 		author: 'BM Editorial',
 		date: '2024-01-05',
 		readTime: '7 min read',
-		image: '',
+		image: top10,
 		tags: ['training', 'education'],
 	},
 	{
 		id: 5,
-		title: 'Safety Trends in Indian Shipping 2024',
-		excerpt: 'Latest safety protocols and trends in the Indian maritime sector.',
+		title: 'Departments in Merchant Navy Explained – Deck, Engine & More! ',
+		excerpt: '📌 Confused about the different departments in Merchant Navy? In this vlog, we break down all major departments like Deck, Engine, and Saloon — what they do, how to join, career growth, and which suits you best! 🚢👨‍✈ Let’s clear all your doubts in one go!',
 		author: 'BM Team',
 		date: '2024-01-03',
 		readTime: '4 min read',
@@ -64,8 +66,8 @@ const blogPosts = [
 	},
 	{
 		id: 6,
-		title: 'How to Choose the Right Marine Course',
-		excerpt: 'Factors to consider when selecting a marine course for your career.',
+		title: ' 🌊 Life at Sea – The Real Experience! ',
+		excerpt: '⚓ Ever wondered what life is really like on a ship? From daily routines to breathtaking sunsets, food, work, and fun onboard – this vlog gives you a full glimpse into the real-life experience of seafarers 🌅🚢. Don’t miss the highs and challenges of life at sea!',
 		author: 'BM Editorial',
 		date: '2024-01-01',
 		readTime: '5 min read',
@@ -115,8 +117,17 @@ const Blog = () => {
 			{featuredPost && (
 				<section className="max-w-3xl mx-auto w-full mb-12">
 					<div className="bg-white rounded-xl flex flex-col md:flex-row overflow-hidden shadow-lg">
+						{/* Show image if present, else fallback */}
 						<div className="flex-1 bg-gray-300 flex items-center justify-center min-h-[220px] md:min-h-[260px]">
-							<span className="text-gray-500 text-lg font-semibold">Featured Article</span>
+							{featuredPost.image ? (
+								<img
+									src={featuredPost.image}
+									alt={featuredPost.title}
+									className="object-cover w-full h-full"
+								/>
+							) : (
+								<span className="text-gray-500 text-lg font-semibold">Featured Article</span>
+							)}
 						</div>
 						<div className="flex-1 p-6 flex flex-col justify-center">
 							<div className="flex items-center gap-2 mb-2">
@@ -129,7 +140,7 @@ const Blog = () => {
 								<span className="flex items-center gap-1"><User className="w-3 h-3" />{featuredPost.author}</span>
 								<span className="flex items-center gap-1"><Clock className="w-3 h-3" />{featuredPost.readTime}</span>
 							</div>
-							<button className="bg-black text-yellow-400 px-4 py-2 rounded font-semibold text-xs w-max">Read More</button>
+							{/* <button className="bg-black text-yellow-400 px-3 py-1 rounded font-semibold text-xs w-max mt-auto">Read More</button> */}
 						</div>
 					</div>
 				</section>
@@ -141,8 +152,16 @@ const Blog = () => {
 					.filter((post) => !post.featured)
 					.map((post) => (
 						<div key={post.id} className="bg-white rounded-xl shadow flex flex-col overflow-hidden">
-							<div className="bg-gray-300 flex items-center justify-center min-h-[120px]">
-								<span className="text-gray-500 text-xs">Blog Image</span>
+							<div className="bg-gray-300 flex items-center justify-center min-h-[120px] w-full">
+								{post.image ? (
+									<img
+										src={post.image}
+										alt={post.title}
+										className="object-cover w-full h-full"
+									/>
+								) : (
+									<span className="text-gray-500 text-xs">Blog Image</span>
+								)}
 							</div>
 							<div className="p-4 flex flex-col flex-1">
 								<div className="flex items-center gap-2 mb-2">
@@ -157,7 +176,7 @@ const Blog = () => {
 									<span className="flex items-center gap-1"><User className="w-3 h-3" />{post.author}</span>
 									<span className="flex items-center gap-1"><Clock className="w-3 h-3" />{post.readTime}</span>
 								</div>
-								<button className="bg-black text-yellow-400 px-3 py-1 rounded font-semibold text-xs w-max mt-auto">Read More</button>
+								{/* <button className="bg-black text-yellow-400 px-3 py-1 rounded font-semibold text-xs w-max mt-auto">Read More</button> */}
 							</div>
 						</div>
 					))}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Anchor } from 'lucide-react';
+import logo from '../../assets/yellow on orange logomark.png';
 
 const Footer = () => {
   return (
@@ -10,8 +11,8 @@ const Footer = () => {
           {/* Brand/Intro */}
           <div>
             <div className="flex items-center space-x-2 mb-3">
-              <div className="bg-black p-2 rounded-full">
-                <Anchor className="h-6 w-6 text-yellow-400" />
+              <div className="bg-black p-2 rounded-full flex items-center justify-center">
+                <img src={logo} alt="BM Logo" className="h-8 w-8 object-contain" />
               </div>
               <span className="font-bold text-lg">BUDDING MARINERS</span>
             </div>

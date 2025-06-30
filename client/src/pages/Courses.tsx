@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Users, Star, BookOpen, CheckCircle, User, Video, Award } from 'lucide-react';
+import { Clock, Users, Star, BookOpen, CheckCircle, User, Award } from 'lucide-react';
 import image1 from '../../assets/course1.png';
 import image2 from '../../assets/course2.png';
 import image3 from '../../assets/DNS.png';
@@ -22,80 +22,92 @@ const Courses = () => {
   const courses = [
     {
       id: 1,
-      title: 'FREE IMU-CET Mock Tests',
+      title: 'Fateh GP Rating',
       type: 'offline',
-      price: 'Free',
-      originalPrice: '',
-      duration: 'Self-paced',
-      students: '500+',
-      rating: 5.0,
-      image: image1,
-      features: ['Mock Tests', 'Instant Results', 'All India Ranking'],
-      badge: 'green'
-    },
-    {
-      id: 2,
-      title: 'GP Rating Offline Course',
-      type: 'offline',
-      price: '₹15,000',
-      originalPrice: '₹20,000',
       duration: '3 months',
       students: '200+',
       rating: 4.8,
       image: image2,
-      features: ['Physical Training', 'Interview Prep', 'Medical Guidance'],
+      features: [
+        'Interview Training',
+        'Written Training',
+        'Forms Notification'
+      ],
       badge: 'yellow'
     },
     {
-      id: 3,
-      title: 'SPONSORSHIP OFFLINE COURSE',
+      id: 2,
+      title: 'Nurture Batch',
       type: 'offline',
-      price: '₹18,000',
-      originalPrice: '₹25,000',
+      duration: '1 year',
+      students: '100+',
+      rating: 5.0,
+      image: image1,
+      features: [
+        'For 11th Standard Students',
+        'IMUCET Top Rankers Batch',
+        'Boards + Merchant Navy Entrance Prep'
+      ],
+      badge: 'green'
+    },
+    {
+      id: 3,
+      title: 'Foundation Batch',
+      type: 'offline',
+      duration: '1 year',
+      students: '300+',
+      rating: 4.9,
+      image: image3,
+      features: [
+        'For 12th Standard Students',
+        'The Best Batch for Merchant Navy Success',
+        'Boards + Merchant Navy Entrance Prep'
+      ],
+      badge: 'purple'
+    },
+    {
+      id: 4,
+      title: 'Sponsorship Batch',
+      type: 'offline',
       duration: '2 months',
       students: '150+',
       rating: 4.7,
       image: image6,
-      features: ['Company Sponsorship', 'Mock Interviews', 'Documentation'],
+      features: [
+        'For IMUCET Rankers',
+        'Prepare for February 2026 Batch',
+        'Fastest Form Notifications'
+      ],
       badge: 'yellow'
     },
     {
-      id: 4,
-      title: 'DNS Preparation Course',
-      type: 'offline',
-      price: '₹12,000',
-      originalPrice: '₹18,000',
-      duration: '2 months',
-      students: '300+',
-      rating: 4.9,
-      image: image3,
-      features: ['IMU-CET', 'Interview Prep', 'Medical Guidance'],
-      badge: 'purple'
-    },
-    {
       id: 5,
-      title: 'Marine Engineering Course',
+      title: 'Udaan Batch',
       type: 'offline',
-      price: '₹16,000',
-      originalPrice: '₹22,000',
-      duration: '3 months',
+      duration: '4 months',
       students: '120+',
       rating: 4.6,
       image: image5,
-      features: ['Workshop Training', 'Technical Drawing', 'Safety Protocols'],
+      features: [
+        'Special Batch for Improvement/NIOS Students',
+        'Get Your Dream Merchant Navy Sponsorship',
+        'Personalised hand holding for Sponsorship Process'
+      ],
       badge: 'blue'
     },
     {
       id: 6,
       title: 'STCW/Basic Safety Training',
       type: 'offline',
-      price: '₹8,000',
-      originalPrice: '₹12,000',
       duration: '1 month',
       students: '100+',
       rating: 4.5,
       image: image4,
-      features: ['Fire Fighting', 'First Aid', 'Personal Survival'],
+      features: [
+        'Fire Fighting',
+        'First Aid',
+        'Personal Survival'
+      ],
       badge: 'red'
     }
   ];
@@ -177,10 +189,10 @@ const Courses = () => {
                   </div>
                   <div className="absolute top-3 left-3">
                     <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${badgeColors[course.badge]}`}>
-                      {course.badge === 'green' && 'Free'}
-                      {course.badge === 'yellow' && 'Offline'}
-                      {course.badge === 'purple' && 'DNS'}
-                      {course.badge === 'blue' && 'Engineering'}
+                      {course.badge === 'green' && 'Nurture'}
+                      {course.badge === 'yellow' && (course.title === 'Fateh GP Rating' ? 'GP Rating' : 'Sponsorship')}
+                      {course.badge === 'purple' && 'Foundation'}
+                      {course.badge === 'blue' && 'Udaan'}
                       {course.badge === 'red' && 'STCW'}
                     </span>
                   </div>
@@ -205,16 +217,15 @@ const Courses = () => {
                       </span>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between mt-auto mb-3">
-                    <div>
-                      <span className={`text-xl font-bold ${course.price === 'Free' ? 'text-green-600' : 'text-yellow-500'}`}>{course.price}</span>
-                      {course.originalPrice && <span className="text-gray-400 line-through ml-2">{course.originalPrice}</span>}
-                    </div>
-                  </div>
-                  <button className="w-full bg-black text-yellow-400 py-2 rounded-lg font-semibold hover:bg-yellow-400 hover:text-black transition-colors flex items-center justify-center gap-2">
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSfplFAt9uFYYr9r5LDg4-0sP6IpfgZ0bjjOogXFtpODXRTVQw/viewform" // placeholder link
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-black text-yellow-400 py-2 rounded-lg font-semibold hover:bg-yellow-400 hover:text-black transition-colors flex items-center justify-center gap-2 mt-auto"
+                  >
                     <BookOpen className="h-5 w-5" />
                     <span>Enroll Now</span>
-                  </button>
+                  </a>
                 </div>
               </motion.div>
             ))}
