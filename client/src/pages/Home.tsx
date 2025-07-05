@@ -11,13 +11,13 @@ import cl4 from '../../assets/CL4.png';
 import cl5 from '../../assets/CL5.png';
 import cl6 from '../../assets/CL6.png';
 import cl7 from '../../assets/CL7.png';
-import cl8 from '../../assets/CL8.jpg';//Remove
-import cl9 from '../../assets/CL9.jpg';//Remove
 import cl10 from '../../assets/CL10.png';
 import cl11 from '../../assets/CL11.png';
 import cl12 from '../../assets/CL12.png';
 import cl13 from '../../assets/CL13.jpg';
-import cl14 from '../../assets/CL14.png';//Remove
+import b1 from '../../assets/highestselections.png';
+import b2 from '../../assets/Selection.png';
+import b3 from '../../assets/mocktest.png';
 
 
 const Home = () => {
@@ -272,7 +272,7 @@ const Home = () => {
             >
               <div className="mb-6 flex justify-center">
                 <img 
-                  src="/assets/highestselections.png" 
+                  src={b1}
                   alt="Highest Selections in Top Companies"
                   className="w-40 h-40 object-cover rounded-lg border-2 border-yellow-400"
                 />
@@ -294,7 +294,7 @@ const Home = () => {
             >
               <div className="mb-6 flex justify-center">
                 <img 
-                  src="/assets/selection.png" 
+                  src={b2}
                   alt="Company-specific preparation by the company's ex-Sponsored Marines"
                   className="w-40 h-40 object-cover rounded-lg border-2 border-yellow-400"
                 />
@@ -316,7 +316,7 @@ const Home = () => {
             >
               <div className="mb-6 flex justify-center">
                 <img 
-                  src="/assets/mocktest.png" 
+                  src={b3}
                   alt="Unlimited Mock Tests and Interviews"
                   className="w-40 h-40 object-cover rounded-lg border-2 border-yellow-400"
                 />
@@ -451,21 +451,7 @@ const Home = () => {
               ))}
             </motion.div>
           </div>
-          {/* Static logos for smaller screens - show all 14, not just 4 */}
-          <div className="mt-8 grid grid-cols-2 md:hidden gap-4">
-            {companyLogos.map((company, index) => (
-              <div
-                key={company.name}
-                className="flex items-center justify-center bg-[#18181b] rounded-lg p-4 shadow-md border border-white/10 h-20"
-              >
-                <img
-                  src={company.url}
-                  alt={company.name}
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-            ))}
-          </div>
+          {/* Remove static logos for mobile */}
         </div>
       </section>
 
@@ -635,6 +621,7 @@ const Home = () => {
     </div>
   );
 };
+
 
 export default Home;
 
