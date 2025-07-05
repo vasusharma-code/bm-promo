@@ -111,7 +111,9 @@ const Blog = () => {
 								<span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-bold">Featured</span>
 								<span className="text-gray-400 text-xs">{new Date(featuredPost.date).toLocaleDateString()}</span>
 							</div>
-							<h2 className="text-lg md:text-xl font-bold text-black mb-2">{featuredPost.title}</h2>
+							<h2 className="text-lg md:text-xl font-bold text-black mb-2 capitalize">
+								{featuredPost.title.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())}
+							</h2>
 							<div className="text-gray-700 text-sm mb-3">{featuredPost.excerpt}</div>
 							<div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
 								<span className="flex items-center gap-1"><User className="w-3 h-3" />{featuredPost.author}</span>
@@ -144,7 +146,9 @@ const Blog = () => {
 								<div className="flex items-center gap-2 mb-2">
 									<span className="text-gray-400 text-xs">{new Date(post.date).toLocaleDateString()}</span>
 								</div>
-								<h3 className="text-base font-bold text-black mb-1">{post.title}</h3>
+								<h3 className="text-base font-bold text-black mb-1 capitalize">
+									{post.title.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())}
+								</h3>
 								<div className="text-gray-700 text-xs mb-2 flex-1">{post.excerpt}</div>
 								<div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
 									<span className="flex items-center gap-1"><User className="w-3 h-3" />{post.author}</span>

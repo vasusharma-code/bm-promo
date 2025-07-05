@@ -95,22 +95,22 @@ const Courses = () => {
         'Personalised hand holding for Sponsorship Process'
       ],
       badge: 'blue'
-    },
-    {
-      id: 6,
-      title: 'STCW/Basic Safety Training',
-      type: 'offline',
-      duration: '1 month',
-      students: '100+',
-      rating: 4.5,
-      image: image4,
-      features: [
-        'Fire Fighting',
-        'First Aid',
-        'Personal Survival'
-      ],
-      badge: 'red'
     }
+    // {
+    //   id: 6,
+    //   title: 'STCW/Basic Safety Training',
+    //   type: 'offline',
+    //   duration: '1 month',
+    //   students: '100+',
+    //   rating: 4.5,
+    //   image: image4,
+    //   features: [
+    //     'Fire Fighting',
+    //     'First Aid',
+    //     'Personal Survival'
+    //   ],
+    //   badge: 'red'
+    // }
   ];
 
   const badgeColors: Record<string, string> = {
@@ -139,7 +139,7 @@ const Courses = () => {
       </Helmet>
       {/* Header */}
       <section className="pt-28 pb-2 text-center">
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white">BM Offline Academy</h1>
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white">BM Academy</h1>
         <p className="text-white/80 text-sm mb-2">
           Personal Mentorship. Industry-oriented Training. 100% Placement Support.
         </p>
@@ -153,7 +153,7 @@ const Courses = () => {
             <div className="text-white/80 text-xs">Expert Faculty</div>
           </div>
           <div className="text-center">
-            <div className="text-yellow-400 text-2xl font-bold">95%</div>
+            <div className="text-yellow-400 text-2xl font-bold">97%</div>
             <div className="text-white/80 text-xs">Placement Rate</div>
           </div>
         </div>

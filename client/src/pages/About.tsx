@@ -102,24 +102,26 @@ const About = () => (
 								</span>
 							</div>
 							{/* Mobile: Show image next, then bio */}
-							<div className="block md:hidden mb-4">
-								<img
-									src={founder.image}
-									alt={founder.name}
-									style={{ width: '100%', height: 'auto', maxWidth: 320, objectFit: 'cover' }}
-									className="rounded-xl border-4 border-yellow-400 mx-auto"
-								/>
+							<div className="block md:hidden mb-4 flex justify-center">
+								<div className="w-56 h-56 rounded-xl border-4 border-yellow-400 overflow-hidden flex items-center justify-center bg-black">
+									<img
+										src={founder.image}
+										alt={founder.name}
+										className="object-cover w-full h-full"
+									/>
+								</div>
 							</div>
 							<p className="text-white/80 whitespace-pre-line">{founder.bio}</p>
 						</div>
 						{/* Desktop: Image on side, fit to bio height */}
 						<div className="flex-1 hidden md:flex justify-center items-stretch">
-							<img
-								src={founder.image}
-								alt={founder.name}
-								style={{ height: '100%', width: 'auto', maxWidth: 320, objectFit: 'cover' }}
-								className="rounded-xl border-4 border-yellow-400"
-							/>
+							<div className="w-72 h-80 rounded-xl border-4 border-yellow-400 overflow-hidden flex items-center justify-center bg-black">
+								<img
+									src={founder.image}
+									alt={founder.name}
+									className="object-cover w-full h-full"
+								/>
+							</div>
 						</div>
 					</div>
 				))}

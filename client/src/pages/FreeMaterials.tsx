@@ -95,7 +95,15 @@ const FreeMaterials = () => {
 							</span>
 						</div>
 						<div className="font-bold text-base text-black mb-6">
-							{mat.title}
+							{idx === 0 && "ORGANIC IMPORTANT REACTIONS"}
+							{idx === 1 && "ALL ABOUT B.SC"}
+							{idx === 2 && "INDIAN PORTS & THEIR STATES"}
+							{idx === 3 && "ASIA COUNTRY AND CAPITAL -2"}
+							{idx === 4 && "ALL ABOUT DNS"}
+							{idx === 5 && "ASIA COUNTRY AND CAPITAL -1"}
+							{idx === 6 && "ALL ABOUT B.TECH"}
+							{idx === 7 && "RIVERS & ORIGINS"}
+							{idx === 8 && "COUNTRY AND THEIR CURRENCY"}
 						</div>
 						<a
 							href={mat.download}
