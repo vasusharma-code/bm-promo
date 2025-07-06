@@ -79,6 +79,25 @@ app.patch('/api/admin/leads/:id', async (req, res) => {
 	}
 });
 
+// Delete all users except admin user
+// app.delete('/api/admin/delete-non-admin-users', async (req, res) => {
+// 	try {
+// 		// Adjust the admin criteria as needed (e.g., by name or phone)
+// 		const adminName = 'admin'; // Change as per your admin user name
+// 		const adminPhone = '9999999999'; // Change as per your admin phone
+
+// 		const result = await UserInfo.deleteMany({
+// 			$and: [
+// 				{ name: { $ne: adminName } },
+// 				{ phone: { $ne: adminPhone } }
+// 			]
+// 		});
+// 		res.json({ message: 'Non-admin users deleted', deletedCount: result.deletedCount });
+// 	} catch (err) {
+// 		res.status(500).json({ error: 'Failed to delete non-admin users.' });
+// 	}
+// });
+
 // Health check
 app.get('/', (req, res) => {
 	res.send('Server is running on port 5000');
