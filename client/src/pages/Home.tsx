@@ -23,7 +23,7 @@ import b3 from '../../assets/mocktest.png';
 const Home = () => {
   // Move image more to the left by adjusting transform range
   const compassRotation = useMotionValue(0);
-  const backgroundX = useTransform(compassRotation, [-90, 90], ['-50%', '0%']);
+  const backgroundX = useTransform(compassRotation, [-90, 90], ['-30%', '0%']);
 
   const [centerIndex, setCenterIndex] = useState(2);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -168,7 +168,7 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden bg-black pt-16">
         <motion.div
-          className="absolute inset-0 w-[200%] h-full bg-cover bg-center"
+          className="absolute inset-0 w-[150%] h-full bg-cover bg-center"
           style={{
             backgroundImage: `url(${bg})`,
             x: backgroundX
