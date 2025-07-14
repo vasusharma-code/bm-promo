@@ -28,23 +28,16 @@ const UserInfoSchema = new mongoose.Schema({
 	interested: { type: String, default: 'Not Yet' }
 }, { timestamps: true });
 
-// Ensure unique combination of name and phone
-UserInfoSchema.index({ name: 1, phone: 1 }, { unique: true });
-
 const UserInfo = mongoose.model('UserInfo', UserInfoSchema);
 
-// API endpoint to store user info (upsert by name and phone)
+// API endpoint to store user info (no upsert, just create)
 app.post('/api/store-user-info', async (req, res) => {
 	const { name, phone } = req.body;
 	if (!name || !phone) {
 		return res.status(400).json({ error: 'Name and phone are required.' });
 	}
 	try {
-		await UserInfo.findOneAndUpdate(
-			{ name, phone },
-			{ name, phone },
-			{ upsert: true, new: true, setDefaultsOnInsert: true }
-		);
+		await UserInfo.create({ name, phone });
 		res.status(200).json({ message: 'User info stored successfully.' });
 	} catch (err) {
 		res.status(500).json({ error: 'Failed to store user info.' });
@@ -106,6 +99,13 @@ app.patch('/api/admin/leads/:id', async (req, res) => {
 // });
 
 // Health check
+app.get('/', (req, res) => {
+	res.send('Server is running on port 5000');
+});
+
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
+});
 app.get('/', (req, res) => {
 	res.send('Server is running on port 5000');
 });
