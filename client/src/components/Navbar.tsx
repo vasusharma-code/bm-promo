@@ -25,7 +25,7 @@ const Navbar = () => {
     { name: 'About', path: '/about' },
     { name: 'BM Store', external: true, url: 'https://storebybm.com/' },
     { name: 'Calculators', path: '/calculators' },
-    { name: 'Blog', path: '/blog' },
+    // { name: 'Blog', path: '/blog' },
     { name: 'Free Materials', path: '/free-materials' },
   ];
 
