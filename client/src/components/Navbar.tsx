@@ -31,7 +31,8 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 bg-gradient-to-b from-[#18181b] to-black border-b border-white shadow-none`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Remove max-w-7xl and horizontal padding for full width */}
+      <div>
         {/* Top Bar - Desktop Only */}
         <div className="hidden md:flex items-center h-10 border-b border-white relative overflow-hidden">
           <div className="absolute inset-0 flex items-center">

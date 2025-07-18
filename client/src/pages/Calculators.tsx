@@ -27,6 +27,18 @@ const calculators = [
 		description: 'Check your eligibility for B.Tech/BSc Marine Engineering.',
 		icon: <CreditCard className="w-6 h-6 text-yellow-400" />,
 	},
+	{
+		id: 'imu-rank-bm',
+		title: 'IMU CET Rank Calculator: With vs Without BM',
+		description: 'Compare your estimated IMU CET rank with self-preparation vs Budding Mariners coaching.',
+		icon: <Calculator className="w-6 h-6 text-yellow-400" />,
+	},
+	{
+		id: 'company-eligibility',
+		title: 'Company Eligibility Calculator',
+		description: 'Find out which shipping companies you are eligible for based on your marks and profile.',
+		icon: <BarChart2 className="w-6 h-6 text-yellow-400" />,
+	},
 ];
 
 const imuRankRanges = [
@@ -88,6 +100,37 @@ const categoryOptions = [
 	{ value: 'ST', label: 'ST' },
 ];
 
+const highestQualificationOptions = [
+	{ value: '10', label: 'Class 10' },
+	{ value: '12', label: 'Class 12' },
+	{ value: 'diploma', label: 'Diploma' },
+	{ value: 'graduation', label: 'Graduation' },
+	{ value: 'pg', label: 'Post Graduation' },
+];
+
+const twelfthStreamOptions = [
+	{ value: 'PCM', label: 'PCM' },
+	{ value: 'PCB', label: 'PCB' },
+	{ value: 'Commerce', label: 'Commerce' },
+	{ value: 'Other', label: 'Other' },
+];
+
+const graduationStreamOptions = [
+	{ value: 'Nautical Science', label: 'Nautical Science' },
+	{ value: 'Engineering', label: 'Engineering' },
+	{ value: 'B.Sc', label: 'B.Sc' },
+	{ value: 'B.Com', label: 'B.Com' },
+	{ value: 'Other', label: 'Other' },
+];
+
+const subjectOptions = [
+	{ value: 'Physics', label: 'Physics' },
+	{ value: 'Chemistry', label: 'Chemistry' },
+	{ value: 'Math', label: 'Math' },
+	{ value: 'English', label: 'English' },
+	{ value: 'Aptitude', label: 'Aptitude' },
+];
+
 // Add a utility to POST user info to a backend API or save to a file (real storage, not simulated)
 // For demonstration, this will POST to /api/store-user-info (you must implement this API in your backend)
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://bm-promo.onrender.com';
@@ -123,17 +166,53 @@ const Calculators = () => {
 	// Course Eligibility Checker
 	const [eligibilityForm, setEligibilityForm] = useState({
 		fullName: '',
-		tenthOverall: '',
+		age: '',
+		highestQualification: '10',
+		// Class 12 fields
 		twelfthPCM: '',
 		twelfthEnglish: '',
+		twelfthStream: '',
+		// Class 10 fields
 		tenthEnglish: '',
-		age: '',
-		graduation: 'NO',
-		graduationCourse: '',
-		graduationLastYear: '',
+		// Diploma fields
+		diplomaPCM: '',
+		diplomaEnglish: '',
+		// Graduation fields
+		graduationPCM: '',
 		graduationEnglish: '',
+		graduationStream: '',
+		// PG fields
+		pgStream: '',
+		// Common
+		improvementExam: 'NO',
+		niosBoard: 'NO',
+		colorBlind: 'NO',
+		spectacles: 'NO',
 	});
 	const [courseEligibility, setCourseEligibility] = useState<string | null>(null);
+
+	// IMU CET Rank Calculator: With vs Without BM
+	const [imuBmForm, setImuBmForm] = useState({
+		pcm: '',
+		english: '',
+		hours: '',
+		difficult: [] as string[],
+		pyq: 'NO',
+		coaching: 'NO',
+		mock: 'NO',
+	});
+	const [imuBmResult, setImuBmResult] = useState<{ self: string, bm: string } | null>(null);
+
+	// Company Eligibility Calculator
+	const [companyForm, setCompanyForm] = useState({
+		name: '',
+		pcm: '',
+		english: '',
+		age: '',
+		improvement: 'NO',
+		nios: 'NO',
+	});
+	const [companyResult, setCompanyResult] = useState<string[] | null>(null);
 
 	// User info modal state
 	const [showUserModal, setShowUserModal] = useState(false);
@@ -194,6 +273,7 @@ const Calculators = () => {
 		if (calcId === 'imu-rank') handleImuRank({ preventDefault: () => {} } as any);
 		if (calcId === 'college-predictor') handleCollegePredictor({ preventDefault: () => {} } as any);
 		if (calcId === 'course-eligibility') handleCourseEligibility({ preventDefault: () => {} } as any);
+		if (calcId === 'company-eligibility') handleCompanyEligibility({ preventDefault: () => {} } as any);
 	};
 
 	const handleEligibility = (e: React.FormEvent) => {
@@ -218,16 +298,23 @@ const Calculators = () => {
 			setImuRankResult({ general: 'Invalid marks', category: '' });
 			return;
 		}
+		if (marks < 50) {
+			setImuRankResult({
+				general: 'Regret',
+				category: '',
+			});
+			return;
+		}
 		let found = false;
 		for (const r of imuRankRanges) {
 			if (marks >= r.min && marks <= r.max) {
 				const [minRank, maxRank] = r.range;
 				const generalRank = Math.floor(Math.random() * (maxRank - minRank + 1)) + minRank;
 				let categoryRank = generalRank;
-				if (imuCategory === 'OBC' || imuCategory === 'OBC NCL') {
-					categoryRank = Math.floor(maxRank * 0.88);
+				if (imuCategory === 'OBC' || imuCategory === 'EWS') {
+					categoryRank = Math.floor(generalRank * 0.88);
 				} else if (imuCategory === 'SC' || imuCategory === 'ST') {
-					categoryRank = Math.floor(maxRank * 0.75);
+					categoryRank = Math.floor(generalRank * 0.75);
 				}
 				setImuRankResult({
 					general: `🎯 Estimated IMU CET Rank: ${generalRank}`,
@@ -265,31 +352,300 @@ const Calculators = () => {
 	const handleCourseEligibility = (e: React.FormEvent) => {
 		e.preventDefault();
 		const f = eligibilityForm;
-		const tenthOverall = parseFloat(f.tenthOverall);
-		const twelfthPCM = parseFloat(f.twelfthPCM);
-		const twelfthEnglish = parseFloat(f.twelfthEnglish);
-		const tenthEnglish = parseFloat(f.tenthEnglish);
 		const age = parseFloat(f.age);
-		const grad = f.graduation === 'YES';
-		const gradLast = parseFloat(f.graduationLastYear);
-		const gradEng = parseFloat(f.graduationEnglish);
+		const results: string[] = [];
+		const notEligible: string[] = [];
 
-		let eligible = true;
-		let reasons: string[] = [];
+		// Helper functions
+		const hasMin = (val: string, min: number) => !isNaN(parseFloat(val)) && parseFloat(val) >= min;
+		const isRegularBoard = f.niosBoard === 'NO';
+		const english10 = parseFloat(f.tenthEnglish);
+		const english12 = parseFloat(f.twelfthEnglish);
 
-		// B.Tech/BSc Marine Engineering logic
-		if (twelfthPCM < 60) { eligible = false; reasons.push('12th PCM < 60%'); }
-		if (!(twelfthEnglish >= 50 || tenthEnglish >= 50)) { eligible = false; reasons.push('English < 50% in both 10th and 12th'); }
-		if (age > 25) { eligible = false; reasons.push('Age > 25'); }
-		if (grad) {
-			if (isNaN(gradLast) || gradLast < 50) { eligible = false; reasons.push('Graduation % < 50%'); }
-			if (isNaN(gradEng) || gradEng < 50) { eligible = false; reasons.push('Graduation English % < 50%'); }
+		// GP Rating
+		let gpEligible = false;
+		if (f.highestQualification === '10') {
+			if (age <= 25 && hasMin(f.tenthEnglish, 40) && hasMin(f.tenthOverall, 40)) {
+				gpEligible = true;
+				results.push('✅ GP Rating');
+			} else {
+				notEligible.push('❌ GP Rating (Age > 25 or English/Overall < 40%)');
+			}
 		}
+		if (f.highestQualification === '12') {
+			if (age <= 25 && (hasMin(f.twelfthEnglish, 40) || hasMin(f.tenthEnglish, 40))) {
+				gpEligible = true;
+				results.push('✅ GP Rating');
+			} else {
+				notEligible.push('❌ GP Rating (Age > 25 or English < 40%)');
+			}
+		}
+		if (f.highestQualification === 'diploma' || f.highestQualification === 'graduation') {
+			if (age <= 25 && (hasMin(f.tenthEnglish, 40) || hasMin(f.twelfthEnglish, 40))) {
+				gpEligible = true;
+				results.push('✅ GP Rating');
+			} else {
+				notEligible.push('❌ GP Rating (Age > 25 or English < 40%)');
+			}
+		}
+
+		// DNS
+		let dnsEligible = false;
+		if (f.highestQualification === '12') {
+			if (f.class12Status === 'Appearing') {
+				results.push('✅ DNS (Conditionally eligible if PCM ≥ 60% and English ≥ 50% in final results)');
+			} else if (f.class12Status === 'Passed') {
+				if (
+					hasMin(f.twelfthPCM, 60) &&
+					(hasMin(f.twelfthEnglish, 50) || hasMin(f.tenthEnglish, 50)) &&
+					isRegularBoard &&
+					age <= 25
+				) {
+					dnsEligible = true;
+					results.push('✅ DNS');
+				} else {
+					notEligible.push('❌ DNS (PCM < 60%, English < 50%, NIOS/Open board, or Age > 25)');
+				}
+			}
+		}
+		if (f.highestQualification === 'graduation') {
+			if (
+				hasMin(f.graduationPCM, 60) &&
+				(hasMin(f.graduationEnglish, 50) || hasMin(f.tenthEnglish, 50) || hasMin(f.twelfthEnglish, 50)) &&
+				age <= 25
+			) {
+				results.push('✅ DNS (as Graduate)');
+			} else {
+				notEligible.push('❌ DNS (Graduation PCM/English < 60/50 or Age > 25)');
+			}
+		}
+
+		// B.Sc Nautical Science
+		if (f.highestQualification === '12') {
+			if (f.class12Status === 'Appearing') {
+				results.push('✅ B.Sc Nautical Science (Conditionally eligible if PCM ≥ 60% and English ≥ 50% in final results)');
+			} else if (f.class12Status === 'Passed') {
+				if (
+					hasMin(f.twelfthPCM, 60) &&
+					(hasMin(f.twelfthEnglish, 50) || hasMin(f.tenthEnglish, 50)) &&
+					isRegularBoard &&
+					age <= 25
+				) {
+					results.push('✅ B.Sc Nautical Science');
+				} else {
+					notEligible.push('❌ B.Sc Nautical Science (PCM < 60%, English < 50%, NIOS/Open board, or Age > 25)');
+				}
+			}
+		}
+
+		// B.Tech Marine Engineering
+		if (f.highestQualification === '12') {
+			if (f.class12Status === 'Appearing') {
+				results.push('✅ B.Tech Marine Engg (Conditionally eligible if PCM ≥ 60% and English ≥ 50% in final results)');
+			} else if (f.class12Status === 'Passed') {
+				if (
+					hasMin(f.twelfthPCM, 60) &&
+					(hasMin(f.twelfthEnglish, 50) || hasMin(f.tenthEnglish, 50)) &&
+					isRegularBoard &&
+					age <= 25
+				) {
+					results.push('✅ B.Tech Marine Engg');
+				} else {
+					notEligible.push('❌ B.Tech Marine Engg (PCM < 60%, English < 50%, NIOS/Open board, or Age > 25)');
+				}
+			}
+		}
+
+		// Diploma
+		if (f.highestQualification === 'diploma') {
+			if (age <= 25 && hasMin(f.diplomaPCM, 60) && (hasMin(f.diplomaEnglish, 50) || hasMin(f.tenthEnglish, 50))) {
+				results.push('✅ GP Rating');
+			} else {
+				notEligible.push('❌ GP Rating (Diploma PCM/English < 60/50 or Age > 25)');
+			}
+			results.push('❌ DNS / B.Sc / B.Tech (Diploma not eligible)');
+		}
+
+		// Graduation
+		if (f.highestQualification === 'graduation') {
+			const gradStream = f.graduationStream;
+			if (age <= 25 && (hasMin(f.graduationEnglish, 40) || hasMin(f.tenthEnglish, 40) || hasMin(f.twelfthEnglish, 40))) {
+				results.push('✅ GP Rating');
+			} else {
+				notEligible.push('❌ GP Rating (Graduation English < 40% or Age > 25)');
+			}
+			if (
+				(gradStream === 'Engineering' || gradStream === 'Nautical Science') &&
+				hasMin(f.graduationPCM, 50) &&
+				age <= 28 &&
+				f.colorBlind === 'NO'
+			) {
+				results.push('✅ GME');
+			} else {
+				notEligible.push('❌ GME (Stream not Engineering/Nautical Science, PCM < 50%, Age > 28, or Color blind)');
+			}
+			if (
+				(gradStream === 'Engineering') &&
+				hasMin(f.graduationPCM, 50) &&
+				hasMin(f.graduationEnglish, 50) &&
+				age <= 28 &&
+				f.colorBlind === 'NO'
+			) {
+				results.push('✅ ETO');
+			} else {
+				notEligible.push('❌ ETO (Stream not Engineering, PCM/English < 50%, Age > 28, or Color blind)');
+			}
+		}
+
+		// Output
 		setCourseEligibility(
-			eligible
-				? 'Eligible for B.Tech/BSc Marine Engineering'
-				: `Not Eligible: ${reasons.join(', ')}`
+			`🎯 Based on your details:\n${results.join('\n')}${notEligible.length ? '\n' + notEligible.join('\n') : ''}`
 		);
+	};
+
+	const handleImuBmChange = (field: string, value: any) => {
+		setImuBmForm(f => ({ ...f, [field]: value }));
+	};
+
+	const handleImuBmMultiSelect = (value: string) => {
+		setImuBmForm(f => ({
+			...f,
+			difficult: f.difficult.includes(value)
+				? f.difficult.filter(v => v !== value)
+				: [...f.difficult, value]
+		}));
+	};
+
+	const handleImuBmSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		const pcm = parseFloat(imuBmForm.pcm);
+		const english = parseFloat(imuBmForm.english);
+		const hours = parseInt(imuBmForm.hours, 10);
+		const difficultCount = imuBmForm.difficult.length;
+
+		if (isNaN(pcm) || isNaN(english) || isNaN(hours)) {
+			setImuBmResult({ self: 'Invalid input', bm: '' });
+			return;
+		}
+		if (pcm < 60) {
+			setImuBmResult({ self: 'Not eligible (PCM < 60%)', bm: '' });
+			return;
+		}
+
+		// Scoring
+		let score = 0;
+		// PCM %
+		if (pcm >= 90) score += 10;
+		else if (pcm >= 80) score += 9;
+		else if (pcm >= 70) score += 8;
+		else if (pcm >= 60) score += 6;
+		// English %
+		if (english >= 90) score += 10;
+		else if (english >= 80) score += 9;
+		else if (english >= 70) score += 8;
+		else if (english >= 60) score += 7;
+		else if (english >= 50) score += 6;
+		// Study hours
+		score += Math.min(hours, 10) * 2;
+		// Difficult subjects
+		score -= difficultCount * 2;
+		// PYQs
+		score += imuBmForm.pyq === 'YES' ? 5 : -5;
+		// Coaching
+		score += imuBmForm.coaching === 'YES' ? 5 : 0;
+		// Mock test consistency
+		score += imuBmForm.mock === 'YES' ? 5 : 0;
+
+		// Clamp score
+		score = Math.max(0, Math.min(score, 50));
+
+		// Map to rank ranges
+		let selfRange = '';
+		let bmRange = '';
+		if (score >= 45) {
+			selfRange = '1 – 500';
+			bmRange = '1 – 250';
+		} else if (score >= 40) {
+			selfRange = '500 – 1500';
+			bmRange = '250 – 750';
+		} else if (score >= 35) {
+			selfRange = '1500 – 3000';
+			bmRange = '750 – 1500';
+		} else if (score >= 30) {
+			selfRange = '3000 – 6000';
+			bmRange = '1500 – 3000';
+		} else {
+			selfRange = '6000+';
+			bmRange = '3000 – 5000';
+		}
+
+		setImuBmResult({
+			self: `Estimated Rank (Self-preparation): ${selfRange}`,
+			bm: `Estimated Rank with Budding Mariners’ Coaching: ${bmRange}`,
+		});
+	};
+
+	const handleCompanyFormChange = (field: string, value: any) => {
+		setCompanyForm(f => ({ ...f, [field]: value }));
+	};
+
+	const companyDB = [
+		{ name: 'Anglo Eastern', pcm: 70, english: 60, improvement: 'Yes', nios: 'Yes', age: 25 },
+		{ name: 'TORM', pcm: 65, english: 60, improvement: 'No', nios: 'No', age: 21 },
+		{ name: 'Fleet Management', pcm: 70, english: 70, improvement: 'No', nios: 'No', age: 20 },
+		{ name: "D' Amico", pcm: 60, english: 60, improvement: 'Yes', nios: 'No', age: 21 },
+		{ name: 'Synergy', pcm: 60, english: 50, improvement: 'Yes', nios: 'Yes', age: 25 },
+		{ name: 'WSM', pcm: 60, english: 50, improvement: 'Yes', nios: 'No', age: 25 },
+		{ name: 'Scorpio', pcm: 65, english: 65, improvement: 'No', nios: 'No', age: 25 },
+		{ name: 'PIL', pcm: 60, english: 50, improvement: 'Yes', nios: 'No', age: 25 },
+		{ name: 'Wallem', pcm: 60, english: 60, improvement: 'Yes', nios: 'Yes', age: 25 },
+		{ name: 'MMSI', pcm: 70, english: 70, improvement: 'Yes', nios: 'No', age: 21 },
+		{ name: 'V Ships', pcm: 70, english: 60, improvement: 'Yes', nios: 'Yes', age: 25 },
+		{ name: 'MSC', pcm: 65, english: 60, improvement: 'Yes', nios: 'No', age: 19 },
+		{ name: 'Seaspan', pcm: 60, english: 60, improvement: 'Yes', nios: 'No', age: 25 },
+		{ name: 'ESM', pcm: 60, english: 50, improvement: 'No', nios: 'No', age: 19 },
+		{ name: 'BSM', pcm: 60, english: 50, improvement: 'Yes', nios: 'No', age: 25 },
+		{ name: 'SISL', pcm: 70, english: 50, improvement: 'Yes', nios: 'No', age: 20 },
+		{ name: 'Great Eastern', pcm: 60, english: 50, improvement: 'Yes', nios: 'No', age: 24 },
+		{ name: 'T Erudite', pcm: 60, english: 50, improvement: 'Yes', nios: 'No', age: 21 },
+		{ name: 'Goodwood', pcm: 60, english: 60, improvement: 'Yes', nios: 'No', age: 25 },
+		{ name: 'SCI', pcm: 60, english: 50, improvement: 'No', nios: 'Yes', age: 25 },
+		{ name: 'TMI', pcm: 60, english: 50, improvement: 'Yes', nios: 'Yes', age: 21 },
+		{ name: 'IMI', pcm: 60, english: 50, improvement: 'No', nios: 'No', age: 25 },
+		{ name: 'GANPAT', pcm: 60, english: 50, improvement: 'Yes', nios: 'Yes', age: 25 },
+		{ name: 'TSR', pcm: 60, english: 50, improvement: 'Yes', nios: 'No', age: 25 },
+		{ name: 'AMET', pcm: 60, english: 50, improvement: 'Yes', nios: 'No', age: 25 },
+		{ name: 'HIMT', pcm: 60, english: 50, improvement: 'Yes', nios: 'Yes', age: 25 },
+		{ name: 'MANET', pcm: 60, english: 50, improvement: 'Yes', nios: 'No', age: 25 },
+	];
+
+	const handleCompanyEligibility = (e: React.FormEvent) => {
+		e.preventDefault();
+		const pcm = parseFloat(companyForm.pcm);
+		const english = parseFloat(companyForm.english);
+		const age = parseFloat(companyForm.age);
+		const improvement = companyForm.improvement === 'YES' ? 'Yes' : 'No';
+		const nios = companyForm.nios === 'YES' ? 'Yes' : 'No';
+
+		if (
+			!companyForm.name.trim() ||
+			isNaN(pcm) ||
+			isNaN(english) ||
+			isNaN(age)
+		) {
+			setCompanyResult([]);
+			return;
+		}
+
+		const eligibleCompanies = companyDB.filter(c =>
+			pcm >= c.pcm &&
+			english >= c.english &&
+			(improvement === c.improvement) &&
+			(nios === c.nios) &&
+			age <= c.age
+		).map(c => c.name);
+
+		setCompanyResult(eligibleCompanies);
 	};
 
 	return (
@@ -443,6 +799,9 @@ const Calculators = () => {
 							>
 								{usedCalculators['imu-rank'] ? 'Used' : 'Calculate Rank'}
 							</button>
+							{usedCalculators['imu-rank'] && (
+	<div className="mt-2 text-sm text-red-600 font-semibold">Refresh the page to use calculator again.</div>
+)}
 						</form>
 						{imuRankResult && (
 							<div className="mt-6 w-full text-center">
@@ -506,6 +865,9 @@ const Calculators = () => {
 							>
 								{usedCalculators['college-predictor'] ? 'Used' : 'Predict Colleges'}
 							</button>
+							{usedCalculators['college-predictor'] && (
+	<div className="mt-2 text-sm text-red-600 font-semibold">Refresh the page to use calculator again.</div>
+)}
 						</form>
 						{predictorResult.length > 0 && (
 							<div className="mt-6 w-full text-center">
@@ -534,60 +896,123 @@ const Calculators = () => {
 							</span>
 						</div>
 						<div className="text-gray-700 text-sm mb-6 text-center">
-							Check your eligibility for B.Tech/BSc Marine Engineering
+							Check your eligibility for B.Tech/BSc Marine Engineering and other maritime courses
 						</div>
 						<form className="w-full" onSubmit={requireUserInfo('course-eligibility', handleCourseEligibility)}>
 							<div className="mb-2">
 								<label className="block text-gray-700 text-sm mb-1">Full Name</label>
-								<input type="text" value={eligibilityForm.fullName} onChange={e => setEligibilityForm(f => ({ ...f, fullName: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
-							</div>
-							<div className="mb-2">
-								<label className="block text-gray-700 text-sm mb-1">10th Overall %</label>
-								<input type="number" value={eligibilityForm.tenthOverall} onChange={e => setEligibilityForm(f => ({ ...f, tenthOverall: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
-							</div>
-							<div className="mb-2">
-								<label className="block text-gray-700 text-sm mb-1">12th PCM %</label>
-								<input type="number" value={eligibilityForm.twelfthPCM} onChange={e => setEligibilityForm(f => ({ ...f, twelfthPCM: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
-							</div>
-							<div className="mb-2">
-								<label className="block text-gray-700 text-sm mb-1">12th English %</label>
-								<input type="number" value={eligibilityForm.twelfthEnglish} onChange={e => setEligibilityForm(f => ({ ...f, twelfthEnglish: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
-							</div>
-							<div className="mb-2">
-								<label className="block text-gray-700 text-sm mb-1">10th English %</label>
-								<input type="number" value={eligibilityForm.tenthEnglish} onChange={e => setEligibilityForm(f => ({ ...f, tenthEnglish: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
+								<input type="text" value={eligibilityForm.fullName} onChange={e => setEligibilityForm(f => ({ ...f, fullName: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
 							</div>
 							<div className="mb-2">
 								<label className="block text-gray-700 text-sm mb-1">Age</label>
 								<input type="number" value={eligibilityForm.age} onChange={e => setEligibilityForm(f => ({ ...f, age: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
 							</div>
 							<div className="mb-2">
-								<label className="block text-gray-700 text-sm mb-1">Graduation?</label>
-								<select value={eligibilityForm.graduation} onChange={e => setEligibilityForm(f => ({ ...f, graduation: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
-									<option value="NO">NO</option>
-									<option value="YES">YES</option>
+								<label className="block text-gray-700 text-sm mb-1">Highest Qualification</label>
+								<select value={eligibilityForm.highestQualification} onChange={e => setEligibilityForm(f => ({ ...f, highestQualification: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									{highestQualificationOptions.map(opt => (
+										<option key={opt.value} value={opt.value}>{opt.label}</option>
+									))}
 								</select>
 							</div>
-							{eligibilityForm.graduation === 'YES' && (
+							{/* Class 12 fields */}
+							{eligibilityForm.highestQualification === '12' && (
 								<>
 									<div className="mb-2">
-										<label className="block text-gray-700 text-sm mb-1">Graduation Course</label>
-										<select value={eligibilityForm.graduationCourse} onChange={e => setEligibilityForm(f => ({ ...f, graduationCourse: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
-											<option value="">Select</option>
-											<option value="Bsc">Bsc</option>
-											<option value="Btech">Btech</option>
+										<label className="block text-gray-700 text-sm mb-1">Stream in 12th</label>
+										<select value={eligibilityForm.twelfthStream} onChange={e => setEligibilityForm(f => ({ ...f, twelfthStream: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+											{twelfthStreamOptions.map(opt => (
+												<option key={opt.value} value={opt.value}>{opt.label}</option>
+											))}
 										</select>
 									</div>
 									<div className="mb-2">
-										<label className="block text-gray-700 text-sm mb-1">Graduation last year %</label>
-										<input type="number" value={eligibilityForm.graduationLastYear} onChange={e => setEligibilityForm(f => ({ ...f, graduationLastYear: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
+										<label className="block text-gray-700 text-sm mb-1">PCM Aggregate %</label>
+										<input type="number" value={eligibilityForm.twelfthPCM} onChange={e => setEligibilityForm(f => ({ ...f, twelfthPCM: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
 									</div>
 									<div className="mb-2">
-										<label className="block text-gray-700 text-sm mb-1">Graduation English %</label>
+										<label className="block text-gray-700 text-sm mb-1">English % (12th)</label>
+										<input type="number" value={eligibilityForm.twelfthEnglish} onChange={e => setEligibilityForm(f => ({ ...f, twelfthEnglish: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
+									</div>
+								</>
+							)}
+							{/* Class 10 fields */}
+							{eligibilityForm.highestQualification === '10' && (
+								<div className="mb-2">
+									<label className="block text-gray-700 text-sm mb-1">English % (10th)</label>
+									<input type="number" value={eligibilityForm.tenthEnglish} onChange={e => setEligibilityForm(f => ({ ...f, tenthEnglish: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
+								</div>
+							)}
+							{/* Diploma fields */}
+							{eligibilityForm.highestQualification === 'diploma' && (
+								<>
+									<div className="mb-2">
+										<label className="block text-gray-700 text-sm mb-1">PCM Aggregate % (Diploma)</label>
+										<input type="number" value={eligibilityForm.diplomaPCM} onChange={e => setEligibilityForm(f => ({ ...f, diplomaPCM: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
+									</div>
+									<div className="mb-2">
+										<label className="block text-gray-700 text-sm mb-1">English % (Diploma)</label>
+										<input type="number" value={eligibilityForm.diplomaEnglish} onChange={e => setEligibilityForm(f => ({ ...f, diplomaEnglish: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
+									</div>
+								</>
+							)}
+							{/* Graduation fields */}
+							{eligibilityForm.highestQualification === 'graduation' && (
+								<>
+									<div className="mb-2">
+										<label className="block text-gray-700 text-sm mb-1">Graduation Stream</label>
+										<select value={eligibilityForm.graduationStream} onChange={e => setEligibilityForm(f => ({ ...f, graduationStream: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+											{graduationStreamOptions.map(opt => (
+												<option key={opt.value} value={opt.value}>{opt.label}</option>
+											))}
+										</select>
+									</div>
+									<div className="mb-2">
+										<label className="block text-gray-700 text-sm mb-1">PCM Aggregate % (Graduation)</label>
+										<input type="number" value={eligibilityForm.graduationPCM} onChange={e => setEligibilityForm(f => ({ ...f, graduationPCM: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
+									</div>
+									<div className="mb-2">
+										<label className="block text-gray-700 text-sm mb-1">English % (Graduation)</label>
 										<input type="number" value={eligibilityForm.graduationEnglish} onChange={e => setEligibilityForm(f => ({ ...f, graduationEnglish: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
 									</div>
 								</>
 							)}
+							{/* PG fields */}
+							{eligibilityForm.highestQualification === 'pg' && (
+								<div className="mb-2">
+									<label className="block text-gray-700 text-sm mb-1">PG Stream</label>
+									<input type="text" value={eligibilityForm.pgStream} onChange={e => setEligibilityForm(f => ({ ...f, pgStream: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" />
+								</div>
+							)}
+							{/* Common fields */}
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Did you appear for Improvement Exams?</label>
+								<select value={eligibilityForm.improvementExam} onChange={e => setEligibilityForm(f => ({ ...f, improvementExam: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">NO</option>
+									<option value="YES">YES</option>
+								</select>
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Are you from the NIOS board?</label>
+								<select value={eligibilityForm.niosBoard} onChange={e => setEligibilityForm(f => ({ ...f, niosBoard: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">NO</option>
+									<option value="YES">YES</option>
+								</select>
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Are you color blind?</label>
+								<select value={eligibilityForm.colorBlind} onChange={e => setEligibilityForm(f => ({ ...f, colorBlind: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">NO</option>
+									<option value="YES">YES</option>
+								</select>
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Do you wear spectacles?</label>
+								<select value={eligibilityForm.spectacles} onChange={e => setEligibilityForm(f => ({ ...f, spectacles: e.target.value }))} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">NO</option>
+									<option value="YES">YES</option>
+								</select>
+							</div>
 							<button
 								type="submit"
 								className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition mt-2"
@@ -595,12 +1020,170 @@ const Calculators = () => {
 							>
 								{usedCalculators['course-eligibility'] ? 'Used' : 'Check Eligibility'}
 							</button>
+							{usedCalculators['course-eligibility'] && (
+	<div className="mt-2 text-sm text-red-600 font-semibold">Refresh the page to use calculator again.</div>
+)}
 						</form>
 						{courseEligibility && (
 							<div className="mt-6 w-full text-center">
 								<span className={`font-bold text-lg ${courseEligibility.startsWith('Eligible') ? 'text-green-600' : 'text-red-600'}`}>
 									{courseEligibility}
 								</span>
+							</div>
+						)}
+					</div>
+				)}
+
+				{selected === 'imu-rank-bm' && (
+					<div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-lg flex flex-col items-center">
+						<div className="flex items-center gap-2 mb-2">
+							<Calculator className="w-6 h-6 text-yellow-400" />
+							<span className="font-bold text-lg text-black">
+								IMU CET Rank Calculator: With vs Without BM
+							</span>
+						</div>
+						<div className="text-gray-700 text-sm mb-6 text-center">
+							Compare your estimated IMU CET rank with self-preparation vs Budding Mariners coaching.
+						</div>
+						<form className="w-full" onSubmit={requireUserInfo('imu-rank-bm', handleImuBmSubmit)}>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">PCM %</label>
+								<input type="number" min={0} max={100} value={imuBmForm.pcm} onChange={e => handleImuBmChange('pcm', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">English %</label>
+								<input type="number" min={0} max={100} value={imuBmForm.english} onChange={e => handleImuBmChange('english', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Number of hours you can study daily</label>
+								<input type="number" min={1} max={10} value={imuBmForm.hours} onChange={e => handleImuBmChange('hours', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Subjects you find difficult</label>
+								<div className="flex flex-wrap gap-2">
+									{subjectOptions.map(opt => (
+										<label key={opt.value} className="flex items-center gap-1">
+											<input
+												type="checkbox"
+												checked={imuBmForm.difficult.includes(opt.value)}
+												onChange={() => handleImuBmMultiSelect(opt.value)}
+											/>
+											<span className="text-black">{opt.label}</span>
+										</label>
+									))}
+								</div>
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Have you solved previous year papers?</label>
+								<select value={imuBmForm.pyq} onChange={e => handleImuBmChange('pyq', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">No</option>
+									<option value="YES">Yes</option>
+								</select>
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Are you attending any coaching currently?</label>
+								<select value={imuBmForm.coaching} onChange={e => handleImuBmChange('coaching', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">No</option>
+									<option value="YES">Yes</option>
+								</select>
+							</div>
+							<div className="mb-4">
+								<label className="block text-gray-700 text-sm mb-1">Are you consistent with mock tests?</label>
+								<select value={imuBmForm.mock} onChange={e => handleImuBmChange('mock', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">No</option>
+									<option value="YES">Yes</option>
+								</select>
+							</div>
+							<button
+								type="submit"
+								className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition"
+								disabled={usedCalculators['imu-rank-bm']}
+							>
+								{usedCalculators['imu-rank-bm'] ? 'Used' : 'Calculate Rank'}
+							</button>
+							{usedCalculators['imu-rank-bm'] && (
+	<div className="mt-2 text-sm text-red-600 font-semibold">Refresh the page to use calculator again.</div>
+)}
+						</form>
+						{imuBmResult && (
+							<div className="mt-6 w-full text-center">
+								<div className="font-bold text-lg text-black">{imuBmResult.self}</div>
+								<div className="font-bold text-md text-yellow-600">{imuBmResult.bm}</div>
+								<div className="text-xs text-red-600 mt-2">
+									🔥 Want to improve your chances? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfplFAt9uFYYr9r5LDg4-0sP6IpfgZ0bjjOogXFtpODXRTVQw/viewform" target="_blank" rel="noopener noreferrer" className="underline">Book a free consultation now!</a>
+								</div>
+							</div>
+						)}
+					</div>
+				)}
+
+				{selected === 'company-eligibility' && (
+					<div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-lg flex flex-col items-center">
+						<div className="flex items-center gap-2 mb-2">
+							<BarChart2 className="w-6 h-6 text-yellow-400" />
+							<span className="font-bold text-lg text-black">
+								Company Eligibility Calculator
+							</span>
+						</div>
+						<div className="text-gray-700 text-sm mb-6 text-center">
+							Find out which shipping companies you are eligible for based on your marks and profile.
+						</div>
+						<form className="w-full" onSubmit={requireUserInfo('company-eligibility', handleCompanyEligibility)}>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Full Name</label>
+								<input type="text" value={companyForm.name} onChange={e => handleCompanyFormChange('name', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">PCM %</label>
+								<input type="number" min={0} max={100} value={companyForm.pcm} onChange={e => handleCompanyFormChange('pcm', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">English %</label>
+								<input type="number" min={0} max={100} value={companyForm.english} onChange={e => handleCompanyFormChange('english', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Age</label>
+								<input type="number" min={0} max={30} value={companyForm.age} onChange={e => handleCompanyFormChange('age', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black" required />
+							</div>
+							<div className="mb-2">
+								<label className="block text-gray-700 text-sm mb-1">Have you given IMPROVEMENT EXAM?</label>
+								<select value={companyForm.improvement} onChange={e => handleCompanyFormChange('improvement', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">No</option>
+									<option value="YES">Yes</option>
+								</select>
+							</div>
+							<div className="mb-4">
+								<label className="block text-gray-700 text-sm mb-1">Are you from NIOS Board?</label>
+								<select value={companyForm.nios} onChange={e => handleCompanyFormChange('nios', e.target.value)} className="w-full px-4 py-2 rounded-lg border border-gray-300 text-black">
+									<option value="NO">No</option>
+									<option value="YES">Yes</option>
+								</select>
+							</div>
+							<button
+								type="submit"
+								className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-500 transition"
+								disabled={usedCalculators['company-eligibility']}
+							>
+								{usedCalculators['company-eligibility'] ? 'Used' : 'Check Eligible Companies'}
+							</button>
+							{usedCalculators['company-eligibility'] && (
+	<div className="mt-2 text-sm text-red-600 font-semibold">Refresh the page to use calculator again.</div>
+)}
+						</form>
+						{companyResult && (
+							<div className="mt-6 w-full text-center">
+								{companyResult.length > 0 ? (
+									<>
+										<div className="font-bold text-lg text-black mb-2">Eligible Companies</div>
+										<ul className="text-black">
+											{companyResult.map((c, idx) => (
+												<li key={idx} className="mb-1">{c}</li>
+											))}
+										</ul>
+									</>
+								) : (
+									<div className="font-bold text-lg text-red-600">No eligible companies found.</div>
+								)}
 							</div>
 						)}
 					</div>

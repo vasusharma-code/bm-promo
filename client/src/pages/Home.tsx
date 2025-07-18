@@ -439,7 +439,7 @@ const Home = () => {
               {[...companyLogos, ...companyLogos].map((company, index) => (
                 <div
                   key={`${company.name}-${index}`}
-                  className="flex-shrink-0 flex items-center justify-center bg-[#18181b] rounded-lg p-4 md:p-6 shadow-md border border-white/10"
+                  className="flex-shrink-0 flex items-center justify-center bg-white rounded-lg p-4 md:p-6 shadow-md border border-white/10"
                   style={{ minWidth: '200px', height: '100px' }}
                 >
                   <img
