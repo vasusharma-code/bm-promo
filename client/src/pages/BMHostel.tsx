@@ -143,18 +143,18 @@ const BMHostel = () => {
 
       {/* Hostel Amenities */}
       <section className="bg-black py-8">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8 px-4">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8 px-2 md:px-4">
           {/* Left: Heading and bullet points */}
-          <div className="flex-1">
+          <div className="flex-1 w-full min-w-0">
             <div
-              className="bg-[#0a2540] rounded-xl border-2 border-[#6d28d9] p-8 md:p-12 mb-4 flex flex-col justify-center"
-              style={{ minHeight: 340, minWidth: 340, maxWidth: '100%', maxHeight: '100%' }}
+              className="bg-[#0a2540] rounded-xl border-2 border-[#6d28d9] p-4 md:p-8 mb-4 flex flex-col justify-center"
+              style={{ minHeight: 260, minWidth: 0, maxWidth: '100%', maxHeight: '100%' }}
             >
-              <h2 className="text-2xl md:text-3xl font-extrabold text-yellow-400 mb-2 leading-tight" style={{ lineHeight: 1.15 }}>
+              <h2 className="text-xl md:text-3xl font-extrabold text-yellow-400 mb-2 leading-tight" style={{ lineHeight: 1.15 }}>
                 What Students<br />Really Need –<br />And We Provide?
               </h2>
-              <div className="font-bold text-white mb-2 text-lg">Comfort Meets Discipline</div>
-              <ul className="list-disc pl-5 text-white/90 text-base space-y-2">
+              <div className="font-bold text-white mb-2 text-base md:text-lg">Comfort Meets Discipline</div>
+              <ul className="list-disc pl-5 text-white/90 text-sm md:text-base space-y-2">
                 <li>Fully furnished shared rooms (bed, mattress, table, cupboard)</li>
                 <li>Hygienic environment with daily cleaning</li>
                 <li>Nutritious vegetarian meals – breakfast, lunch, dinner</li>
@@ -162,14 +162,22 @@ const BMHostel = () => {
             </div>
           </div>
           {/* Right: Video */}
-          <div className="flex-1 flex justify-center">
-            <div className="rounded-3xl border-8 border-[#2351d5] bg-[#18181b] flex items-center justify-center"
-              style={{ width: 400, height: 400, maxWidth: '100vw', maxHeight: '80vw' }}>
+          <div className="flex-1 flex justify-center w-full min-w-0">
+            <div
+              className="rounded-3xl border-8 border-[#2351d5] bg-[#18181b] flex items-center justify-center w-full"
+              style={{
+                width: '100%',
+                maxWidth: 400,
+                height: 'auto',
+                aspectRatio: '1/1',
+                minWidth: 0,
+              }}
+            >
               <video
                 src={hostelvideo}
                 controls
                 className="object-cover w-full h-full rounded-2xl"
-                style={{ borderRadius: 24, background: '#232323' }}
+                style={{ borderRadius: 24, background: '#232323', width: '100%', height: '100%', maxHeight: 400, maxWidth: 400 }}
                 poster=""
               />
             </div>
@@ -182,12 +190,12 @@ const BMHostel = () => {
         <h2 className="text-2xl md:text-3xl font-extrabold text-yellow-400 text-center mb-6">
           Structured Daily Routine for Maximum Productivity
         </h2>
-        <div className="flex justify-center">
+        <div className="flex justify-center px-2">
           <img
             src={timing}
             alt="Structured Daily Routine"
-            className="rounded-2xl shadow-lg border-4 border-yellow-400 max-w-full"
-            style={{ maxWidth: 700 }}
+            className="rounded-2xl shadow-lg border-4 border-yellow-400 w-full max-w-[700px] h-auto"
+            style={{ objectFit: 'contain' }}
           />
         </div>
       </section>
@@ -213,8 +221,8 @@ const BMHostel = () => {
 
       {/* Parents Section */}
       <section className="bg-[#0a2540] py-8">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 items-center px-4">
-          <div className="flex-1">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 items-center px-2 md:px-4">
+          <div className="flex-1 w-full min-w-0">
             <h2 className="text-2xl font-bold text-white mb-2">Parents, We've Got You Covered...</h2>
             <ul className="list-disc pl-6 text-white/80 space-y-2">
               <li>Warden contact for instant update</li>
@@ -222,7 +230,7 @@ const BMHostel = () => {
               <li>Focus on character building & discipline</li>
             </ul>
           </div>
-          <div className="flex-1 flex justify-center">
+          <div className="flex-1 flex justify-center w-full min-w-0">
             <div className="bg-gray-800 rounded-xl border-4 border-yellow-400 w-full max-w-xs h-40 flex items-center justify-center overflow-hidden">
               <img
                 src={parents}
@@ -233,20 +241,20 @@ const BMHostel = () => {
           </div>
         </div>
         {/* Below the parents section, show the "Give Not Give" image */}
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-8 px-2">
           <img
             src={givenotgive}
             alt="What We Provide and Not Provide"
-            className="rounded-2xl shadow-lg border-4 border-yellow-400 max-w-full"
-            style={{ maxWidth: 900 }}
+            className="rounded-2xl shadow-lg border-4 border-yellow-400 w-full max-w-[900px] h-auto"
+            style={{ objectFit: 'contain' }}
           />
         </div>
       </section>
 
       {/* Location Section */}
       <section className="bg-black py-8">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 items-center px-4">
-          <div className="flex-1">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 items-center px-2 md:px-4">
+          <div className="flex-1 w-full min-w-0">
             <h2 className="text-2xl font-bold text-yellow-400 mb-2">Location</h2>
             <div className="mb-2">
               <span className="font-bold text-white">Address:</span>{' '}
@@ -259,7 +267,7 @@ const BMHostel = () => {
               <span className="text-yellow-400">097890 09509</span>
             </div>
           </div>
-          <div className="flex-1 flex justify-center">
+          <div className="flex-1 flex justify-center w-full min-w-0">
             <div className="bg-gray-800 rounded-xl border-4 border-yellow-400 w-full max-w-xs h-40 flex items-center justify-center text-yellow-400 text-lg font-bold">
               <iframe
                 title="BM Hostel Location"
@@ -354,4 +362,4 @@ const BMHostel = () => {
 };
 
 export default BMHostel;
- 
+

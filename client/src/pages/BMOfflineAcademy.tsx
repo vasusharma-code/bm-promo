@@ -289,31 +289,7 @@ const BMOfflineAcademy = () => {
         `}</style>
       </div>
 
-      {/* Admissions Marquee Banner */}
-      <div className="w-full bg-red-600 text-white font-bold text-center py-2 text-base md:text-lg overflow-hidden">
-        <div
-          className="flex items-center whitespace-nowrap"
-          style={{
-            animation: 'marqueeAdmissions 22s linear infinite',
-            width: 'fit-content'
-          }}
-        >
-          {Array(8).fill(0).map((_, i) => (
-            <React.Fragment key={i}>
-              <span className="mx-8">Batch Starting Soon... Want to Enquire?</span>
-              <span className="mx-8">Next Batch Starting Soon... Want to Enquire?</span>
-              <span className="mx-8">Admissions Open... Want to Enquire?</span>
-              <span className="mx-8 text-yellow-400">✦</span>
-            </React.Fragment>
-          ))}
-        </div>
-        <style jsx>{`
-          @keyframes marqueeAdmissions {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-        `}</style>
-      </div>
+      
 
       {/* Past Selections */}
       <section className="bg-black py-8">
@@ -405,6 +381,32 @@ const BMOfflineAcademy = () => {
         </div>
         <div className="text-center text-xs text-white/80 mt-4">50+ Company-specific experts</div>
       </section>
+
+      {/* Admissions Marquee Banner */}
+      <div className="w-full bg-red-600 text-white font-bold text-center py-2 text-base md:text-lg overflow-hidden">
+        <div
+          className="flex items-center whitespace-nowrap"
+          style={{
+            animation: 'marqueeAdmissions 30s linear infinite',
+            width: 'fit-content'
+          }}
+        >
+          {Array(8).fill(0).map((_, i) => (
+            <React.Fragment key={i}>
+              <span className="mx-8">Batch Starting Soon... Want to Enquire?</span>
+              <span className="mx-8">Next Batch Starting Soon... Want to Enquire?</span>
+              <span className="mx-8">Admissions Open... Want to Enquire?</span>
+              <span className="mx-8 text-yellow-400">✦</span>
+            </React.Fragment>
+          ))}
+        </div>
+        <style jsx>{`
+          @keyframes marqueeAdmissions {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+        `}</style>
+      </div>
 
       {/* Beyond the Books */}
       <section className="bg-black py-8">
