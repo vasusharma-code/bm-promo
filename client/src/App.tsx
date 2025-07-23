@@ -10,6 +10,7 @@ import Blog from './pages/Blog';
 import CollegeForms from './pages/CollegeForms';
 import FreeMaterials from './pages/FreeMaterials';
 import Admin from './pages/Admin';
+import BMOfflineAcademy from './pages/BMOfflineAcademy';
 
 function App() {
   return (
@@ -26,12 +27,10 @@ function App() {
             <Route path="/college-forms" element={<CollegeForms />} />
             <Route path="/free-materials" element={<FreeMaterials />} />
             <Route path="/admin" element={<Admin />} />
-            
-            
+            <Route path="/bm-offline-academy" element={<BMOfflineAcademy />} />
           </Routes>
         </main>
         <Footer />
-        
       </div>
     </Router>
   );

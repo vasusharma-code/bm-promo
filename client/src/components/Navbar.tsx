@@ -21,6 +21,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
+    { name: 'BM Academy', path: '/bm-offline-academy' },
     { name: 'Courses', path: '/courses' },
     { name: 'About', path: '/about' },
     { name: 'BM Store', external: true, url: 'https://storebybm.com/' },
