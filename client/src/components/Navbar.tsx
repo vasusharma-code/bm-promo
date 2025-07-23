@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, ChevronDown } from 'lucide-react';
 import logo from '../../assets/yellow on orange logomark.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [academyDropdown, setAcademyDropdown] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -21,7 +22,14 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'BM Academy', path: '/bm-offline-academy' },
+    {
+      name: 'BM Academy',
+      dropdown: true,
+      items: [
+        { name: 'BM Offline Academy', path: '/bm-offline-academy' },
+        { name: 'BM Hostel', path: '/bm-hostel' },
+      ],
+    },
     { name: 'Courses', path: '/courses' },
     { name: 'About', path: '/about' },
     { name: 'BM Store', external: true, url: 'https://storebybm.com/' },
@@ -98,6 +106,40 @@ const Navbar = () => {
                 >
                   {link.name}
                 </a>
+              ) : link.dropdown ? (
+                <div
+                  key={link.name}
+                  className="relative"
+                >
+                  <button
+                    className={`flex items-center gap-1 text-white hover:text-yellow-400 transition-colors duration-200 font-semibold text-sm tracking-wide ${
+                      link.items.some((item) => location.pathname === item.path)
+                        ? 'underline underline-offset-4 text-yellow-400'
+                        : ''
+                    }`}
+                    type="button"
+                    onClick={() => setAcademyDropdown((prev) => !prev)}
+                  >
+                    {link.name}
+                    <ChevronDown className="w-4 h-4 ml-1" />
+                  </button>
+                  {academyDropdown && (
+                    <div className="absolute left-0 mt-2 w-56 bg-black border border-white/10 rounded-lg shadow-lg z-50">
+                      {link.items.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className={`block px-4 py-2 text-white hover:text-yellow-400 transition-colors duration-200 font-semibold text-sm ${
+                            location.pathname === item.path ? 'bg-yellow-400/10' : ''
+                          }`}
+                          onClick={() => setAcademyDropdown(false)}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ) : (
                 <Link
                   key={link.name}
@@ -110,7 +152,6 @@ const Navbar = () => {
                 </Link>
               )
             )}
-            {/* <button className="ml-4 bg-yellow-400 text-black font-bold px-5 py-1.5 rounded hover:bg-yellow-300 text-sm">Login</button> */}
           </div>
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -137,6 +178,36 @@ const Navbar = () => {
                   >
                     {link.name}
                   </a>
+                ) : link.dropdown ? (
+                  <div key={link.name}>
+                    <button
+                      className="flex items-center w-full px-3 py-2 text-yellow-400 hover:text-white transition-colors duration-200 font-semibold text-base"
+                      onClick={() => setAcademyDropdown((prev) => !prev)}
+                      type="button"
+                    >
+                      {link.name}
+                      <ChevronDown className="w-4 h-4 ml-1" />
+                    </button>
+                    {academyDropdown && (
+                      <div className="ml-4">
+                        {link.items.map((item) => (
+                          <Link
+                            key={item.name}
+                            to={item.path}
+                            onClick={() => {
+                              setIsOpen(false);
+                              setAcademyDropdown(false);
+                            }}
+                            className={`block px-3 py-2 text-yellow-400 hover:text-white transition-colors duration-200 font-semibold text-base ${
+                              location.pathname === item.path ? 'underline underline-offset-4' : ''
+                            }`}
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <Link
                     key={link.name}
@@ -150,14 +221,6 @@ const Navbar = () => {
                   </Link>
                 )
               )}
-              {/* <a
-                href="https://forms.gle/eYhht7QngobRYATJ8"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block px-3 py-2 text-yellow-400 hover:text-white transition-colors duration-200 font-semibold text-base"
-              >
-                Admissions Open For Online/Offline Batches
-              </a> */}
             </div>
           </div>
         )}
