@@ -148,17 +148,17 @@ const BMOfflineAcademy = () => {
 
       {/* Header */}
       <section className="pt-32 pb-4 text-center bg-black">
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white uppercase tracking-wide">
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white uppercase tracking-wide font-geist">
           Budding Mariners Academy
         </h1>
-        <div className="text-lg md:text-2xl font-bold text-yellow-400 mb-2">
+        <div className="text-lg md:text-2xl font-bold text-yellow-400 mb-2 font-geist">
           Offline Classes for IMU-CET & Sponsorship Prep
         </div>
-        <div className="inline-block bg-red-600 text-white font-bold px-4 py-2 rounded mb-3 text-base md:text-lg">
+        <div className="inline-block bg-red-600 text-white font-bold px-4 py-2 rounded mb-3 text-base md:text-lg font-geist">
           INDIA'S #1 ACADEMY FOR MERCHANT NAVY ASPIRANTS
         </div>
-        <div className="text-white/80 text-base md:text-lg mb-2">
-          Structured. <span className="text-yellow-400 font-bold">Smart.</span> Successful.
+        <div className="text-white/80 text-base md:text-lg mb-2 font-poppins">
+          Structured. <span className="text-yellow-400 font-bold font-geist">Smart.</span> Successful.
         </div>
       </section>
 
@@ -166,16 +166,16 @@ const BMOfflineAcademy = () => {
       <section className="bg-black py-6">
         <div className="max-w-3xl mx-auto flex flex-col md:flex-row justify-center items-center gap-6">
           <div className="flex-1 flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1">42%</div>
-            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold">of All India Merchant Navy Cadets are from BM</div>
+            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1 font-bebas">42%</div>
+            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold font-poppins">of All India Merchant Navy Cadets are from BM</div>
           </div>
           <div className="flex-1 flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1">85%</div>
-            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold">Selection Ratio Over The Last 4 Years</div>
+            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1 font-bebas">85%</div>
+            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold font-poppins">Selection Ratio Over The Last 4 Years</div>
           </div>
           <div className="flex-1 flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1">25+</div>
-            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold">Shipping Company Sponsorships Cracked by BM Students</div>
+            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1 font-bebas">25+</div>
+            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold font-poppins">Shipping Company Sponsorships Cracked by BM Students</div>
           </div>
         </div>
       </section>

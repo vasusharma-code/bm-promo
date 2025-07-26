@@ -73,34 +73,33 @@ const BMHostel = () => {
 
       {/* Header */}
       <section className="pt-32 pb-4 text-center bg-black">
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white uppercase tracking-wide">
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white uppercase tracking-wide font-geist">
           Budding Mariners Hostel
         </h1>
-        <div className="text-lg md:text-2xl font-bold text-yellow-400 mb-2">
+        <div className="text-lg md:text-2xl font-bold text-yellow-400 mb-2 font-geist">
           Live, Learn & Thrive
         </div>
-        <div className="inline-block bg-red-600 text-white font-bold px-4 py-2 rounded mb-3 text-base md:text-lg">
+        <div className="inline-block bg-red-600 text-white font-bold px-4 py-2 rounded mb-3 text-base md:text-lg font-geist">
           INDIA'S #1 HOSTEL FOR MERCHANT NAVY ASPIRANTS
         </div>
-        <div className="text-white/80 text-base md:text-lg mb-2">
-          Comfort. <span className="text-yellow-400 font-bold">Discipline.</span> Success.
+        <div className="text-white/80 text-base md:text-lg mb-2 font-poppins">
+          Comfort. <span className="text-yellow-400 font-bold font-geist">Discipline.</span> Success.
         </div>
       </section>
-
       {/* Hostel Stats */}
       <section className="bg-black py-6">
         <div className="max-w-3xl mx-auto flex flex-col md:flex-row justify-center items-center gap-6">
           <div className="flex-1 flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1">24x7</div>
-            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold">Warden & Security</div>
+            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1 font-bebas">24x7</div>
+            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold font-poppins">Warden & Security</div>
           </div>
           <div className="flex-1 flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1">100%</div>
-            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold">Under CCTV Supervision</div>
+            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1 font-bebas">100%</div>
+            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold font-poppins">Under CCTV Supervision</div>
           </div>
           <div className="flex-1 flex flex-col items-center">
-            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1">3X</div>
-            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold">Best Quality Meals Every day</div>
+            <div className="text-4xl md:text-5xl font-extrabold text-white mb-1 font-bebas">3X</div>
+            <div className="text-yellow-400 text-center text-base md:text-lg font-semibold font-poppins">Best Quality Meals Every day</div>
           </div>
         </div>
       </section>
@@ -145,10 +144,17 @@ const BMHostel = () => {
       <section className="bg-black py-8">
         <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8 px-2 md:px-4">
           {/* Left: Heading and bullet points */}
-          <div className="flex-1 w-full min-w-0">
+          <div className="flex-1 w-full min-w-0 flex items-center justify-center">
             <div
-              className="bg-[#0a2540] rounded-xl border-2 border-[#6d28d9] p-4 md:p-8 mb-4 flex flex-col justify-center"
-              style={{ minHeight: 260, minWidth: 0, maxWidth: '100%', maxHeight: '100%' }}
+              className="bg-[#0a2540] rounded-3xl border-8 border-[#2351d5] p-4 md:p-8 flex flex-col justify-center"
+              style={{
+                minHeight: 320,
+                minWidth: 0,
+                maxWidth: 400,
+                width: '100%',
+                height: 320,
+                boxSizing: 'border-box',
+              }}
             >
               <h2 className="text-xl md:text-3xl font-extrabold text-yellow-400 mb-2 leading-tight" style={{ lineHeight: 1.15 }}>
                 What Students<br />Really Need –<br />And We Provide?
@@ -162,22 +168,26 @@ const BMHostel = () => {
             </div>
           </div>
           {/* Right: Video */}
-          <div className="flex-1 flex justify-center w-full min-w-0">
+          <div className="flex-1 flex items-center justify-center w-full min-w-0">
             <div
-              className="rounded-3xl border-8 border-[#2351d5] bg-[#18181b] flex items-center justify-center w-full"
+              className="rounded-3xl border-8 border-[#2351d5] bg-[#18181b] flex items-center justify-center"
               style={{
-                width: '100%',
-                maxWidth: 400,
-                height: 'auto',
-                aspectRatio: '1/1',
+                minHeight: 320,
                 minWidth: 0,
+                maxWidth: 400,
+                width: '100%',
+                height: 320,
+                boxSizing: 'border-box',
               }}
             >
               <video
                 src={hostelvideo}
                 controls
+                autoPlay
+                muted
+                loop
                 className="object-cover w-full h-full rounded-2xl"
-                style={{ borderRadius: 24, background: '#232323', width: '100%', height: '100%', maxHeight: 400, maxWidth: 400 }}
+                style={{ borderRadius: 24, background: '#232323', width: '100%', height: '100%' }}
                 poster=""
               />
             </div>
@@ -194,7 +204,7 @@ const BMHostel = () => {
           <img
             src={timing}
             alt="Structured Daily Routine"
-            className="rounded-2xl shadow-lg border-4 border-yellow-400 w-full max-w-[700px] h-auto"
+            className="rounded-2xl shadow-lg border-4 border-white w-full max-w-[700px] h-auto"
             style={{ objectFit: 'contain' }}
           />
         </div>
@@ -245,7 +255,7 @@ const BMHostel = () => {
           <img
             src={givenotgive}
             alt="What We Provide and Not Provide"
-            className="rounded-2xl shadow-lg border-4 border-yellow-400 w-full max-w-[900px] h-auto"
+            className="rounded-2xl shadow-lg border-4 border-white w-full max-w-[700px] h-auto"
             style={{ objectFit: 'contain' }}
           />
         </div>

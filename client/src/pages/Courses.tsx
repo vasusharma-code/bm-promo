@@ -139,22 +139,22 @@ const Courses = () => {
       </Helmet>
       {/* Header */}
       <section className="pt-28 pb-2 text-center">
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white">BM Academy</h1>
-        <p className="text-white/80 text-sm mb-2">
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white font-geist">BM Academy</h1>
+        <p className="text-white/80 text-sm mb-2 font-poppins">
           Personal Mentorship. Industry-oriented Training. 100% Placement Support.
         </p>
         <div className="flex flex-wrap justify-center gap-8 mb-2 mt-4">
           <div className="text-center">
-            <div className="text-yellow-400 text-2xl font-bold">500+</div>
-            <div className="text-white/80 text-xs">Students Trained</div>
+            <div className="text-yellow-400 text-2xl font-bold font-bebas">500+</div>
+            <div className="text-white/80 text-xs font-poppins">Students Trained</div>
           </div>
           <div className="text-center">
-            <div className="text-yellow-400 text-2xl font-bold">15+</div>
-            <div className="text-white/80 text-xs">Expert Faculty</div>
+            <div className="text-yellow-400 text-2xl font-bold font-bebas">15+</div>
+            <div className="text-white/80 text-xs font-poppins">Expert Faculty</div>
           </div>
           <div className="text-center">
-            <div className="text-yellow-400 text-2xl font-bold">97%</div>
-            <div className="text-white/80 text-xs">Placement Rate</div>
+            <div className="text-yellow-400 text-2xl font-bold font-bebas">97%</div>
+            <div className="text-white/80 text-xs font-poppins">Placement Rate</div>
           </div>
         </div>
       </section>

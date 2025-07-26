@@ -84,8 +84,8 @@ const Blog = () => {
 
 			{/* Header */}
 			<section className="pt-28 pb-2 text-center">
-				<h1 className="text-3xl md:text-4xl font-extrabold mb-1">Maritime Insights</h1>
-				<p className="text-yellow-400 text-sm mb-2">
+				<h1 className="text-3xl md:text-4xl font-extrabold mb-1 font-geist">Maritime Insights</h1>
+				<p className="text-yellow-400 text-sm mb-2 font-poppins">
 					Stay updated with the latest maritime trends, guides, and insights from the maritime industry
 				</p>
 			</section>

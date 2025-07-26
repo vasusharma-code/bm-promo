@@ -706,10 +706,10 @@ const Calculators = () => {
 
 			{/* Header */}
 			<section className="pt-28 pb-2 text-center">
-				<h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white">
+				<h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white font-geist">
 					Maritime Calculators
 				</h1>
-				<p className="text-white/80 text-sm max-w-2xl mx-auto mb-2">
+				<p className="text-white/80 text-sm max-w-2xl mx-auto mb-2 font-poppins">
 					Essential tools to help you plan your merchant navy career and education
 				</p>
 			</section>
@@ -1199,9 +1199,14 @@ const Calculators = () => {
 					Our expert counselors can help you understand eligibility requirements and
 					plan your maritime career path.
 				</p>
-				<button className="bg-yellow-400 text-black font-bold px-6 py-3 rounded-full hover:bg-yellow-500 transition">
+				<a
+					href="https://docs.google.com/forms/d/e/1FAIpQLSfplFAt9uFYYr9r5LDg4-0sP6IpfgZ0bjjOogXFtpODXRTVQw/viewform"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="bg-yellow-400 text-black font-bold px-6 py-3 rounded-full hover:bg-yellow-500 transition"
+				>
 					Get Expert Guidance
-				</button>
+				</a>
 			</section>
 		</div>
 	);

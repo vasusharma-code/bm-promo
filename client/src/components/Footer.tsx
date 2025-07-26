@@ -14,16 +14,16 @@ const Footer = () => {
               <div className="bg-black p-2 rounded-full flex items-center justify-center">
                 <img src={logo} alt="BM Logo" className="h-8 w-8 object-contain" />
               </div>
-              <span className="font-bold text-lg">BUDDING MARINERS</span>
+              <span className="font-bold text-lg font-geist">BUDDING MARINERS</span>
             </div>
-            <div className="text-sm text-black/90 mb-4">
-              Leading academy for aspiring merchant navy professionals with over 5+ years of experience and 3000+ successful students.
+            <div className="text-sm text-black/90 mb-4 font-poppins">
+              Leading academy for aspiring merchant navy professionals with over <span className="font-bebas text-xl">5+</span> years of experience and <span className="font-bebas text-xl">3000+</span> successful students.
             </div>
           </div>
           {/* Quick Links */}
           <div>
-            <div className="font-bold mb-2">Quick Links</div>
-            <ul className="space-y-1 text-sm">
+            <div className="font-bold mb-2 font-geist">Quick Links</div>
+            <ul className="space-y-1 text-sm font-poppins">
               <li><Link to="/about" className="hover:underline">About Us</Link></li>
               <li><Link to="/blog" className="hover:underline">Blogs</Link></li>
               <li><Link to="/calculators" className="hover:underline">Calculators</Link></li>
@@ -32,8 +32,8 @@ const Footer = () => {
           </div>
           {/* Services */}
           <div>
-            <div className="font-bold mb-2">Services</div>
-            <ul className="space-y-1 text-sm">
+            <div className="font-bold mb-2 font-geist">Services</div>
+            <ul className="space-y-1 text-sm font-poppins">
               <li>Online Courses</li>
               <li>Offline Batches</li>
               <li>Test Series</li>
@@ -42,8 +42,8 @@ const Footer = () => {
           </div>
           {/* Legal */}
           <div>
-            <div className="font-bold mb-2">Legal</div>
-            <ul className="space-y-1 text-sm">
+            <div className="font-bold mb-2 font-geist">Legal</div>
+            <ul className="space-y-1 text-sm font-poppins">
               <li>Terms of use</li>
               <li>Privacy policy</li>
               <li>Refund policy</li>
@@ -52,8 +52,8 @@ const Footer = () => {
           </div>
         </div>
         <hr className="my-8 border-black/30" />
-        <div className="text-center text-xs text-black/80 pb-2">
-          © 2025 Budding Mariners. All rights reserved.
+        <div className="text-center text-xs text-black/80 pb-2 font-poppins">
+          © <span className="font-bebas">2025</span> Budding Mariners. All rights reserved.
         </div>
       </div>
     </footer>

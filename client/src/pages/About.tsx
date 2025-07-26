@@ -38,10 +38,10 @@ const About = () => (
 
 		{/* About Us Header */}
 		<section className="pt-28 pb-2 text-center">
-			<h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white">
+			<h1 className="text-3xl md:text-4xl font-extrabold mb-1 text-white font-geist">
 				About Us
 			</h1>
-			<p className="text-white/80 text-sm max-w-2xl mx-auto mb-2">
+			<p className="text-white/80 text-sm max-w-2xl mx-auto mb-2 font-poppins">
 				Discover the story behind Budding Mariners and our mission to transform
 				maritime education.
 			</p>
@@ -50,12 +50,12 @@ const About = () => (
 		{/* Our Story */}
 		<section className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10 pb-12 px-4">
 			<div className="flex-1">
-				<h2 className="text-2xl font-bold mb-4 text-white">Our Story</h2>
-				<p className="text-white/80 mb-4">
+				<h2 className="text-2xl font-bold mb-4 text-white font-geist">Our Story</h2>
+				<p className="text-white/80 mb-4 font-poppins">
 					Founded in 2021 by Ojas Lalla and Shahnawaz, Budding Mariners has rapidly ascended to become India’s leading academy for aspiring merchant navy professionals. Our academy is recognized for its unwavering commitment to transparency, excellence, and the genuine guidance we provide to our students.
 				</p>
-				<p className="text-white/80">
-					With over 1,500+ successful selections into prestigious maritime universities across the country, Budding Mariners stands as a beacon of trust in an industry often plagued by misinformation and fraud. We believe in empowering the next generation of seafarers by equipping them with the knowledge and tools they need to navigate their careers with confidence.
+				<p className="text-white/80 font-poppins">
+					With over <span className="font-bebas">1,500+</span> successful selections into prestigious maritime universities across the country, Budding Mariners stands as a beacon of trust in an industry often plagued by misinformation and fraud. We believe in empowering the next generation of seafarers by equipping them with the knowledge and tools they need to navigate their careers with confidence.
 				</p>
 			</div>
 			<div className="flex-1 flex justify-center">

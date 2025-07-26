@@ -59,10 +59,10 @@ const Home = () => {
 
     return (
       <div ref={ref} className="text-center">
-        <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-400 mb-2">
+        <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-400 mb-2 font-bebas">
           {count.toLocaleString()}{suffix}
         </div>
-        <div className="text-white text-xs md:text-sm lg:text-base font-medium">{label}</div>
+        <div className="text-white text-xs md:text-sm lg:text-base font-medium font-poppins">{label}</div>
       </div>
     );
   };
@@ -178,7 +178,7 @@ const Home = () => {
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
           <div className="max-w-4xl mx-auto mb-4">
             <motion.h1
-              className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3"
+              className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3 font-geist"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
@@ -186,14 +186,14 @@ const Home = () => {
             >
               Your Gateway to the
               <span
-                className="text-primary-400 block"
+                className="text-primary-400 block font-geist"
                 style={{ fontFamily: 'Impact, Charcoal, sans-serif', letterSpacing: '0.039em' }}
               >
                 Merchant Navy
               </span>
             </motion.h1>
             <motion.p
-              className="text-base md:text-lg lg:text-xl text-white/90 mb-4"
+              className="text-base md:text-lg lg:text-xl text-white/90 mb-4 font-poppins"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
@@ -205,7 +205,7 @@ const Home = () => {
 
         {/* Compass Wheel */}
         <motion.div
-          className="absolute left-1/2 z-20 flex justify-center items-center"
+          className="absolute z-20"
           drag
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           onDrag={handleCompassDrag}
@@ -214,9 +214,9 @@ const Home = () => {
           dragElastic={0}
           style={{
             rotate: compassRotation,
-            bottom: 'calc(-20vw / 2 + 2.5rem)',
-            left: '38%',
-            transform: 'translateX(-40%)' // move slightly left on all screens
+            bottom: 'calc(-9vw + 3rem)', // Adjusted for better positioning
+            left: '43%',
+            transform: 'translateX(-50%)'
           }}
         >
           <div className="w-[18vw] h-[18vw] min-w-[100px] min-h-[100px] max-w-[220px] max-h-[220px] flex items-center justify-center relative select-none">
@@ -253,13 +253,13 @@ const Home = () => {
       <section className="py-12 md:py-16 lg:py-20 bg-black border-t border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <motion.h2
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-12"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-12 font-geist"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            Why is <span className="text-primary-400">Budding Mariners</span> The Best for you?
+            Why is <span className="text-primary-400 font-geist">Budding Mariners</span> The Best for you?
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {/* Feature 1 */}
@@ -277,10 +277,10 @@ const Home = () => {
                   className="w-40 h-40 object-cover rounded-lg border-2 border-yellow-400"
                 />
               </div>
-              <h3 className="text-lg md:text-xl font-bold text-yellow-400 mb-3">
+              <h3 className="text-lg md:text-xl font-bold text-yellow-400 mb-3 font-geist">
                 Highest Selections in Top Companies
               </h3>
-              <p className="text-white/80 text-sm md:text-base">
+              <p className="text-white/80 text-sm md:text-base font-poppins">
                 Our proven track record speaks for itself with maximum placements in leading maritime companies
               </p>
             </motion.div>
@@ -299,10 +299,10 @@ const Home = () => {
                   className="w-40 h-40 object-cover rounded-lg border-2 border-yellow-400"
                 />
               </div>
-              <h3 className="text-lg md:text-xl font-bold text-yellow-400 mb-3">
+              <h3 className="text-lg md:text-xl font-bold text-yellow-400 mb-3 font-geist">
                 Company-specific preparation by the company's ex-Sponsored Marines
               </h3>
-              <p className="text-white/80 text-sm md:text-base">
+              <p className="text-white/80 text-sm md:text-base font-poppins">
                 Learn from industry experts who have sailed with the companies you aspire to join
               </p>
             </motion.div>
@@ -321,10 +321,10 @@ const Home = () => {
                   className="w-40 h-40 object-cover rounded-lg border-2 border-yellow-400"
                 />
               </div>
-              <h3 className="text-lg md:text-xl font-bold text-yellow-400 mb-3">
+              <h3 className="text-lg md:text-xl font-bold text-yellow-400 mb-3 font-geist">
                 Unlimited Mock Tests and Interviews
               </h3>
-              <p className="text-white/80 text-sm md:text-base">
+              <p className="text-white/80 text-sm md:text-base font-poppins">
                 Practice makes perfect - unlimited access to mock tests and interview sessions
               </p>
             </motion.div>
@@ -336,7 +336,7 @@ const Home = () => {
       <section className="py-12 md:py-16 lg:py-20 bg-black border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <motion.h2
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-12"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-12 font-geist"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -356,8 +356,8 @@ const Home = () => {
               <div className="mb-4 flex justify-center">
                 <Users className="w-12 h-12 md:w-16 md:h-16 text-primary-400" />
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-2">75,000+</div>
-              <p className="text-white/80 text-sm md:text-base font-medium">Students</p>
+              <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-2 font-bebas">75,000+</div>
+              <p className="text-white/80 text-sm md:text-base font-medium font-poppins">Students</p>
               <p className="text-white/60 text-xs md:text-sm">Student Community</p>
             </motion.div>
             {/* Stat 2 */}
@@ -371,8 +371,8 @@ const Home = () => {
               <div className="mb-4 flex justify-center">
                 <Building className="w-12 h-12 md:w-16 md:h-16 text-primary-400" />
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-2">25+</div>
-              <p className="text-white/80 text-sm md:text-base font-medium">Companies</p>
+              <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-2 font-bebas">25+</div>
+              <p className="text-white/80 text-sm md:text-base font-medium font-poppins">Companies</p>
               <p className="text-white/60 text-xs md:text-sm">Have Sponsored our Students</p>
             </motion.div>
             {/* Stat 3 */}
@@ -387,7 +387,7 @@ const Home = () => {
                 <Star className="w-12 h-12 md:w-16 md:h-16 text-yellow-400" />
               </div>
               <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-2">Highest Rated</div>
-              <p className="text-white/80 text-sm md:text-base font-medium">Faculty and Mentors</p>
+              <p className="text-white/80 text-sm md:text-base font-medium font-poppins">Faculty and Mentors</p>
             </motion.div>
             {/* Stat 4 */}
             <motion.div
@@ -400,8 +400,8 @@ const Home = () => {
               <div className="mb-4 flex justify-center">
                 <Laptop className="w-12 h-12 md:w-16 md:h-16 text-primary-400" />
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-2">A-Z</div>
-              <p className="text-white/80 text-sm md:text-base font-medium">Guidance</p>
+              <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-2 font-bebas">A-Z</div>
+              <p className="text-white/80 text-sm md:text-base font-medium font-poppins">Guidance</p>
               <p className="text-white/60 text-xs md:text-sm">From Career Entry to Advancement</p>
             </motion.div>
           </div>
@@ -412,7 +412,7 @@ const Home = () => {
       <section className="py-12 md:py-16 lg:py-20 bg-black border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4">
           <motion.h2
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-12"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold text-center text-white mb-12 font-geist"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}

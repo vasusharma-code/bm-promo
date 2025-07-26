@@ -109,8 +109,8 @@ const CollegeForms = () => {
 
 			{/* Header */}
 			<section className="pt-28 pb-4 text-center">
-				<h1 className="text-3xl md:text-4xl font-extrabold mb-1">Admissions & Applications</h1>
-				<p className="text-white/80 text-sm mb-6">
+				<h1 className="text-3xl md:text-4xl font-extrabold mb-1 font-geist">Admissions & Applications</h1>
+				<p className="text-white/80 text-sm mb-6 font-poppins">
 					Apply for maritime courses and company sponsorships to kickstart your seafaring career
 				</p>
 			</section>

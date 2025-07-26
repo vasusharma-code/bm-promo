@@ -41,7 +41,7 @@ const Navbar = () => {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 bg-gradient-to-b from-[#18181b] to-black border-b border-white shadow-none`}>
       {/* Remove max-w-7xl and horizontal padding for full width */}
-      <div>
+      <div className="px-4 md:px-8">
         {/* Top Bar - Desktop Only */}
         <div className="hidden md:flex items-center h-10 border-b border-white relative overflow-hidden">
           <div className="absolute inset-0 flex items-center">
@@ -57,7 +57,15 @@ const Navbar = () => {
                     >
                       {marqueeContent}
                     </a>
-                    <span className="text-yellow-400 mx-8">✦</span>
+                    <a
+                      href="https://forms.gle/eYhht7QngobRYATJ8"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2 bg-yellow-400 text-black font-bold px-4 py-1 rounded-full text-sm hover:bg-white hover:text-yellow-400 transition"
+                      style={{ display: 'inline-block', verticalAlign: 'middle' }}
+                    >
+                      Join Now
+                    </a>
                   </React.Fragment>
                 ))}
               </div>
@@ -78,7 +86,15 @@ const Navbar = () => {
                   >
                     {marqueeContent}
                   </a>
-                  <span className="text-yellow-400 mx-4">✦</span>
+                  <a
+                    href="https://forms.gle/eYhht7QngobRYATJ8"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded-full text-xs hover:bg-white hover:text-yellow-400 transition"
+                    style={{ display: 'inline-block', verticalAlign: 'middle' }}
+                  >
+                    Join Now
+                  </a>
                 </React.Fragment>
               ))}
             </div>

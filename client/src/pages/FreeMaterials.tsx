@@ -73,10 +73,10 @@ const FreeMaterials = () => {
 
 			{/* Header */}
 			<section className="pt-28 pb-6 text-center">
-				<h1 className="text-3xl md:text-4xl font-extrabold mb-2">
+				<h1 className="text-3xl md:text-4xl font-extrabold mb-2 font-geist">
 					Free Study Materials
 				</h1>
-				<p className="text-white/80 text-base max-w-2xl mx-auto">
+				<p className="text-white/80 text-base max-w-2xl mx-auto font-poppins">
 					Download a curated collection of educational PDFs on various topics.
 				</p>
 			</section>
