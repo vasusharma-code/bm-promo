@@ -32,12 +32,12 @@ const Footer = () => {
           </div>
           {/* Services */}
           <div>
-            <div className="font-bold mb-2 font-geist">Services</div>
-            <ul className="space-y-1 text-sm font-poppins">
-              <li>Online Courses</li>
-              <li>Offline Batches</li>
-              <li>Test Series</li>
-              <li>Consultation</li>
+            <div className="font-bold mb-2">Services</div>
+            <ul className="space-y-1 text-sm">
+              <li><a href="/courses">Online Courses</a></li>
+              <li><a href="/bm-offline-academy">Offline Batches</a></li>
+              {/* <li>Test Series</li>
+              <li>Consultation</li> */}
             </ul>
           </div>
           {/* Legal */}
