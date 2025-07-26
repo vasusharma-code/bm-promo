@@ -34,10 +34,10 @@ const Footer = () => {
           <div>
             <div className="font-bold mb-2">Services</div>
             <ul className="space-y-1 text-sm">
-              <li>Online Courses</li>
-              <li>Offline Batches</li>
-              <li>Test Series</li>
-              <li>Consultation</li>
+              <li><a href="/courses">Online Courses</a></li>
+              <li><a href="/bm-offline-academy">Offline Batches</a></li>
+              {/* <li>Test Series</li>
+              <li>Consultation</li> */}
             </ul>
           </div>
           {/* Legal */}
