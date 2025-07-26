@@ -23,6 +23,9 @@ const Admin: React.FC = () => {
   const [auth, setAuth] = useState(false);
   const [login, setLogin] = useState({ id: '', pass: '' });
   const [loginError, setLoginError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(leads.length / itemsPerPage);
 
   // Fetch leads from backend
   const fetchLeads = async () => {
@@ -95,6 +98,14 @@ const Admin: React.FC = () => {
     }
   };
 
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const paginatedLeads = leads.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   if (!auth) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center ">
@@ -140,13 +151,6 @@ const Admin: React.FC = () => {
         <h1 className="text-2xl font-bold text-yellow-400">Admin Panel - Leads</h1>
         <div className="flex gap-2 flex-wrap">
           <button
-            onClick={exportToExcel}
-            className="flex items-center gap-2 bg-yellow-400 text-black px-4 py-2 rounded font-semibold hover:bg-yellow-500 transition"
-            style={{ minWidth: 160 }}
-          >
-            <Download className="w-5 h-5" /> Export to Excel
-          </button>
-          <button
             onClick={() => setAuth(false)}
             className="flex items-center gap-2 bg-white/10 text-yellow-400 px-4 py-2 rounded font-semibold hover:bg-yellow-400 hover:text-black transition"
           >
@@ -169,7 +173,7 @@ const Admin: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {leads.map((lead) => (
+                {paginatedLeads.map((lead) => (
                   <tr key={lead._id} className="border-b border-white/10">
                     <td className="px-4 py-2">{lead.name}</td>
                     <td className="px-4 py-2">{lead.phone}</td>
@@ -202,7 +206,27 @@ const Admin: React.FC = () => {
             {leads.length === 0 && (
               <div className="text-center text-white/60 mt-8">No leads found.</div>
             )}
-            {/* Export to Excel button at bottom */}
+            {/* Pagination Controls */}
+            <div className="flex justify-between items-center mt-6">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-yellow-400 text-black rounded font-semibold hover:bg-yellow-500 transition disabled:opacity-50"
+              >
+                Previous
+              </button>
+              <div className="text-white">
+                Page {currentPage} of {totalPages}
+              </div>
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-yellow-400 text-black rounded font-semibold hover:bg-yellow-500 transition disabled:opacity-50"
+              >
+                Next
+              </button>
+            </div>
+            {/* Export to Excel button */}
             <div className="flex justify-end mt-6">
               <button
                 onClick={exportToExcel}
